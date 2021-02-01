@@ -8,7 +8,7 @@
 #include "OpMode.h"
 #include "OpModes/TestTeleop1.h"
 #include "OpModes/TestTeleop2.h"
-
+#include "OpModes/ManualTeleop.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
@@ -27,11 +27,13 @@ class Robot : public frc::TimedRobot {
   void TestInit() override;
   void TestPeriodic() override;
 
-  std::vector<OpMode> AutoModes;
-  std::vector<OpMode> TeleopModes;
+  std::vector<OpMode*> AutoModes;
+  std::vector<OpMode*> TeleopModes;
 
-  TestTeleop1 Teleop1;
-  TestTeleop2 Teleop2;
+  TestTeleop1 * Teleop1;
+  TestTeleop2 * Teleop2;
+  ManualTeleop * Manual;
+
  private:
   
 };

@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-
+#include "string"
 class OpMode {
  public:
   OpMode(); // 
   
+  std::string name;
+  int timesRun;
 
   void Start(); // overide this
 

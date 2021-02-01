@@ -12,7 +12,9 @@
 
 void Robot::RobotInit() 
 {
-  
+  Teleop1 = new TestTeleop1();
+  Teleop2 = new TestTeleop2();
+  Manual =  new ManualTeleop();
 }
 
 

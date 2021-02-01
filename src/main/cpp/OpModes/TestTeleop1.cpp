@@ -4,4 +4,7 @@
 
 #include "OpModes/TestTeleop1.h"
 
-TestTeleop1::TestTeleop1() = default;
+TestTeleop1::TestTeleop1() 
+{
+    name = "test1";
+}

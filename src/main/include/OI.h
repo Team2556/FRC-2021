@@ -3,8 +3,20 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include "Robot.h"
+#include "RobotMap.h"
+#include "frc/XboxController.h"
 
 class OI {
  public:
   OI();
+
+  bool bTestButton(int iButton);
+  float fTestValue(int iControl);
+
+  protected:
+    frc::XboxController   Xbox1{XBOX_ONE};
+    frc::XboxController   Xbox2{XBOX_TWO};
+    frc::XboxController   Xbox3{XBOX_THREE};
+
 };

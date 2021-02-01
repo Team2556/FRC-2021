@@ -4,4 +4,7 @@
 
 #include "OpModes/TestTeleop2.h"
 
-TestTeleop2::TestTeleop2() = default;
+TestTeleop2::TestTeleop2() 
+{
+    name = "test2";
+}
