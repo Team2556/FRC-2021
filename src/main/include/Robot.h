@@ -11,7 +11,12 @@
 #include "OpModes/ManualTeleop.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-
+#include "OI.h"
+#include "Triggers/Trigger.h"
+#include "Triggers/TestTrigger1.h"
+#include "Triggers/TestTrigger2.h"
+#include "OPController.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
 
 class Robot : public frc::TimedRobot {
@@ -33,6 +38,12 @@ class Robot : public frc::TimedRobot {
   TestTeleop1 * Teleop1;
   TestTeleop2 * Teleop2;
   ManualTeleop * Manual;
+  OI * OIObject;
+  TestTrigger1 * TeleopTrigger1;
+  TestTrigger2 * TeleopTrigger2;
+  OPController * TeleopController;
+
+  std::vector<Trigger*> TeleopTriggers;
 
  private:
   

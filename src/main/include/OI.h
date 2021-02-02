@@ -3,9 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "Robot.h"
 #include "RobotMap.h"
 #include "frc/XboxController.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 class OI {
  public:
