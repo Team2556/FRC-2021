@@ -38,7 +38,7 @@ class Robot : public frc::TimedRobot {
   TestTeleop1 * Teleop1;
   TestTeleop2 * Teleop2;
   ManualTeleop * Manual;
-  OI * OIObject;
+  OI * DriverCMD;
   TestTrigger1 * TeleopTrigger1;
   TestTrigger2 * TeleopTrigger2;
   OPController * TeleopController;

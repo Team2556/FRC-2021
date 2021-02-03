@@ -14,13 +14,12 @@ OpMode * OPController::nextOp() {
     Trigger * startTrigger;
     Trigger * tempTrigger;
     std::string name;
+    startTrigger = NULL;
     for(int i = 0; i < Triggers.size(); i++) 
     {
-        tempTrigger = Triggers[i];
-        if(tempTrigger->Start()) 
+        if(Triggers[i]->Start())
         {
             startTrigger = Triggers[i];
-            frc::SmartDashboard::PutString("test", "Works Perfectly");
             break;
         }
     }
