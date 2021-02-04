@@ -9,4 +9,9 @@ class ManualTeleop : public OpMode {
  public:
   ManualTeleop();
 
+  void Start() override;
+  void Run() override;
+  bool Complete() override;
+
+  int timesRun;
 };

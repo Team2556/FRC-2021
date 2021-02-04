@@ -11,6 +11,16 @@ class OI {
  public:
   OI();
 
+  //OPMode Controls
+  bool CancelOP(); // Cancel the current op
+  bool TestTeleop1(); // Start teleop 1
+  bool TestTeleop2(); // Start teleop 2
+
+  //Driving Controls
+
+  //Codriver Controls
+  
+  // Test Functions
   bool bTestButton(int iButton);
   float fTestValue(int iControl);
 

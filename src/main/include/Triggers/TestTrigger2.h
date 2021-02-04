@@ -8,7 +8,7 @@
 class TestTrigger2 : public Trigger {
  public:
   TestTrigger2(OI * OIObjectParam);
-  OI * OIObject;
+  OI * DriverCMD;
 
   bool Start() override;
 };

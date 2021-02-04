@@ -24,7 +24,7 @@ void Robot::RobotInit()
   TeleopTriggers.push_back(TeleopTrigger1);
   TeleopTriggers.push_back(TeleopTrigger2);
 
-  TeleopController = new OPController(TeleopModes, TeleopTriggers);
+  TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
 }
 
 
@@ -48,6 +48,8 @@ void Robot::TeleopInit()
 {
   // std::string name = TeleopController->nextOp()->name;
   // frc::SmartDashboard::PutString("Next Op", name);
+  // frc::SmartDashboard::PutBoolean("manual", Manual->interruptible);
+  // frc::SmartDashboard::PutBoolean("test1", Teleop1->interruptible);
 }
 
 void Robot::TeleopPeriodic() 
@@ -55,12 +57,10 @@ void Robot::TeleopPeriodic()
   //printf("address is %p and address 2 is %p\n", (void *)TeleopModes[0], *((int *)(void * )TeleopController->nextOp()));
   //TeleopController->nextOp();
   //TeleopController->test();
-  //frc::SmartDashboard::PutBoolean("button", OIObject->bTestButton(0));
-  frc::SmartDashboard::PutBoolean("A Button", DriverCMD->bTestButton(0));
-  frc::SmartDashboard::PutBoolean("B Button", DriverCMD->bTestButton(1));
-  frc::SmartDashboard::PutBoolean("Trigger 1 (A)", TeleopTrigger1->Start());
-  frc::SmartDashboard::PutBoolean("Trigger 2 (B)", TeleopTrigger2->Start());
-  frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
+  //frc::SmartDashboard::PutBoolean("button", DriverCMD->bTestButton(0));
+  //frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
+  TeleopController->ControllerPeriodic();
+  frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
 }
 
 void Robot::DisabledInit() {}

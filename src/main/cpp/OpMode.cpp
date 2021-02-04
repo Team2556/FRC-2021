@@ -4,4 +4,25 @@
 
 #include "OpMode.h"
 
-OpMode::OpMode() = default;
+OpMode::OpMode()
+{
+
+}
+
+
+void OpMode::Start()
+{
+    frc::SmartDashboard::PutString("Overload Start", this->name);
+}
+
+void OpMode::Run()
+{
+    frc::SmartDashboard::PutString("Overload Run", this->name);
+}
+
+bool OpMode::Complete()
+{
+    frc::SmartDashboard::PutString("Overload Complete", this->name);
+    return true;
+}
+

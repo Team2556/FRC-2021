@@ -9,4 +9,9 @@ class TestTeleop1 : public OpMode {
  public:
   TestTeleop1();
   
+  void Start() override;
+  void Run() override;
+  bool Complete() override;
+
+  int timesRun;
 };

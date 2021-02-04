@@ -7,4 +7,20 @@
 TestTeleop2::TestTeleop2() 
 {
     name = "test2";
+    timesRun = 0;
+}
+
+void TestTeleop2::Start()
+{
+    timesRun++;
+}
+
+void TestTeleop2::Run()
+{
+    frc::SmartDashboard::PutNumber("Teleop 2 Start times run", timesRun);
+}
+
+bool TestTeleop2::Complete()
+{
+    return false;
 }

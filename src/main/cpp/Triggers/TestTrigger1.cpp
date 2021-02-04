@@ -7,11 +7,11 @@
 TestTrigger1::TestTrigger1(OI * OIObjectParam)
 {
     name = "test1";
-    OIObject = OIObjectParam;
+    DriverCMD = OIObjectParam;
 }
 
 
 bool TestTrigger1::Start()
 {
-    return OIObject->bTestButton(0);
+    return DriverCMD->TestTeleop1();
 }

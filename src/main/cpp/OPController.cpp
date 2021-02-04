@@ -4,15 +4,16 @@
 
 #include "OPController.h"
 
-OPController::OPController(std::vector<OpMode*> opModes, std::vector<Trigger*> triggers)
+OPController::OPController(OI * OIObjectParam, std::vector<OpMode*> opModes, std::vector<Trigger*> triggers)
 {
     OpModes = opModes;
     Triggers = triggers;
+    DriverCMD = OIObjectParam;
+    this->CurrOp = NULL;
 }
 
 OpMode * OPController::nextOp() {
     Trigger * startTrigger;
-    Trigger * tempTrigger;
     std::string name;
     startTrigger = NULL;
     for(int i = 0; i < Triggers.size(); i++) 
@@ -34,6 +35,7 @@ OpMode * OPController::nextOp() {
     }
 
     OpMode * nextOpMode;
+    nextOpMode = NULL;
     for(int i = 0; i < OpModes.size(); i++)
     {
         if(OpModes[i]->name == name)
@@ -45,7 +47,22 @@ OpMode * OPController::nextOp() {
     return nextOpMode;
 }
 
-void OPController::test()
+void OPController::ControllerPeriodic()
 {
-    printf("pleasework");
+    if(!CurrOp or CurrOp->interruptible or DriverCMD->CancelOP())
+    {
+        OpMode * TempPrevOp = CurrOp;
+        CurrOp = nextOp();
+        if(TempPrevOp != CurrOp)
+        {
+            CurrOp->Start();
+        }
+    }
+
+    CurrOp->Run();
+
+    if(CurrOp->Complete())
+    {
+        CurrOp = NULL;
+    }
 }

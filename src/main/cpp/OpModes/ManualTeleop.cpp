@@ -7,4 +7,21 @@
 ManualTeleop::ManualTeleop() 
 {
     name = "manual";
+    timesRun = 0;
+    interruptible = true;
+}
+
+void ManualTeleop::Start()
+{
+    timesRun++;
+}
+
+void ManualTeleop::Run()
+{
+    frc::SmartDashboard::PutNumber("Manual start times run", timesRun);
+}
+
+bool ManualTeleop::Complete()
+{
+    return false;
 }

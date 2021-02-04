@@ -4,17 +4,18 @@
 
 #pragma once
 #include "string"
+#include "frc/smartdashboard/SmartDashboard.h"
 class OpMode {
  public:
   OpMode(); // 
   
   std::string name;
-  int timesRun;
+  bool interruptible = false;
 
-  void Start(); // overide this
+  virtual void Start(); // overide this
 
-  void Run(); // overide this
+  virtual void Run(); // overide this
 
-  bool Complete(); // override this
+  virtual bool Complete(); // override this
 
 };

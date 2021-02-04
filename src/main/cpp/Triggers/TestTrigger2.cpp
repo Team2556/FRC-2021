@@ -7,11 +7,11 @@
 TestTrigger2::TestTrigger2(OI * OIObjectParam) 
 {
     name = "test2";
-    OIObject = OIObjectParam;
+    DriverCMD = OIObjectParam;
 }
 
 bool TestTrigger2::Start()
 {
     //frc::SmartDashboard::PutString("In Trigger 2", "yes");
-    return OIObject->bTestButton(1);
+    return DriverCMD->TestTeleop2();
 }

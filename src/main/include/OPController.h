@@ -3,19 +3,21 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include "OI.h"
 #include "OpMode.h"
 #include "Triggers/Trigger.h"
 
 class OPController {
  public:
-  OPController(std::vector<OpMode*> opModes, std::vector<Trigger*> triggers);
+  OPController(OI * OIObjectParam, std::vector<OpMode*> opModes, std::vector<Trigger*> triggers);
   std::vector<OpMode*> OpModes;
   std::vector<Trigger*> Triggers;
+  OI * DriverCMD;
 
   OpMode * nextOp();
 
-  OpMode currOp;
+  void ControllerPeriodic();
 
-  void test();
+  OpMode * CurrOp;
 
 };
