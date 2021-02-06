@@ -11,18 +11,23 @@
 
 void Robot::RobotInit() 
 {
-  Teleop1 = new TestTeleop1();
-  Teleop2 = new TestTeleop2();
+  AutoTrench = new AutomaticTrench();
+  AutoBall = new AutomaticBall();
+  AutoShoot = new AutomaticShoot();
   Manual =  new ManualTeleop();
   DriverCMD = new OI();
-  TeleopTrigger1 = new TestTrigger1(DriverCMD);
-  TeleopTrigger2 = new TestTrigger2(DriverCMD);
+  AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
+  AutoTrenchTrigger = new AutomaticTrenchTrigger(DriverCMD);
+  AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
 
-  TeleopModes.push_back(Teleop1);
-  TeleopModes.push_back(Teleop2);
+  TeleopModes.push_back(AutoTrench);
+  TeleopModes.push_back(AutoBall);
+  TeleopModes.push_back(AutoShoot);
   TeleopModes.push_back(Manual);
-  TeleopTriggers.push_back(TeleopTrigger1);
-  TeleopTriggers.push_back(TeleopTrigger2);
+  TeleopTriggers.push_back(AutoShootTrigger);
+  TeleopTriggers.push_back(AutoBallTrigger);
+  TeleopTriggers.push_back(AutoTrenchTrigger);
+
 
   TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
 }

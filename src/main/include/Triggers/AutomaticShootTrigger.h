@@ -3,15 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "OpMode.h"
+#include "Trigger.h"
 
-class TestTeleop1 : public OpMode {
+class AutomaticShootTrigger : public Trigger {
  public:
-  TestTeleop1();
-  
-  void Start() override;
-  void Run() override;
-  bool Complete() override;
+  AutomaticShootTrigger(OI * OIObjectParam);
+  OI * DriverCMD;
 
-  int timesRun;
+  bool Start() override;
 };

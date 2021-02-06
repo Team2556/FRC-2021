@@ -6,18 +6,20 @@
 
 #include <string>
 #include "OpMode.h"
-#include "OpModes/TestTeleop1.h"
-#include "OpModes/TestTeleop2.h"
 #include "OpModes/ManualTeleop.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "OI.h"
 #include "Triggers/Trigger.h"
-#include "Triggers/TestTrigger1.h"
-#include "Triggers/TestTrigger2.h"
 #include "OPController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
+#include "Triggers/AutomaticTrenchTrigger.h"
+#include "Triggers/AutomaticShootTrigger.h"
+#include "Triggers/AutomaticBallTrigger.h"
+#include "OpModes/AutomaticTrench.h"
+#include "OpModes/AutomaticShoot.h"
+#include "OpModes/AutomaticBall.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -35,12 +37,14 @@ class Robot : public frc::TimedRobot {
   std::vector<OpMode*> AutoModes;
   std::vector<OpMode*> TeleopModes;
 
-  TestTeleop1 * Teleop1;
-  TestTeleop2 * Teleop2;
   ManualTeleop * Manual;
   OI * DriverCMD;
-  TestTrigger1 * TeleopTrigger1;
-  TestTrigger2 * TeleopTrigger2;
+  AutomaticBallTrigger * AutoBallTrigger;
+  AutomaticShootTrigger * AutoShootTrigger;
+  AutomaticTrenchTrigger * AutoTrenchTrigger;
+  AutomaticBall * AutoBall;
+  AutomaticShoot * AutoShoot;
+  AutomaticTrench * AutoTrench;
   OPController * TeleopController;
 
   std::vector<Trigger*> TeleopTriggers;

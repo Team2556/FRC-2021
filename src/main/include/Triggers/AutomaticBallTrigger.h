@@ -5,9 +5,9 @@
 #pragma once
 #include "Trigger.h"
 
-class TestTrigger2 : public Trigger {
+class AutomaticBallTrigger : public Trigger {
  public:
-  TestTrigger2(OI * OIObjectParam);
+  AutomaticBallTrigger(OI * OIObjectParam);
   OI * DriverCMD;
 
   bool Start() override;

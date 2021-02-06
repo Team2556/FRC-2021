@@ -13,9 +13,9 @@ class OI {
 
   //OPMode Controls
   bool CancelOP(); // Cancel the current op
-  bool TestTeleop1(); // Start teleop 1
-  bool TestTeleop2(); // Start teleop 2
-
+  bool AutomaticShoot(); //Start shooting
+  bool AutomaticBall(); //Start picking up balls
+  bool AutomaticTrench(); //Start Trench
   //Driving Controls
 
   //Codriver Controls

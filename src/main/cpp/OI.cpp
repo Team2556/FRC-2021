@@ -18,15 +18,21 @@ bool OI::CancelOP()
     return Xbox1.GetStartButton();
 }
 
-bool OI::TestTeleop1()
+bool OI::AutomaticBall()
 {
     return Xbox1.GetAButton();
 }
 
-bool OI::TestTeleop2()
+bool OI::AutomaticShoot()
 {
     return Xbox1.GetBButton();
 }
+
+bool OI::AutomaticTrench()
+{
+    return Xbox1.GetXButton();
+}
+
 // ----------------------------------------------------------------------------
 // Driver commands
 // ----------------------------------------------------------------------------
