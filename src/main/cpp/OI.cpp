@@ -28,7 +28,7 @@ bool OI::AutomaticShoot()
     return Xbox1.GetBButton();
 }
 
-bool OI::AutomaticTrench()
+bool OI::AutomaticPath()
 {
     return Xbox1.GetXButton();
 }

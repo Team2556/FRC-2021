@@ -15,7 +15,7 @@ class OI {
   bool CancelOP(); // Cancel the current op
   bool AutomaticShoot(); //Start shooting
   bool AutomaticBall(); //Start picking up balls
-  bool AutomaticTrench(); //Start Trench
+  bool AutomaticPath(); //Start Trench
   //Driving Controls
 
   //Codriver Controls

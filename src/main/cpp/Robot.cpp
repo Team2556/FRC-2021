@@ -7,26 +7,33 @@
 #include <iostream>
 
 #include <frc/smartdashboard/SmartDashboard.h>
+#include "OpModes/AutomaticPath.h"
+#include "Drivebase.h"
 
+AutomaticPath * AutoPath;
+Drivebase * MecanumDrive;
 
 void Robot::RobotInit() 
 {
-  AutoTrench = new AutomaticTrench();
+  OdometryController = new Odometry();
+  MecanumDrive = new Drivebase(this);
+  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
   Manual =  new ManualTeleop();
   DriverCMD = new OI();
   AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
-  AutoTrenchTrigger = new AutomaticTrenchTrigger(DriverCMD);
+  AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
   AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
+  
 
-  TeleopModes.push_back(AutoTrench);
+  TeleopModes.push_back(AutoPath);
   TeleopModes.push_back(AutoBall);
   TeleopModes.push_back(AutoShoot);
   TeleopModes.push_back(Manual);
   TeleopTriggers.push_back(AutoShootTrigger);
   TeleopTriggers.push_back(AutoBallTrigger);
-  TeleopTriggers.push_back(AutoTrenchTrigger);
+  TeleopTriggers.push_back(AutoPathTrigger);
 
 
   TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);

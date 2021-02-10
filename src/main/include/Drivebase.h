@@ -3,13 +3,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-
+#include "Robot.h"
 class Drivebase {
  public:
-  Drivebase();
+  Drivebase(Robot * pRobot);
+  Robot * pRobot;
+
   // reference frame for robot is: +X Right, +Y Forward, +theta
   void Drive(float xSpeed, float ySpeed, float rotate, float gyro);
-
+  
+  void PolarDrive(float speed, float direction, float rotate, float gyro);
   void GyroDrive();
   void FieldOrientedDrive();
 };

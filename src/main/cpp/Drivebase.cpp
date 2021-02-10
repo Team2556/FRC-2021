@@ -4,4 +4,7 @@
 
 #include "Drivebase.h"
 
-Drivebase::Drivebase() = default;
+Drivebase::Drivebase(Robot * pRobot)
+{
+    this->pRobot = pRobot;
+}

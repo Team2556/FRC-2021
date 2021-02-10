@@ -7,4 +7,13 @@
 class Odometry {
  public:
   Odometry();
+
+  float getX();
+  float getY();
+
+  void setCommandYaw();
+  float getYaw();
+  float getCommandYaw();
+  float error();
+  float getRotate();
 };

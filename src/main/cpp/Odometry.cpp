@@ -4,4 +4,22 @@
 
 #include "Odometry.h"
 
-Odometry::Odometry() = default;
+Odometry::Odometry() 
+{
+
+}
+
+float Odometry::getYaw()
+{
+    return 0;
+}
+
+float Odometry::getX()
+{
+    return 0;
+}
+
+float Odometry::getY()
+{
+    return 0;
+}

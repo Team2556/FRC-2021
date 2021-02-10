@@ -14,12 +14,13 @@
 #include "OPController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
-#include "Triggers/AutomaticTrenchTrigger.h"
+#include "Triggers/AutomaticPathTrigger.h"
 #include "Triggers/AutomaticShootTrigger.h"
 #include "Triggers/AutomaticBallTrigger.h"
-#include "OpModes/AutomaticTrench.h"
 #include "OpModes/AutomaticShoot.h"
 #include "OpModes/AutomaticBall.h"
+#include "frc/geometry/Pose2d.h"
+#include "Odometry.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -41,13 +42,14 @@ class Robot : public frc::TimedRobot {
   OI * DriverCMD;
   AutomaticBallTrigger * AutoBallTrigger;
   AutomaticShootTrigger * AutoShootTrigger;
-  AutomaticTrenchTrigger * AutoTrenchTrigger;
   AutomaticBall * AutoBall;
   AutomaticShoot * AutoShoot;
-  AutomaticTrench * AutoTrench;
+  AutomaticPathTrigger * AutoPathTrigger;
   OPController * TeleopController;
-
+  Odometry * OdometryController;
   std::vector<Trigger*> TeleopTriggers;
+
+  std::vector<frc::Pose2d*> testWaypoints;
 
  private:
   
