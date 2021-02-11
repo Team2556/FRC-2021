@@ -8,3 +8,8 @@ Drivebase::Drivebase(Robot * pRobot)
 {
     this->pRobot = pRobot;
 }
+
+void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyro)
+{
+    return;
+}
