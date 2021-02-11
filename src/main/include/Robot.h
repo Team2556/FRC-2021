@@ -50,6 +50,8 @@ class Robot : public frc::TimedRobot {
   std::vector<Trigger*> TeleopTriggers;
 
   std::vector<frc::Pose2d*> testWaypoints;
+  frc::Pose2d * pWaypoint1;
+  frc::Pose2d * pWaypoint2;
 
  private:
   

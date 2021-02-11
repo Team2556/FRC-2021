@@ -15,6 +15,12 @@ Drivebase * MecanumDrive;
 
 void Robot::RobotInit() 
 {
+  pWaypoint1 = new frc::Pose2d{10_ft, 10_ft, frc::Rotation2d(0_deg)};
+  pWaypoint1 = new frc::Pose2d{20_ft, 10_ft, frc::Rotation2d(0_deg)};
+  testWaypoints.push_back(pWaypoint1);
+  testWaypoints.push_back(pWaypoint2);
+
+
   OdometryController = new Odometry();
   MecanumDrive = new Drivebase(this);
   AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive);
