@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include "Robot.h"
+#include "RobotMap.h"
+
 class Feeder {
  public:
   Feeder();
@@ -22,4 +25,13 @@ class Feeder {
 
   void KickUp();
   void KickUp(float Speed); // positive is into the shooter, negative is out
+
+  private:
+  WPI_TalonSRX      Feeder_High_Motor{FEEDER_HIGH};
+  WPI_TalonSRX      Feeder_Low_Motor{FEEDER_LOW};
+  WPI_TalonSRX      Intake_Motor{CAN_INTAKE};
+  WPI_TalonSRX      Hopper_Spinner{HOPPER_MOTOR};
+  WPI_TalonSRX      Hopper_Kickup{HOPPER_KICKUP};
+
+  frc::DoubleSolenoid   Intake_Solenoid{CAN_PCM, INTAKE_OUT, INTAKE_IN};
 };

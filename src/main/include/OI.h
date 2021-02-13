@@ -19,7 +19,10 @@ class OI {
   //Driving Controls
 
   //Codriver Controls
-  
+  bool IntakeExtension(); //Extend the intake system
+  float IntakeRun(); //Run intake
+  float HopperRun(); //Spin hopper
+  float HopperKickup(); //Kickup balls in hopper
   // Test Functions
   bool bTestButton(int iButton);
   float fTestValue(int iControl);

@@ -21,6 +21,7 @@
 #include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
 #include "Odometry.h"
+#include "frc/DoubleSolenoid.h"
 
 class Robot : public frc::TimedRobot {
  public:

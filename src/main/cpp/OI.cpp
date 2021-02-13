@@ -32,7 +32,6 @@ bool OI::AutomaticPath()
 {
     return Xbox1.GetXButton();
 }
-
 // ----------------------------------------------------------------------------
 // Driver commands
 // ----------------------------------------------------------------------------
@@ -42,6 +41,76 @@ bool OI::AutomaticPath()
 // Codriver commands
 // ----------------------------------------------------------------------------
 
+bool OI::IntakeExtension()
+{
+    bool extended;
+    if (Xbox2.GetYButtonPressed())
+    {
+        extended = false;
+    }
+    else if (Xbox2.GetXButtonPressed())
+    {
+        extended = true;
+    } 
+    return extended;
+}
+
+float OI::IntakeRun()
+{ 
+    float x; 
+    if (Xbox2.GetAButton())
+    {
+        x = -1;
+    }
+    else if (Xbox2.GetBButton())
+    {
+        x = 1;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
+
+float OI::HopperKickup()
+{
+    float x; 
+    if (Xbox2.GetPOV() == 90)
+    {
+        x = 1;
+    }
+    else if (Xbox2.GetPOV() == 270)
+    {
+        x = -1;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
+
+float OI::HopperRun()
+{
+    float x; 
+    if (Xbox2.GetPOV() == 0)
+    {
+        x = 1;
+    }
+    else if (Xbox2.GetPOV() == 180)
+    {
+        x = -1;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
 
 // ----------------------------------------------------------------------------
 // Test commands
