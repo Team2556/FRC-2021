@@ -60,11 +60,11 @@ float OI::IntakeRun()
     float x; 
     if (Xbox2.GetAButton())
     {
-        x = -1;
+        x = -0.5;
     }
     else if (Xbox2.GetBButton())
     {
-        x = 1;
+        x = 0.5;
     }
     else 
     {
@@ -79,11 +79,11 @@ float OI::HopperKickup()
     float x; 
     if (Xbox2.GetPOV() == 90)
     {
-        x = 1;
+        x = 0.5;
     }
     else if (Xbox2.GetPOV() == 270)
     {
-        x = -1;
+        x = -0.5;
     }
     else 
     {
@@ -98,11 +98,11 @@ float OI::HopperRun()
     float x; 
     if (Xbox2.GetPOV() == 0)
     {
-        x = 1;
+        x = 0.5;
     }
     else if (Xbox2.GetPOV() == 180)
     {
-        x = -1;
+        x = -0.5;
     }
     else 
     {
