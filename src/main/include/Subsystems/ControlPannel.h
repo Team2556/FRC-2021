@@ -3,8 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include "Utilities/Debug.h"
 
 class ControlPannel {
  public:
   ControlPannel();
+
+  Debug ControlPanelDebug{"/Subsystems/ControlPanel"};
 };

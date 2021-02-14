@@ -8,6 +8,10 @@
 #include "frc/drive/MecanumDrive.h"
 #include "frc/Encoder.h"
 
+
+#include "Utilities/Debug.h"
+
+
 class Drivebase {
  public:
   Drivebase(Robot * pRobot);
@@ -26,4 +30,5 @@ class Drivebase {
   // rev::CANSparkMax  leftBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   // frc::MecanumDrive  MecanumDrive{leftFront, leftBack, rightFront, rightBack};
+  Debug DrivebaseDebug{"/Subsystems/Drivebase"};
 };

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "Utilities/Debug.h"
+
 class Shooter {
  public:
   Shooter();
@@ -25,6 +27,6 @@ class Shooter {
   bool IsAimed();
   void RotateTurret(float speed);
 
-
+  Debug ShooterDebug{"/Subsystems/Shooter"};
 
 };

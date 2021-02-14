@@ -8,10 +8,12 @@
 #include "frc/kinematics/MecanumDriveOdometry.h"
 #include "frc/kinematics/MecanumDriveKinematics.h"
 #include "thread"
-#include "RobotMap.h"
+#include "Utilities/RobotMap.h"
 #include "rev/CANEncoder.h"
 #include "frc/Encoder.h"
-#include "Drivebase.h"
+#include "Subsystems/Drivebase.h"
+
+#include "Utilities/Debug.h"
 
 class Odometry {
  public:
@@ -54,4 +56,5 @@ class Odometry {
 
   void updatePose();
 
+  Debug OdometryDebug{"/Subsystems/Odometry"};
 };

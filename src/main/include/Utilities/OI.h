@@ -6,6 +6,7 @@
 #include "RobotMap.h"
 #include "frc/XboxController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
+#include "Utilities/Debug.h"
 
 class OI {
  public:
@@ -19,7 +20,10 @@ class OI {
   //Driving Controls
 
   //Codriver Controls
-  
+  bool IntakeExtension(); //Extend the intake system
+  float IntakeRun(); //Run intake
+  float HopperRun(); //Spin hopper
+  float HopperKickup(); //Kickup balls in hopper
   // Test Functions
   bool bTestButton(int iButton);
   float fTestValue(int iControl);
@@ -28,5 +32,8 @@ class OI {
     frc::XboxController   Xbox1{XBOX_ONE};
     frc::XboxController   Xbox2{XBOX_TWO};
     frc::XboxController   Xbox3{XBOX_THREE};
+  
+
+    Debug OIDebug{"/Subsystems/OI"};
 
 };

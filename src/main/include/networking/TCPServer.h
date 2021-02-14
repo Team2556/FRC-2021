@@ -2,6 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "Shooter.h"
+#pragma once
 
-Shooter::Shooter() = default;
+#include <string>
+#include "AbstractServer.h"
+
+using std::string;
+
+class TCPServer : public AbstractServer {
+  public:
+    TCPServer(string ipaddress, int port);
+};
+

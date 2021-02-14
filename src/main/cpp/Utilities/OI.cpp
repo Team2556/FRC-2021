@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "OI.h"
+#include "Utilities/OI.h"
 
 OI::OI()
 {
@@ -32,7 +32,6 @@ bool OI::AutomaticPath()
 {
     return Xbox1.GetXButton();
 }
-
 // ----------------------------------------------------------------------------
 // Driver commands
 // ----------------------------------------------------------------------------
@@ -42,6 +41,76 @@ bool OI::AutomaticPath()
 // Codriver commands
 // ----------------------------------------------------------------------------
 
+bool OI::IntakeExtension()
+{
+    bool extended;
+    if (Xbox2.GetYButtonPressed())
+    {
+        extended = false;
+    }
+    else if (Xbox2.GetXButtonPressed())
+    {
+        extended = true;
+    } 
+    return extended;
+}
+
+float OI::IntakeRun()
+{ 
+    float x; 
+    if (Xbox2.GetAButton())
+    {
+        x = -0.5;
+    }
+    else if (Xbox2.GetBButton())
+    {
+        x = 0.5;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
+
+float OI::HopperKickup()
+{
+    float x; 
+    if (Xbox2.GetPOV() == 90)
+    {
+        x = 0.5;
+    }
+    else if (Xbox2.GetPOV() == 270)
+    {
+        x = -0.5;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
+
+float OI::HopperRun()
+{
+    float x; 
+    if (Xbox2.GetPOV() == 0)
+    {
+        x = 0.5;
+    }
+    else if (Xbox2.GetPOV() == 180)
+    {
+        x = -0.5;
+    }
+    else 
+    {
+        x = 0;
+    }
+
+    return x;
+}
 
 // ----------------------------------------------------------------------------
 // Test commands

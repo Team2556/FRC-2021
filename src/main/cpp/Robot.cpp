@@ -8,8 +8,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "OpModes/AutomaticPath.h"
-#include "Drivebase.h"
-#include "Odometry.h"
+#include "Odometry/Odometry.h"
+#include "Subsystems/Drivebase.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
