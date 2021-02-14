@@ -9,9 +9,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "OpModes/AutomaticPath.h"
 #include "Drivebase.h"
+#include "Odometry.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
+Odometry * OdometryController;
 
 void Robot::RobotInit() 
 {
@@ -23,7 +25,7 @@ void Robot::RobotInit()
 
   OdometryController = new Odometry();
   MecanumDrive = new Drivebase(this);
-  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive);
+  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
   Manual =  new ManualTeleop();

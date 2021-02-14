@@ -20,7 +20,6 @@
 #include "OpModes/AutomaticShoot.h"
 #include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
-#include "Odometry.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -46,7 +45,6 @@ class Robot : public frc::TimedRobot {
   AutomaticShoot * AutoShoot;
   AutomaticPathTrigger * AutoPathTrigger;
   OPController * TeleopController;
-  Odometry * OdometryController;
   std::vector<Trigger*> TeleopTriggers;
 
   std::vector<frc::Pose2d*> testWaypoints;

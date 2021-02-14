@@ -8,20 +8,23 @@
 #include "Odometry.h"
 #include "Robot.h"
 #include "Drivebase.h"
+#include "Odometry.h"
 
 class AutomaticPath : public OpMode {
  public:
-  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive);
+  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController);
 
   std::vector<frc::Pose2d*> waypoints;
   Robot * pRobot;
   Drivebase * MecanumDrive;
+  Odometry * OdometryController;
   void Start() override;
   void Run() override;
   bool Complete() override;
 
   float distanceToNextWaypoint(frc::Pose2d * waypoint);
   float angleToNextWaypoint(frc::Pose2d * waypoint);
+  bool atHeading(frc::Pose2d * waypoint);
   void moveToNextWaypoint();
 
   float normalize360(float angle);

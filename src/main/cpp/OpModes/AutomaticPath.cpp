@@ -4,13 +4,14 @@
 
 #include "OpModes/AutomaticPath.h"
 
-AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive)
+AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController)
 {
     name = "autoTrench";
     timesRun = 0;
     this->waypoints = waypoints;
     this->pRobot = pRobot;
     this->MecanumDrive = MecanumDrive;
+    this->OdometryController = OdometryController;
 }
 
 void AutomaticPath::Start()
@@ -30,8 +31,8 @@ bool AutomaticPath::Complete()
 
 float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
 {
-    float xCurrent = pRobot->OdometryController->getX();
-    float yCurrent = pRobot->OdometryController->getY();
+    float xCurrent = OdometryController->getX();
+    float yCurrent = OdometryController->getY();
     float xWaypoint = (float)waypoint->Translation().X();
     float yWaypoint = (float)waypoint->Translation().Y();
     float dX = xCurrent - xWaypoint;
@@ -42,17 +43,32 @@ float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
 
 float AutomaticPath::angleToNextWaypoint(frc::Pose2d * waypoint)
 {
-    float xCurrent = pRobot->OdometryController->getX();
-    float yCurrent = pRobot->OdometryController->getY();
+    float xCurrent = OdometryController->getX();
+    float yCurrent = OdometryController->getY();
     float xWaypoint = (float)waypoint->Translation().X();
     float yWaypoint = (float)waypoint->Translation().Y();
-    float robotHeading = pRobot->OdometryController->getYaw();
+    float robotHeading = OdometryController->getYaw();
     float alpha = atan2((yWaypoint - yCurrent), (xWaypoint - xCurrent)) * 180/M_PI;
     float beta = 90 - alpha;
     float clockwiseAngleToWaypoint = robotHeading + beta;
     float counterclockwise = 360 - clockwiseAngleToWaypoint;
     return normalize360(counterclockwise);
     //I know this function is unreadable but it probably works so just ctrl-C ctrl-V
+}
+
+bool AutomaticPath::atHeading(frc::Pose2d * waypoint)
+{
+    if((float)waypoint->Rotation().Degrees() > OdometryController->getYaw() - 2 &&
+       (float)waypoint->Rotation().Degrees() < OdometryController->getYaw() + 2)
+    {
+        //Don't need to rotate (close enough to heading)
+        return true;
+    }
+    else
+    {
+        //Need to rotate 
+        return false;
+    }
 }
 
 void AutomaticPath::moveToNextWaypoint()
@@ -72,7 +88,9 @@ void AutomaticPath::moveToNextWaypoint()
         }
     }
 
-    MecanumDrive->PolarDrive(speed, angle, 0, 0);
+    float rotate = (int)!atHeading(waypoints[0]) * 0.5;
+
+    MecanumDrive->PolarDrive(speed, angle, rotate, 0);
 }
 
 float AutomaticPath::normalize360(float angle)
