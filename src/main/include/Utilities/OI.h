@@ -6,7 +6,7 @@
 #include "RobotMap.h"
 #include "frc/XboxController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
-#include "Debug.h"
+#include "Utilities/Debug.h"
 
 class OI {
  public:

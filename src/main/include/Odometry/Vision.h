@@ -2,14 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "Drivebase.h"
+#pragma once
 
-Drivebase::Drivebase(Robot * pRobot)
-{
-    this->pRobot = pRobot;
-}
+#include "Utilities/Debug.h"
 
-void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyro)
-{
-    return;
-}
+class Vision {
+ public:
+  Vision();
+
+  Debug VisionDebug{"/Subsystems/Vision"};
+};

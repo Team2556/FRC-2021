@@ -3,11 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include "Utilities/Debug.h"
 
-#include "Debug.h"
-class Climber {
+class ControlPannel {
  public:
-  Climber();
+  ControlPannel();
 
-  Debug ClimberDebug{"/Subsystems/Climber"};
+  Debug ControlPanelDebug{"/Subsystems/ControlPanel"};
 };

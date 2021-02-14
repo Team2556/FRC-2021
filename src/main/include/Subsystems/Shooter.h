@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Debug.h"
+#include "Utilities/Debug.h"
 
 class Shooter {
  public:

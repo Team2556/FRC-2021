@@ -5,9 +5,9 @@
 #pragma once
 
 #include "Robot.h"
-#include "RobotMap.h"
+#include "Utilities/RobotMap.h"
 
-#include "Debug.h"
+#include "Utilities/Debug.h"
 class Feeder {
  public:
   Feeder();

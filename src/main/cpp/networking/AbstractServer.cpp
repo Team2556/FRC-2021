@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "AbstractServer.h"
+#include "Networking/AbstractServer.h"
 
 #include <arpa/inet.h>
 #include <sys/types.h>
@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
-#include <ServerException.h>
+#include <Networking/ServerException.h>
 
 #define BUFFER_SIZE 512
 

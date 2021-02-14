@@ -5,9 +5,9 @@
 #pragma once
 #include "OpMode.h"
 #include "frc/geometry/Pose2d.h"
-#include "Odometry.h"
+#include "Odometry/Odometry.h"
 #include "Robot.h"
-#include "Drivebase.h"
+#include "Subsystems/Drivebase.h"
 
 class AutomaticPath : public OpMode {
  public:

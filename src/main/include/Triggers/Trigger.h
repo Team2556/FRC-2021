@@ -4,7 +4,7 @@
 
 #pragma once
 #include "string"
-#include "OI.h"
+#include "Utilities/OI.h"
 
 class Trigger {
  public:

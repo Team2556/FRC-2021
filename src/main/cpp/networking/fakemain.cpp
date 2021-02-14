@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <TCPServer.h>
-#include <TCPSocket.h>
+#include <Networking/TCPServer.h>
+#include <Networking/TCPSocket.h>
 
 #include <string>
 #include <stdexcept>
@@ -11,7 +11,7 @@ using std::endl;
 using std::cout;
 using std::exception;
 
-int main(int argc, char **argv) {
+int notmain(int argc, char **argv) {
     try {
         TCPServer server("0.0.0.0", 1777);
         TCPSocket socket("127.0.0.1", 1777);

@@ -5,13 +5,13 @@
 #pragma once
 
 #include <string>
-#include "OpMode.h"
+#include "OpModes/OpMode.h"
 #include "OpModes/ManualTeleop.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include "OI.h"
+#include "Utilities/OI.h"
 #include "Triggers/Trigger.h"
-#include "OPController.h"
+#include "OpModes/OPController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
 #include "Triggers/AutomaticPathTrigger.h"
@@ -20,7 +20,7 @@
 #include "OpModes/AutomaticShoot.h"
 #include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
-#include "Odometry.h"
+#include "Odometry/Odometry.h"
 #include "frc/DoubleSolenoid.h"
 
 class Robot : public frc::TimedRobot {
