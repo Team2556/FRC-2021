@@ -6,6 +6,7 @@
 #include "RobotMap.h"
 #include "frc/XboxController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
+#include "Debug.h"
 
 class OI {
  public:
@@ -31,5 +32,8 @@ class OI {
     frc::XboxController   Xbox1{XBOX_ONE};
     frc::XboxController   Xbox2{XBOX_TWO};
     frc::XboxController   Xbox3{XBOX_THREE};
+  
+
+    Debug OIDebug{"/Subsystems/OI"};
 
 };

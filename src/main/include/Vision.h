@@ -4,7 +4,11 @@
 
 #pragma once
 
+#include "Debug.h"
+
 class Vision {
  public:
   Vision();
+
+  Debug VisionDebug{"/Subsystems/Vision"};
 };

@@ -4,7 +4,10 @@
 
 #pragma once
 
+#include "Debug.h"
 class Climber {
  public:
   Climber();
+
+  Debug ClimberDebug{"/Subsystems/Climber"};
 };

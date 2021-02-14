@@ -4,6 +4,8 @@
 
 #pragma once
 #include "Robot.h"
+
+#include "Debug.h"
 class Drivebase {
  public:
   Drivebase(Robot * pRobot);
@@ -15,4 +17,6 @@ class Drivebase {
   void PolarDrive(float speed, float direction, float rotate, float gyro);
   void GyroDrive();
   void FieldOrientedDrive();
+
+  Debug DrivebaseDebug{"/Subsystems/Drivebase"};
 };

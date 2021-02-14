@@ -7,6 +7,7 @@
 #include "Robot.h"
 #include "RobotMap.h"
 
+#include "Debug.h"
 class Feeder {
  public:
   Feeder();
@@ -34,4 +35,5 @@ class Feeder {
   WPI_TalonSRX      Hopper_Kickup{HOPPER_KICKUP};
 
   frc::DoubleSolenoid   Intake_Solenoid{CAN_PCM, INTAKE_OUT, INTAKE_IN};
+  Debug FeederDebug{"/Subsystems/Feeder"};
 };

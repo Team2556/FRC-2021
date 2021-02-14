@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "Debug.h"
+
 class Odometry {
  public:
   Odometry();
@@ -16,4 +18,5 @@ class Odometry {
   float getCommandYaw();
   float error();
   float getRotate();
+  Debug OdometryDebug{"/Subsystems/Odometry"};
 };
