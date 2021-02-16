@@ -10,6 +10,7 @@
 #include "OpModes/AutomaticPath.h"
 #include "Odometry/Odometry.h"
 #include "Subsystems/Drivebase.h"
+#include <thread>
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
@@ -24,6 +25,7 @@ void Robot::RobotInit()
 
 
   OdometryController = new Odometry();
+  //JetsonController = new Jetson();
   MecanumDrive = new Drivebase(this);
   AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
@@ -83,7 +85,11 @@ void Robot::TeleopPeriodic()
   frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() 
+{
+  OdometryController->OdometryPeriodicThread.~thread();
+  //JetsonController->JetsonReceiverThread.~thread();
+}
 
 void Robot::DisabledPeriodic() {}
 

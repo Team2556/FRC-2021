@@ -8,11 +8,21 @@ Odometry::Odometry()
 {
     pNavX = new AHRS(frc::SPI::Port::kMXP);
     OdometryPeriodicThread = std::thread(&Odometry::odometryPeriodic, this);
+    OdometryPeriodicThread.detach();
 }
 
 void Odometry::odometryPeriodic()
 {
-    updatePose();
+    float wheelRadius = 3; //Inches
+    float countToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
+    frontRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    frontLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    backRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    backLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    while(true)
+    {
+        updatePose();
+    }
 }
 
 //Returns the degree value of the robot's counterclockwise angle from vertical heading
@@ -24,30 +34,25 @@ float Odometry::getYaw()
 //Returns the horizontal distance from the origin in meters
 float Odometry::getX()
 {
-    return (float)currPose.Translation().X();
+    return (float)currPose.load().Translation().X();
 }
 
 //Returns the vertical distance from the origin in meters
 float Odometry::getY()
 {
-    return (float)currPose.Translation().Y();
+    return (float)currPose.load().Translation().Y();
 }
 
+//Returns robot's current position data
 frc::Pose2d Odometry::getCurrentPose()
 {
-    return currPose;
+    return currPose.load();
 }
 
 
 //Private method used to update current pose
 void Odometry::updatePose()
 {
-    float wheelRadius = 3; //Inches
-    float countToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
-    frontRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    frontLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    backRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    backLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
     frc::MecanumDriveWheelSpeeds    wheelSpeeds {
         (units::meters_per_second_t)(frontLeftEncoder.GetRate()),
         (units::meters_per_second_t)(frontRightEncoder.GetRate()),
@@ -55,5 +60,5 @@ void Odometry::updatePose()
         (units::meters_per_second_t)(backRightEncoder.GetRate())
     };
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
-    currPose = mecOdometry.Update(gyroAngle, wheelSpeeds);
+    currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));
 }

@@ -21,6 +21,7 @@
 #include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
+#include "Odometry/Jetson.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -51,6 +52,7 @@ class Robot : public frc::TimedRobot {
   std::vector<frc::Pose2d*> testWaypoints;
   frc::Pose2d * pWaypoint1;
   frc::Pose2d * pWaypoint2;
+  Jetson * JetsonController;
 
  private:
   
