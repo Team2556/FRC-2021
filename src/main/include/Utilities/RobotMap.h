@@ -23,3 +23,8 @@
 #define         XBOX_ONE                0
 #define         XBOX_TWO                1
 #define         XBOX_THREE              2
+
+//Shooter Motors
+#define HOOD_MOTOR 5
+#define SHOOTER_MOTOR_1 6
+#define SHOOTER_MOTOR_2 7

@@ -29,4 +29,11 @@ class Shooter {
 
   Debug ShooterDebug{"/Subsystems/Shooter"};
 
+ private:
+  
+  //CHECK ROBOT MAP (In Utilities) FOR MOTOR NAMES
+  //Define two falcon 500s here. These will be the motors spinning the wheel that actually shoots the balls
+
+  //Define a talon SRX here. This will move the hood
+
 };
