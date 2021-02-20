@@ -22,6 +22,8 @@
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
 #include "Odometry/Jetson.h"
+#include "Utilities/RobotMap.h"
+
 
 class Robot : public frc::TimedRobot {
  public:
@@ -38,6 +40,15 @@ class Robot : public frc::TimedRobot {
 
   std::vector<OpMode*> AutoModes;
   std::vector<OpMode*> TeleopModes;
+
+//Motors
+
+  WPI_TalonFX Shooter_Motor_1{SHOOTER_MOTOR_1};
+  WPI_TalonFX Shooter_Motor_2{SHOOTER_MOTOR_2};
+
+  WPI_TalonSRX Hood_Motor{HOOD_MOTOR};
+
+//
 
   ManualTeleop * Manual;
   OI * DriverCMD;

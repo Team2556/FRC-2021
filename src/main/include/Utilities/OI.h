@@ -24,6 +24,10 @@ class OI {
   float IntakeRun(); //Run intake
   float HopperRun(); //Spin hopper
   float HopperKickup(); //Kickup balls in hopper
+
+  //Feeder
+    float speedMult = .9;
+
   // Test Functions
   bool bTestButton(int iButton);
   float fTestValue(int iControl);

@@ -11,10 +11,12 @@
 #include "Odometry/Odometry.h"
 #include "Subsystems/Drivebase.h"
 #include <thread>
+#include "Subsystems/Shooter.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
 Odometry * OdometryController;
+Shooter * pShooter;
 
 void Robot::RobotInit() 
 {

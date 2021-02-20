@@ -31,4 +31,9 @@ class Drivebase {
 
   // frc::MecanumDrive  MecanumDrive{leftFront, leftBack, rightFront, rightBack};
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
+
+  // Aim Functions
+  bool Aim();
+  bool IsAimed();
+  void RotateDrivebase(float speed);
 };

@@ -5,10 +5,13 @@
 #pragma once
 
 #include "Utilities/Debug.h"
+#include "Robot.h"
+#include "Feeder.h"
+#include "frc/WPILib.h"
 
 class Shooter {
  public:
-  Shooter();
+  Shooter(Robot * pRobot, Feeder * pFeeder);
 
   // Wheel Functions
   bool SpinUp();
@@ -17,15 +20,13 @@ class Shooter {
   bool TargetSpeed();
 
   //Hood
-  void MoveHood();
+  void MoveHood(); //Talon SRX Motor
   bool SetHood(int angle /*units is encoder ticks*/);
   bool HoodAimed();
   void RotateHood(float speed);
 
-  // Turret Functions
-  bool Aim();
-  bool IsAimed();
-  void RotateTurret(float speed);
+  Robot *pRobot;
+  Feeder *pFeeder;
 
   Debug ShooterDebug{"/Subsystems/Shooter"};
 
