@@ -12,15 +12,12 @@
 #include "rev/CANEncoder.h"
 #include "frc/Encoder.h"
 #include "Subsystems/Drivebase.h"
-#include <mutex>
-#include <atomic>
 
 #include "Utilities/Debug.h"
 
 class Odometry {
  public:
   Odometry();
-
   void odometryPeriodic();
 
   float getX();
@@ -31,13 +28,12 @@ class Odometry {
   float getCommandYaw();
   float error();
   float getRotate();
-
-
   frc::Pose2d getCurrentPose();
 
-
-  std::thread OdometryPeriodicThread;
-
+  float fNormalizeAngle360(float fAngle);
+  float fNormalizeAngle180(float fAngle);
+  
+  float CommandYaw;
  private:
   AHRS * pNavX;
 
@@ -53,17 +49,16 @@ class Odometry {
   frc::Pose2d startingPosition{0_m, 0_m, 0_deg};
   frc::MecanumDriveOdometry mecOdometry{mecKinematics, frc::Rotation2d{0_deg}, startingPosition};
   
+  std::thread OdometryPeriodicThread;
 
   frc::Encoder  frontRightEncoder{0, 1};
   frc::Encoder  frontLeftEncoder{2, 3};
   frc::Encoder  backRightEncoder{4, 5};
   frc::Encoder  backLeftEncoder{6, 7};
 
-  std::atomic<frc::Pose2d>  currPose;
+  frc::Pose2d   currPose;
 
   void updatePose();
 
   Debug OdometryDebug{"/Subsystems/Odometry"};
-
-  std::mutex mtx;
 };
