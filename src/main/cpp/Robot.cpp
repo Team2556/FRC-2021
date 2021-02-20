@@ -74,6 +74,7 @@ void Robot::TeleopInit()
   // frc::SmartDashboard::PutString("Next Op", name);
   // frc::SmartDashboard::PutBoolean("manual", Manual->interruptible);
   // frc::SmartDashboard::PutBoolean("test1", Teleop1->interruptible);
+  MecanumDrive->InvertMotors();
 }
 
 void Robot::TeleopPeriodic() 
@@ -85,6 +86,8 @@ void Robot::TeleopPeriodic()
   //frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
   TeleopController->ControllerPeriodic();
   frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
+  MecanumDrive->GyroDrive(MecanumDrive->MaxStrafe(DriverCMD->xSpeed()), MecanumDrive->MaxForward(DriverCMD->ySpeed()), MecanumDrive->MaxRotate(DriverCMD->rotate()), DriverCMD->allowRotate(), OdometryController->error());
+  
 }
 
 void Robot::DisabledInit() 

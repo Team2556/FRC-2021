@@ -36,6 +36,28 @@ bool OI::AutomaticPath()
 // Driver commands
 // ----------------------------------------------------------------------------
 
+double OI::xSpeed()
+{
+    return Xbox1.GetX(frc::XboxController::JoystickHand::kLeftHand);
+}
+
+double OI::ySpeed()
+{
+    return Xbox1.GetY(frc::XboxController::JoystickHand::kLeftHand);
+}
+
+double OI::rotate()
+{
+    return Xbox1.GetX(frc::XboxController::JoystickHand::kRightHand);
+}
+
+bool OI::allowRotate()
+{ bool allowRotate;
+    if (Xbox1.GetStickButton(frc::XboxController::JoystickHand::kLeftHand))
+    {
+        allowRotate = !allowRotate;
+    }
+}
 
 // ----------------------------------------------------------------------------
 // Codriver commands
@@ -43,16 +65,12 @@ bool OI::AutomaticPath()
 
 bool OI::IntakeExtension()
 {
-    bool extended;
+    bool intakeExtended;
     if (Xbox2.GetYButtonPressed())
     {
-        extended = false;
+        intakeExtended = !intakeExtended;
     }
-    else if (Xbox2.GetXButtonPressed())
-    {
-        extended = true;
-    } 
-    return extended;
+    return intakeExtended;
 }
 
 float OI::IntakeRun()

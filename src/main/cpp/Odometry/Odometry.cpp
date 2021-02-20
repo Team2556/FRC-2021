@@ -31,6 +31,19 @@ float Odometry::getYaw()
     return pNavX->GetYaw();
 }
 
+//Resets the command yaw
+void Odometry::setCommandYaw()
+{
+CommandYaw = pNavX->GetYaw();
+}
+
+float Odometry::error()
+{
+
+    return fNormalizeAngle180(CommandYaw - pNavX->GetYaw()); 
+
+}
+
 //Returns the horizontal distance from the origin in meters
 float Odometry::getX()
 {
@@ -61,4 +74,20 @@ void Odometry::updatePose()
     };
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
     currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));
+}
+
+float Odometry::fNormalizeAngle360(float fAngle)
+{
+    //Puts the angle range between 0 and 360
+    while (fAngle < 0.0) fAngle += 360.0;
+    while (fAngle >= 360.0) fAngle -= 360.0;
+    return fAngle;
+}
+
+float Odometry::fNormalizeAngle180(float fAngle)
+{
+    //Puts the angle range between 0 and 180
+    while (fAngle < 0.0) fAngle += 180.0;
+    while (fAngle >= 180.0) fAngle -= 180.0;
+    return fAngle;
 }

@@ -18,7 +18,10 @@ class OI {
   bool AutomaticBall(); //Start picking up balls
   bool AutomaticPath(); //Start Trench
   //Driving Controls
-
+  double xSpeed(); //Measures the x movement of the left joystick
+  double ySpeed(); //Measures the y movement of the left joystick
+  double rotate(); //Measures the x movement of the right joystick
+  bool allowRotate(); //Whether the driver can manually rotate the robot or not
   //Codriver Controls
   bool IntakeExtension(); //Extend the intake system
   float IntakeRun(); //Run intake
