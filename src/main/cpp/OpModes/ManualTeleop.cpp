@@ -4,11 +4,17 @@
 
 #include "OpModes/ManualTeleop.h"
 
-ManualTeleop::ManualTeleop() 
+ManualTeleop::ManualTeleop(Robot * pRobot, Climber * pClimber, ControlPanel * pCtrlPanel, Drivebase * pDrivebase, Feeder * pFeeder, Shooter * pShooter) 
 {
     name = "manual";
     timesRun = 0;
     interruptible = true;
+    this->pRobot = pRobot;
+    this->pClimber = pClimber;
+    this->pCtrlPanel = pCtrlPanel;
+    this->pDrivebase = pDrivebase;
+    this->pFeeder = pFeeder;
+    this->pShooter = pShooter;
 }
 
 void ManualTeleop::Start()

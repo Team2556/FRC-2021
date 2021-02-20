@@ -9,14 +9,27 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "OpModes/AutomaticPath.h"
 #include "Odometry/Odometry.h"
-#include "Subsystems/Drivebase.h"
 #include <thread>
+#include "Subsystems/Drivebase.h"
 #include "Subsystems/Shooter.h"
+#include "Subsystems/Feeder.h"
+#include "Subsystems/ControlPanel.h"
+#include "Subsystems/Climber.h"
+
+#include "OpModes/ManualTeleop.h"
+#include "OpModes/AutomaticShoot.h"
+#include "OpModes/AutomaticBall.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
 Odometry * OdometryController;
-Shooter * pShooter;
+Shooter * ShooterController;
+Climber * ClimberController;
+ControlPanel * CtrlPanel;
+Feeder * FeederController;
+ManualTeleop * Manual;
+AutomaticBall * AutoBall;
+AutomaticShoot * AutoShoot;
 
 void Robot::RobotInit() 
 {
@@ -32,7 +45,7 @@ void Robot::RobotInit()
   AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
-  Manual =  new ManualTeleop();
+  Manual =  new ManualTeleop(this, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
   DriverCMD = new OI();
   AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
   AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);

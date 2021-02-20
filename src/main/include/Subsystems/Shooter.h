@@ -7,7 +7,6 @@
 #include "Utilities/Debug.h"
 #include "Robot.h"
 #include "Feeder.h"
-#include "frc/WPILib.h"
 
 class Shooter {
  public:

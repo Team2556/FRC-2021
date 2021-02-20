@@ -4,10 +4,24 @@
 
 #pragma once
 #include "OpMode.h"
+#include "Robot.h"
+#include "Subsystems/Climber.h"
+#include "Subsystems/Drivebase.h"
+#include "Subsystems/ControlPanel.h"
+#include "Subsystems/Feeder.h"
+#include "Subsystems/Shooter.h"
 
 class ManualTeleop : public OpMode {
  public:
-  ManualTeleop();
+  ManualTeleop(Robot * pRobot, Climber * pClimber, ControlPanel * pCtrlPanel, Drivebase * pDrivebase, Feeder * pFeeder, Shooter * pShooter);
+
+  Robot * pRobot;
+  Climber * pClimber;
+  ControlPanel * pCtrlPanel;
+  Drivebase * pDrivebase;
+  Feeder * pFeeder;
+  Shooter * pShooter;
+
 
   void Start() override;
   void Run() override;

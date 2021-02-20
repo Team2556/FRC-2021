@@ -9,5 +9,9 @@ class Climber {
  public:
   Climber();
 
+  bool ClimberUp(); //Return true when climber is up and robot is ready to climb
+  bool Climb(); //Return true when robot has finished climbing
+
+
   Debug ClimberDebug{"/Subsystems/Climber"};
 };

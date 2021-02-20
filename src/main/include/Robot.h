@@ -6,7 +6,6 @@
 
 #include <string>
 #include "OpModes/OpMode.h"
-#include "OpModes/ManualTeleop.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "Utilities/OI.h"
@@ -17,8 +16,6 @@
 #include "Triggers/AutomaticPathTrigger.h"
 #include "Triggers/AutomaticShootTrigger.h"
 #include "Triggers/AutomaticBallTrigger.h"
-#include "OpModes/AutomaticShoot.h"
-#include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
 #include "Odometry/Jetson.h"
@@ -50,12 +47,9 @@ class Robot : public frc::TimedRobot {
 
 //
 
-  ManualTeleop * Manual;
   OI * DriverCMD;
   AutomaticBallTrigger * AutoBallTrigger;
   AutomaticShootTrigger * AutoShootTrigger;
-  AutomaticBall * AutoBall;
-  AutomaticShoot * AutoShoot;
   AutomaticPathTrigger * AutoPathTrigger;
   OPController * TeleopController;
   std::vector<Trigger*> TeleopTriggers;
