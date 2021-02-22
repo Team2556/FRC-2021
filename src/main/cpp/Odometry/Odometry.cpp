@@ -11,6 +11,7 @@ Odometry::Odometry()
     OdometryPeriodicThread.detach();
 }
 
+//Runs on a separate thread to update odometry things
 void Odometry::odometryPeriodic()
 {
     float wheelRadius = 3; //Inches
@@ -19,6 +20,7 @@ void Odometry::odometryPeriodic()
     frontLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
     backRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
     backLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    //not sketch I swear
     while(true)
     {
         updatePose();

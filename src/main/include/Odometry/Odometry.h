@@ -48,9 +48,12 @@ class Odometry {
   frc::Translation2d backRight{x, -y};
   frc::Translation2d frontLeft{-x, y};
   frc::Translation2d backLeft{-x, -y};
+  
   frc::MecanumDriveKinematics mecKinematics{frontLeft, frontRight, backLeft, backRight};
+  
   //This pose2d stores our starting location relative to the origin
   frc::Pose2d startingPosition{0_m, 0_m, 0_deg};
+  
   frc::MecanumDriveOdometry mecOdometry{mecKinematics, frc::Rotation2d{0_deg}, startingPosition};
   
 
@@ -59,11 +62,13 @@ class Odometry {
   frc::Encoder  backRightEncoder{4, 5};
   frc::Encoder  backLeftEncoder{6, 7};
 
+  //Current Position pose is thread-safe for the getters
   std::atomic<frc::Pose2d>  currPose;
 
   void updatePose();
 
   Debug OdometryDebug{"/Subsystems/Odometry"};
 
+  //mutex can lock and unlock threads to allow common functions to be called safely
   std::mutex mtx;
 };

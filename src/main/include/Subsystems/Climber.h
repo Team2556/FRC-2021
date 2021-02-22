@@ -14,4 +14,10 @@ class Climber {
 
 
   Debug ClimberDebug{"/Subsystems/Climber"};
+ 
+ private:
+
+  //Define your motors and other climber hardware stuff here
+
+
 };

@@ -9,6 +9,7 @@ Drivebase::Drivebase(Robot * pRobot)
     this->pRobot = pRobot;
 }
 
+//Drives the robot using a speed, direction, and rotation. 
 void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyro)
 {
     return;

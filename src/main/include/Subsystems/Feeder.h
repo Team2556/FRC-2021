@@ -28,6 +28,7 @@ class Feeder {
   void KickUp(float Speed); // positive is into the shooter, negative is out
 
   private:
+  //Feeder/Intake Motors
   WPI_TalonSRX      Feeder_High_Motor{FEEDER_HIGH};
   WPI_TalonSRX      Feeder_Low_Motor{FEEDER_LOW};
   WPI_TalonSRX      Intake_Motor{CAN_INTAKE};

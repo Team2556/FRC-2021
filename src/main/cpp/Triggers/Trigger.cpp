@@ -9,6 +9,7 @@ Trigger::Trigger()
     name = "manual";
 }
 
+//Check whether conditions are met to start an opmode. 
 bool Trigger::Start()
 {
     frc::SmartDashboard::PutString("override", "overide default start");

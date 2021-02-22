@@ -13,25 +13,31 @@ OI::OI()
 // Opmode commands
 // ----------------------------------------------------------------------------
 
+//Cancel Op modes when Xbox1 start button is pressed
 bool OI::CancelOP()
 {
     return Xbox1.GetStartButton();
 }
 
+//Pick up balls autonomously when Xbox1 A button is pressed
 bool OI::AutomaticBall()
 {
     return Xbox1.GetAButton();
 }
 
+//Shoot automatically when Xbox1 B button is pressed
 bool OI::AutomaticShoot()
 {
     return Xbox1.GetBButton();
 }
 
+//Navigate waypoints when Xbox1 X button is pressed
 bool OI::AutomaticPath()
 {
     return Xbox1.GetXButton();
 }
+
+
 // ----------------------------------------------------------------------------
 // Driver commands
 // ----------------------------------------------------------------------------
@@ -41,20 +47,18 @@ bool OI::AutomaticPath()
 // Codriver commands
 // ----------------------------------------------------------------------------
 
+//Extend and retract intake when Xbox2 X button is pressed.
 bool OI::IntakeExtension()
 {
-    bool extended;
-    if (Xbox2.GetYButtonPressed())
+    static bool extended = false;
+    if (Xbox2.GetXButtonPressed())
     {
-        extended = false;
+        extended = !extended;
     }
-    else if (Xbox2.GetXButtonPressed())
-    {
-        extended = true;
-    } 
     return extended;
 }
 
+//Run intake in when Xbox2 A button is pressed, run intake out when Xbox2 B button is pressed.
 float OI::IntakeRun()
 { 
     float x; 
@@ -74,6 +78,7 @@ float OI::IntakeRun()
     return x;
 }
 
+//Returns speed of hopper kickup motor using Xbox2 Dpad.
 float OI::HopperKickup()
 {
     float x; 
@@ -93,6 +98,7 @@ float OI::HopperKickup()
     return x;
 }
 
+//Returns hopper speed using Xbox2 Dpad
 float OI::HopperRun()
 {
     float x; 

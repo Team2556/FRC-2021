@@ -10,6 +10,7 @@ Jetson::Jetson()
     JetsonReceiverThread.detach();
 }
 
+//Updates everything to do with the Jetson, runs on a separate thread.
 void Jetson::updateJetsonPose()
 {
     TCPServer server{"0.0.0.0", 5801};

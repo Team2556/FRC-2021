@@ -29,6 +29,7 @@ bool AutomaticPath::Complete()
     return false;
 }
 
+//Calculates distance to next waypoint
 float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
 {
     float xCurrent = OdometryController->getX();
@@ -37,10 +38,12 @@ float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
     float yWaypoint = (float)waypoint->Translation().Y();
     float dX = xCurrent - xWaypoint;
     float dY = yCurrent - yWaypoint;
+    //the most efficient function in existance. Probably could do everything without square roots honestly
     float distance = sqrt((dX * dX + dY * dY));
     return distance;
 }
 
+//Return robot's angle to next waypoint using the nav gyro
 float AutomaticPath::angleToNextWaypoint(frc::Pose2d * waypoint)
 {
     float xCurrent = OdometryController->getX();
@@ -56,6 +59,7 @@ float AutomaticPath::angleToNextWaypoint(frc::Pose2d * waypoint)
     //I know this function is unreadable but it probably works so just ctrl-C ctrl-V
 }
 
+//Returns true if robot is pretty close to angle it needs to be at for the next waypoint
 bool AutomaticPath::atHeading(frc::Pose2d * waypoint)
 {
     if((float)waypoint->Rotation().Degrees() > OdometryController->getYaw() - 2 &&
@@ -71,6 +75,7 @@ bool AutomaticPath::atHeading(frc::Pose2d * waypoint)
     }
 }
 
+//Move to the next waypoint
 void AutomaticPath::moveToNextWaypoint()
 {
     //When we reach the waypoint we delete it from the waypoint array.
@@ -93,6 +98,7 @@ void AutomaticPath::moveToNextWaypoint()
     MecanumDrive->PolarDrive(speed, angle, rotate, 0);
 }
 
+//Normalizes an angle (in degrees) to be from 0 to 360
 float AutomaticPath::normalize360(float angle)
 {
     float newAngle = angle + 3600;

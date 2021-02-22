@@ -24,3 +24,5 @@ bool AutomaticBall::Complete()
 {
     return false;
 }
+
+//This opmode is probably going to be awful to write and not very useful outside of the autonomous period.

@@ -35,28 +35,32 @@ class Robot : public frc::TimedRobot {
   void TestInit() override;
   void TestPeriodic() override;
 
-  std::vector<OpMode*> AutoModes;
-  std::vector<OpMode*> TeleopModes;
 
-//Motors
-
+  //Motors
   WPI_TalonFX Shooter_Motor_1{SHOOTER_MOTOR_1};
   WPI_TalonFX Shooter_Motor_2{SHOOTER_MOTOR_2};
-
   WPI_TalonSRX Hood_Motor{HOOD_MOTOR};
 
-//
 
+  //Operator Interface
   OI * DriverCMD;
+
+
+  //OpMode things
+  std::vector<OpMode*> AutoModes;
+  std::vector<OpMode*> TeleopModes;
   AutomaticBallTrigger * AutoBallTrigger;
   AutomaticShootTrigger * AutoShootTrigger;
   AutomaticPathTrigger * AutoPathTrigger;
   OPController * TeleopController;
   std::vector<Trigger*> TeleopTriggers;
 
+  //Pathfinding things
   std::vector<frc::Pose2d*> testWaypoints;
   frc::Pose2d * pWaypoint1;
   frc::Pose2d * pWaypoint2;
+  
+  //Odometry
   Jetson * JetsonController;
 
  private:

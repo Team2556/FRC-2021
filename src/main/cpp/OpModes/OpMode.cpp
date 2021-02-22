@@ -9,17 +9,19 @@ OpMode::OpMode()
 
 }
 
-
+//Begin OpMode
 void OpMode::Start()
 {
     frc::SmartDashboard::PutString("Overload Start", this->name);
 }
 
+//Called periodically to run OpMode. 
 void OpMode::Run()
 {
     frc::SmartDashboard::PutString("Overload Run", this->name);
 }
 
+//Returns true when OpMode finishes.
 bool OpMode::Complete()
 {
     frc::SmartDashboard::PutString("Overload Complete", this->name);
