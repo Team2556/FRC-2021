@@ -4,7 +4,7 @@
 
 #include "OpModes/AutomaticPath.h"
 
-AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController)
+AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, OdometryTest * OdometryController)
 {
     name = "autoTrench";
     timesRun = 0;
@@ -12,6 +12,7 @@ AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints
     this->pRobot = pRobot;
     this->MecanumDrive = MecanumDrive;
     this->OdometryController = OdometryController;
+    PathDebug = new Debug{"/Paths/"};
 }
 
 void AutomaticPath::Start()
@@ -40,6 +41,7 @@ float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
     float dY = yCurrent - yWaypoint;
     //the most efficient function in existance. Probably could do everything without square roots honestly
     float distance = sqrt((dX * dX + dY * dY));
+    PathDebug->PutNumber("Distance", distance);
     return distance;
 }
 
@@ -51,10 +53,11 @@ float AutomaticPath::angleToNextWaypoint(frc::Pose2d * waypoint)
     float xWaypoint = (float)waypoint->Translation().X();
     float yWaypoint = (float)waypoint->Translation().Y();
     float robotHeading = OdometryController->getYaw();
-    float alpha = atan2((yWaypoint - yCurrent), (xWaypoint - xCurrent)) * 180/M_PI;
+    float alpha = atan2((yWaypoint - yCurrent), (xWaypoint - xCurrent)) * 180/3.14159265358979;
     float beta = 90 - alpha;
     float clockwiseAngleToWaypoint = robotHeading + beta;
     float counterclockwise = 360 - clockwiseAngleToWaypoint;
+    PathDebug->PutNumber("Angle", counterclockwise);
     return normalize360(counterclockwise);
     //I know this function is unreadable but it probably works so just ctrl-C ctrl-V
 }
@@ -94,7 +97,6 @@ void AutomaticPath::moveToNextWaypoint()
     }
 
     float rotate = (int)!atHeading(waypoints[0]) * 0.5;
-
     MecanumDrive->PolarDrive(speed, angle, rotate, 0);
 }
 

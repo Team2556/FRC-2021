@@ -23,3 +23,8 @@ void Debug::PutBoolean(std::string key, bool value)
 {
     table->PutBoolean(key, value);
 }
+
+float Debug::GetNumber(std::string key, float defaultValue)
+{
+    return table->GetNumber(key, defaultValue);
+}

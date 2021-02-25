@@ -7,17 +7,18 @@
 #include "frc/geometry/Pose2d.h"
 #include "Odometry/Odometry.h"
 #include "Robot.h"
-#include "Odometry/Odometry.h"
+#include "Odometry/OdometryTest.h"
 #include "Subsystems/Drivebase.h"
+#include "Utilities/Debug.h"
 
 class AutomaticPath : public OpMode {
  public:
-  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController);
+  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, OdometryTest * OdometryController);
 
   std::vector<frc::Pose2d*> waypoints;
   Robot * pRobot;
   Drivebase * MecanumDrive;
-  Odometry * OdometryController;
+  OdometryTest * OdometryController;
   void Start() override;
   void Run() override;
   bool Complete() override;
@@ -30,4 +31,6 @@ class AutomaticPath : public OpMode {
   float normalize360(float angle);
 
   int timesRun;
+
+  Debug * PathDebug;
 };

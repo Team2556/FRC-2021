@@ -18,7 +18,7 @@
 #include "Triggers/AutomaticBallTrigger.h"
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
-#include "Odometry/Jetson.h"
+//#include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
 
 
@@ -60,8 +60,6 @@ class Robot : public frc::TimedRobot {
   frc::Pose2d * pWaypoint1;
   frc::Pose2d * pWaypoint2;
   
-  //Odometry
-  Jetson * JetsonController;
 
  private:
   

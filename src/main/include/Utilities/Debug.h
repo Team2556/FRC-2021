@@ -15,5 +15,7 @@ class Debug {
   void PutNumber(std::string key, float value);
   void PutBoolean(std::string key, bool value);
 
+  float GetNumber(std::string key, float defaultValue);
+
   std::shared_ptr<NetworkTable> table;
 };

@@ -17,4 +17,5 @@ bool Shooter::SpinUp(){
 	pRobot->Shooter_Motor_2.Follow(pRobot->Shooter_Motor_1);
 	frc::SmartDashboard::PutNumber("Shoot Speed", pRobot->Shooter_Motor_1.GetSelectedSensorVelocity());
 	frc::SmartDashboard::PutNumber("Shoot Set Percent", pRobot->Shooter_Motor_1.GetMotorOutputPercent());
+	return false;
 }

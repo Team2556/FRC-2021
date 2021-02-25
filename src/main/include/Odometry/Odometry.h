@@ -67,7 +67,7 @@ class Odometry {
 
   void updatePose();
 
-  Debug OdometryDebug{"/Subsystems/Odometry"};
+  //Debug OdometryDebug{"/Subsystems/Odometry"};
 
   //mutex can lock and unlock threads to allow common functions to be called safely
   std::mutex mtx;

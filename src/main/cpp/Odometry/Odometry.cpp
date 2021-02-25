@@ -15,7 +15,7 @@ Odometry::Odometry()
 void Odometry::odometryPeriodic()
 {
     float wheelRadius = 3; //Inches
-    float countToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
+    float countToDistanceMultiplier = 2 * 3.14159265 * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
     frontRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
     frontLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
     backRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
@@ -55,6 +55,12 @@ frc::Pose2d Odometry::getCurrentPose()
 //Private method used to update current pose
 void Odometry::updatePose()
 {
+    // frc::MecanumDriveWheelSpeeds    wheelSpeeds {
+    //     (units::meters_per_second_t)(frontLeftEncoder.GetRate()),
+    //     (units::meters_per_second_t)(frontRightEncoder.GetRate()),
+    //     (units::meters_per_second_t)(backLeftEncoder.GetRate()),
+    //     (units::meters_per_second_t)(backRightEncoder.GetRate())
+    // };
     frc::MecanumDriveWheelSpeeds    wheelSpeeds {
         (units::meters_per_second_t)(frontLeftEncoder.GetRate()),
         (units::meters_per_second_t)(frontRightEncoder.GetRate()),

@@ -9,6 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "OpModes/AutomaticPath.h"
 #include "Odometry/Odometry.h"
+#include "Odometry/OdometryTest.h"
 #include <thread>
 #include "Subsystems/Drivebase.h"
 #include "Subsystems/Shooter.h"
@@ -23,6 +24,7 @@
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
 Odometry * OdometryController;
+OdometryTest * OdometryTester;
 Shooter * ShooterController;
 Climber * ClimberController;
 ControlPanel * CtrlPanel;
@@ -38,11 +40,12 @@ void Robot::RobotInit()
   testWaypoints.push_back(pWaypoint1);
   testWaypoints.push_back(pWaypoint2);
 
-
   OdometryController = new Odometry();
+  OdometryTester = new OdometryTest();
   //JetsonController = new Jetson();
+  //The Drivebase is the issue. #cringe
   MecanumDrive = new Drivebase(this);
-  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
+  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryTester);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
   Manual =  new ManualTeleop(this, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
@@ -87,6 +90,9 @@ void Robot::TeleopInit()
   // frc::SmartDashboard::PutString("Next Op", name);
   // frc::SmartDashboard::PutBoolean("manual", Manual->interruptible);
   // frc::SmartDashboard::PutBoolean("test1", Teleop1->interruptible);
+  OdometryTester->Test.PutNumber("X", 0.0);
+  OdometryTester->Test.PutNumber("Y", 0.0);
+  OdometryTester->Test.PutNumber("Yaw", 0.0);
 }
 
 void Robot::TeleopPeriodic() 
@@ -98,6 +104,7 @@ void Robot::TeleopPeriodic()
   //frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
   TeleopController->ControllerPeriodic();
   frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
+  AutoPath->moveToNextWaypoint();
 }
 
 void Robot::DisabledInit() 
@@ -106,7 +113,9 @@ void Robot::DisabledInit()
   //JetsonController->JetsonReceiverThread.~thread();
 }
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+
+}
 
 void Robot::TestInit() {}
 
