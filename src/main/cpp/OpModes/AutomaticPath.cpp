@@ -12,6 +12,7 @@ AutomaticPath::AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints
     this->pRobot = pRobot;
     this->MecanumDrive = MecanumDrive;
     this->OdometryController = OdometryController;
+    this->waypointIndex = 0;
     PathDebug = new Debug{"/Paths/"};
 }
 
@@ -42,6 +43,10 @@ float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
     //the most efficient function in existance. Probably could do everything without square roots honestly
     float distance = sqrt((dX * dX + dY * dY));
     PathDebug->PutNumber("Distance", distance);
+    PathDebug->PutNumber("Current X", xCurrent);
+    PathDebug->PutNumber("Current Y", yCurrent);    
+    PathDebug->PutNumber("target X", xWaypoint);
+    PathDebug->PutNumber("target Y", yWaypoint);
     return distance;
 }
 
@@ -78,26 +83,43 @@ bool AutomaticPath::atHeading(frc::Pose2d * waypoint)
     }
 }
 
-//Move to the next waypoint
-void AutomaticPath::moveToNextWaypoint()
+//Move to the next waypoint, return true when done with last waypoint
+bool AutomaticPath::moveToNextWaypoint(float speedMultiplier, float rotationMultiplier)
 {
     //When we reach the waypoint we delete it from the waypoint array.
-    float smallDistance1 = 2;
-    float smallDistance2 = 3; //this should be bigger than smallDistance1
-    if(distanceToNextWaypoint(waypoints[0]) < smallDistance1) {
-        waypoints.erase(waypoints.begin());
-    }
-    float angle = angleToNextWaypoint(waypoints[0]);
-    float speed = 0.3;
-    if(waypoints.size() == 1) {
-        float distance = distanceToNextWaypoint(waypoints[0]);
+    float smallDistance1 = 0.05;
+    float smallDistance2 = 0.1; //this should be bigger than smallDistance1
+    float angle = angleToNextWaypoint(waypoints[waypointIndex]);
+    float speed = speedMultiplier;
+    if(waypointIndex == waypoints.size() - 1) {
+        float distance = distanceToNextWaypoint(waypoints[waypointIndex]);
+        //When we start getting close to the last waypoint, slow down a bit
         if(distance < smallDistance2) {
-            speed = 0.2;
+            speed /= 2;
         }
     }
 
-    float rotate = (int)!atHeading(waypoints[0]) * 0.5;
+    //If at the correct heading this becomes 0, if not it is scaled to the rotation speed
+    float rotate = (int)!atHeading(waypoints[waypointIndex]) * rotationMultiplier;
     MecanumDrive->PolarDrive(speed, angle, rotate, 0);
+
+
+    //If we are pretty close to the current waypoint, move to the next one
+    if(distanceToNextWaypoint(waypoints[waypointIndex]) < smallDistance1) {
+        if(waypointIndex != waypoints.size() - 1)
+        {
+            //go to next waypoint
+            waypointIndex++;
+        }
+        else
+        {
+            //we've done it boys
+            waypointIndex = 0;
+            return true;
+        }  
+    }
+    
+    return false;
 }
 
 //Normalizes an angle (in degrees) to be from 0 to 360

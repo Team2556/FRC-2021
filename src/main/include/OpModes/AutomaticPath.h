@@ -26,11 +26,13 @@ class AutomaticPath : public OpMode {
   float distanceToNextWaypoint(frc::Pose2d * waypoint);
   float angleToNextWaypoint(frc::Pose2d * waypoint);
   bool atHeading(frc::Pose2d * waypoint);
-  void moveToNextWaypoint();
+  bool moveToNextWaypoint(float speedMultiplier, float rotationMultiplier);
 
   float normalize360(float angle);
 
   int timesRun;
+
+  int waypointIndex;
 
   Debug * PathDebug;
 };
