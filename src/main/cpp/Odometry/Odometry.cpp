@@ -64,3 +64,12 @@ void Odometry::updatePose()
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
     currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));
 }
+
+
+//Normalizes an angle (in degrees) to be from 0 to 360
+float Odometry::normalize360(float angle)
+{
+    float newAngle = angle + 3600;
+    newAngle = fmod(newAngle, 360);
+    return newAngle;
+}

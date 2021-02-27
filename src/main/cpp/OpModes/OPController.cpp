@@ -18,7 +18,7 @@ OpMode * OPController::nextOp() {
     //the names of the opmode and trigger must be the same
     std::string name;
     startTrigger = NULL;
-    for(int i = 0; i < Triggers.size(); i++) 
+    for(int i = 0; i < (int)Triggers.size(); i++) 
     {
         //check if any triggers have been called
         if(Triggers[i]->Start())
@@ -39,7 +39,7 @@ OpMode * OPController::nextOp() {
 
     OpMode * nextOpMode;
     nextOpMode = NULL;
-    for(int i = 0; i < OpModes.size(); i++)
+    for(int i = 0; i < (int)OpModes.size(); i++)
     {
         //find the opmode corresponding to the trigger called
         if(OpModes[i]->name == name)

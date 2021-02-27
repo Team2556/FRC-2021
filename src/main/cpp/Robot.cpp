@@ -33,8 +33,8 @@ AutomaticShoot * AutoShoot;
 
 void Robot::RobotInit() 
 {
-  pWaypoint1 = new frc::Pose2d{10_ft, 10_ft, frc::Rotation2d(0_deg)};
-  pWaypoint1 = new frc::Pose2d{20_ft, 10_ft, frc::Rotation2d(0_deg)};
+  pWaypoint1 = new frc::Pose2d{10_m, 10_m, frc::Rotation2d(0_deg)};
+  pWaypoint2 = new frc::Pose2d{20_m, 10_m, frc::Rotation2d(0_deg)};
   testWaypoints.push_back(pWaypoint1);
   testWaypoints.push_back(pWaypoint2);
 

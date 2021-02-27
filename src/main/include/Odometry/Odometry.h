@@ -32,6 +32,7 @@ class Odometry {
   float error();
   float getRotate();
 
+  float normalize360(float angle);
 
   frc::Pose2d getCurrentPose();
 
