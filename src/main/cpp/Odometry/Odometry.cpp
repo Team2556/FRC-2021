@@ -4,8 +4,9 @@
 
 #include "Odometry/Odometry.h"
 
-Odometry::Odometry() 
+Odometry::Odometry(Drivebase * pDrivebase) 
 {
+    this->pDrivebase = pDrivebase;
     pNavX = new AHRS(frc::SPI::Port::kMXP);
     OdometryPeriodicThread = std::thread(&Odometry::odometryPeriodic, this);
     OdometryPeriodicThread.detach();
@@ -16,10 +17,12 @@ void Odometry::odometryPeriodic()
 {
     float wheelRadius = 3; //Inches
     float countToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
-    frontRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    frontLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    backRightEncoder.SetDistancePerPulse(countToDistanceMultiplier);
-    backLeftEncoder.SetDistancePerPulse(countToDistanceMultiplier);
+    frontRightEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
+    frontLeftEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
+    backRightEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
+    backLeftEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
+
+
     //not sketch I swear
     while(true)
     {
@@ -56,10 +59,10 @@ frc::Pose2d Odometry::getCurrentPose()
 void Odometry::updatePose()
 {
     frc::MecanumDriveWheelSpeeds    wheelSpeeds {
-        (units::meters_per_second_t)(frontLeftEncoder.GetRate()),
-        (units::meters_per_second_t)(frontRightEncoder.GetRate()),
-        (units::meters_per_second_t)(backLeftEncoder.GetRate()),
-        (units::meters_per_second_t)(backRightEncoder.GetRate())
+        (units::meters_per_second_t)(frontLeftEncoder.GetVelocity()),
+        (units::meters_per_second_t)(frontRightEncoder.GetVelocity()),
+        (units::meters_per_second_t)(backLeftEncoder.GetVelocity()),
+        (units::meters_per_second_t)(backRightEncoder.GetVelocity())
     };
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
     currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));

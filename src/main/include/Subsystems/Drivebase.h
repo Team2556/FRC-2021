@@ -31,13 +31,13 @@ class Drivebase {
   bool IsAimed();
   void RotateDrivebase(float speed);
 
- private:
   //Drivebase motors
   rev::CANSparkMax  rightFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax  leftFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax  rightBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax  leftBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
+ private:
   //Drivebase Object
   frc::MecanumDrive  MecanumDrive{leftFront, leftBack, rightFront, rightBack};
 };

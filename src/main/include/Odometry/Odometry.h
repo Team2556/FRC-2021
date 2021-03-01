@@ -14,12 +14,12 @@
 #include "Subsystems/Drivebase.h"
 #include <mutex>
 #include <atomic>
-
+#include "Subsystems/Drivebase.h"
 #include "Utilities/Debug.h"
 
 class Odometry {
  public:
-  Odometry();
+  Odometry(Drivebase * pDrivebase);
 
   void odometryPeriodic();
 
@@ -40,6 +40,8 @@ class Odometry {
   std::thread OdometryPeriodicThread;
 
  private:
+
+  Drivebase * pDrivebase;
   AHRS * pNavX;
 
   //x and y are distances from robot center to wheel
@@ -58,10 +60,10 @@ class Odometry {
   frc::MecanumDriveOdometry mecOdometry{mecKinematics, frc::Rotation2d{0_deg}, startingPosition};
   
 
-  frc::Encoder  frontRightEncoder{0, 1};
-  frc::Encoder  frontLeftEncoder{2, 3};
-  frc::Encoder  backRightEncoder{4, 5};
-  frc::Encoder  backLeftEncoder{6, 7};
+  rev::CANEncoder frontRightEncoder = pDrivebase->leftFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
+  rev::CANEncoder frontLeftEncoder = pDrivebase->leftBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
+  rev::CANEncoder backRightEncoder = pDrivebase->rightFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
+  rev::CANEncoder backLeftEncoder = pDrivebase->rightBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
 
   //Current Position pose is thread-safe for the getters
   std::atomic<frc::Pose2d>  currPose;

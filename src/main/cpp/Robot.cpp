@@ -38,10 +38,9 @@ void Robot::RobotInit()
   testWaypoints.push_back(pWaypoint1);
   testWaypoints.push_back(pWaypoint2);
 
-
-  OdometryController = new Odometry();
-  //JetsonController = new Jetson();
   MecanumDrive = new Drivebase(this);
+  OdometryController = new Odometry(MecanumDrive);
+  //JetsonController = new Jetson();
   AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
