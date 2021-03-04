@@ -31,13 +31,16 @@ class Odometry {
   float getCommandYaw();
   float error();
   float getRotate();
-
+  
   float normalize360(float angle);
 
   frc::Pose2d getCurrentPose();
 
 
   std::thread OdometryPeriodicThread;
+
+  //TESTING
+  float testGetEncoder();
 
  private:
 
@@ -60,10 +63,7 @@ class Odometry {
   frc::MecanumDriveOdometry mecOdometry{mecKinematics, frc::Rotation2d{0_deg}, startingPosition};
   
 
-  rev::CANEncoder frontRightEncoder = pDrivebase->leftFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
-  rev::CANEncoder frontLeftEncoder = pDrivebase->leftBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
-  rev::CANEncoder backRightEncoder = pDrivebase->rightFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
-  rev::CANEncoder backLeftEncoder = pDrivebase->rightBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192);
+  
 
   //Current Position pose is thread-safe for the getters
   std::atomic<frc::Pose2d>  currPose;

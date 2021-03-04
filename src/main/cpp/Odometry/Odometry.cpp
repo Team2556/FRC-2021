@@ -15,17 +15,18 @@ Odometry::Odometry(Drivebase * pDrivebase)
 //Runs on a separate thread to update odometry things
 void Odometry::odometryPeriodic()
 {
+    //Nonperiodic stuff goes here
     float wheelRadius = 3; //Inches
-    float countToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254; //This may need to be divided by 256, needs testing
-    frontRightEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
-    frontLeftEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
-    backRightEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
-    backLeftEncoder.SetVelocityConversionFactor(countToDistanceMultiplier);
-
+    float RPMToDistanceMultiplier = 2 * M_PI * wheelRadius * 0.0254 / 60; //This may need to be divided by 256, needs testing
+    pDrivebase->leftFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).SetVelocityConversionFactor(RPMToDistanceMultiplier);
+    pDrivebase->rightFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).SetVelocityConversionFactor(RPMToDistanceMultiplier);
+    pDrivebase->leftBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).SetVelocityConversionFactor(RPMToDistanceMultiplier);
+    pDrivebase->rightBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).SetVelocityConversionFactor(RPMToDistanceMultiplier);
 
     //not sketch I swear
     while(true)
     {
+        //Periodic stuff goes here
         updatePose();
     }
 }
@@ -59,10 +60,10 @@ frc::Pose2d Odometry::getCurrentPose()
 void Odometry::updatePose()
 {
     frc::MecanumDriveWheelSpeeds    wheelSpeeds {
-        (units::meters_per_second_t)(frontLeftEncoder.GetVelocity()),
-        (units::meters_per_second_t)(frontRightEncoder.GetVelocity()),
-        (units::meters_per_second_t)(backLeftEncoder.GetVelocity()),
-        (units::meters_per_second_t)(backRightEncoder.GetVelocity())
+        (units::meters_per_second_t)(pDrivebase->leftFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).GetVelocity()),
+        (units::meters_per_second_t)(pDrivebase->rightFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).GetVelocity()),
+        (units::meters_per_second_t)(pDrivebase->leftBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).GetVelocity()),
+        (units::meters_per_second_t)(pDrivebase->rightBack.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).GetVelocity())
     };
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
     currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));
@@ -75,4 +76,11 @@ float Odometry::normalize360(float angle)
     float newAngle = angle + 3600;
     newAngle = fmod(newAngle, 360);
     return newAngle;
+}
+
+float Odometry::testGetEncoder()
+{
+    pDrivebase->rightFront.Set(0);
+    float x = pDrivebase->rightFront.GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8096).GetVelocity();
+    return x;
 }

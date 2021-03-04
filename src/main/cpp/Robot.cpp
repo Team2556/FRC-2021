@@ -40,7 +40,7 @@ void Robot::RobotInit()
 
   MecanumDrive = new Drivebase(this);
   OdometryController = new Odometry(MecanumDrive);
-  //JetsonController = new Jetson();
+  // JetsonController = new Jetson();
   AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
@@ -97,11 +97,12 @@ void Robot::TeleopPeriodic()
   //frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
   TeleopController->ControllerPeriodic();
   frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
+  frc::SmartDashboard::PutNumber("EncoderSpeed", OdometryController->testGetEncoder());
 }
 
 void Robot::DisabledInit() 
 {
-  OdometryController->OdometryPeriodicThread.~thread();
+  //OdometryController->OdometryPeriodicThread.~thread();
   //JetsonController->JetsonReceiverThread.~thread();
 }
 
