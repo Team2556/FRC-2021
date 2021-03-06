@@ -118,6 +118,10 @@ float OI::HopperRun()
     return x;
 }
 
+bool OI::StopShoot(){
+    return Xbox2.GetTriggerAxis(frc::GenericHID::JoystickHand::kLeftHand);
+}
+
 // ----------------------------------------------------------------------------
 // Test commands
 // ----------------------------------------------------------------------------
