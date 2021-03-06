@@ -24,7 +24,7 @@
 #include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
 
-class Robot : public frc::TimedRobot {
+class Robot : public frc::TimedRobot{
 public:
   void RobotInit() override;
   void RobotPeriodic() override;
