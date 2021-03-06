@@ -24,17 +24,20 @@ class OI {
   float IntakeRun(); //Run intake
   float HopperRun(); //Spin hopper
   float HopperKickup(); //Kickup balls in hopper
-
+  bool StopShoot();
   //Feeder
-    float speedMult = .9;
 
   // Test Functions
   bool bTestButton(int iButton);
   float fTestValue(int iControl);
 
+
+  float shooterSpeedMult = .9;
+  float hoodAngleMult = .75; 
+
   protected:
     frc::XboxController   Xbox1{XBOX_ONE};
-    frc::XboxController   Xbox2{XBOX_TWO};
+    frc::XboxController   Xbox2{XBOX_TWO}; //CoDriver 
     frc::XboxController   Xbox3{XBOX_THREE};
   
 
