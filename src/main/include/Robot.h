@@ -24,7 +24,12 @@
 #include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
 
+<<<<<<< Updated upstream
 class Robot : public frc::TimedRobot{
+=======
+class Robot : public frc::TimedRobot
+{
+>>>>>>> Stashed changes
 public:
   void RobotInit() override;
   void RobotPeriodic() override;
