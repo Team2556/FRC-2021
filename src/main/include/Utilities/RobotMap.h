@@ -4,13 +4,13 @@
 
 // Motor Controllers
 
-#define DRIVE_LEFT_FRONT 0
-#define DRIVE_RIGHT_FRONT 1
-#define DRIVE_LEFT_REAR 2
-#define DRIVE_RIGHT_REAR 3
+#define DRIVE_LEFT_FRONT 1
+#define DRIVE_RIGHT_FRONT 2
+#define DRIVE_LEFT_REAR 3
+#define DRIVE_RIGHT_REAR 4
 
 //Feeder/Intake Placeholders.
-#define INTAKE_OUT 4
+#define INTAKE_OUT 56
 #define CAN_INTAKE 5
 #define HOPPER_MOTOR 6 
 #define FEEDER_HIGH 7

@@ -20,6 +20,7 @@
 #include "frc/DoubleSolenoid.h"
 //#include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
+#include "Odometry/NavGyro.h"
 
 
 class Robot : public frc::TimedRobot {
@@ -35,6 +36,8 @@ class Robot : public frc::TimedRobot {
   void TestInit() override;
   void TestPeriodic() override;
 
+  // NavX
+  NavGyro Nav;
 
   //Motors
   WPI_TalonFX Shooter_Motor_1{SHOOTER_MOTOR_1};

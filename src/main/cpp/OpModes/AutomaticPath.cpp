@@ -43,10 +43,10 @@ float AutomaticPath::distanceToNextWaypoint(frc::Pose2d * waypoint)
     //the most efficient function in existance. Probably could do everything without square roots honestly
     float distance = sqrt((dX * dX + dY * dY));
     PathDebug->PutNumber("Distance", distance);
-    PathDebug->PutNumber("Current X", xCurrent);
-    PathDebug->PutNumber("Current Y", yCurrent);    
-    PathDebug->PutNumber("target X", xWaypoint);
-    PathDebug->PutNumber("target Y", yWaypoint);
+    PathDebug->PutNumber("TargetX", xWaypoint);
+    PathDebug->PutNumber("TargetY", yWaypoint);
+    PathDebug->PutNumber("CurrentX", xCurrent);
+    PathDebug->PutNumber("CurrentY", yCurrent);
     return distance;
 }
 

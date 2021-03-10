@@ -17,11 +17,11 @@ class Drivebase {
   Drivebase(Robot * pRobot);
   Robot * pRobot;
 
-  // reference frame for robot is: +X Right, +Y Forward, +theta
-  void Drive(float xSpeed, float ySpeed, float rotate, float gyro);
+  // reference frame for robot is: +Strafe Right, +Y Forward, +theta is clockwise
+  void Drive(float fForward, float fStrafe, float rotate, float gyro);
   
   void PolarDrive(float speed, float direction, float rotate, float gyro);
-  void GyroDrive();
+  void GyroDrive(bool fieldOriented = false);
   void FieldOrientedDrive();
 
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
@@ -31,13 +31,28 @@ class Drivebase {
   bool IsAimed();
   void RotateDrivebase(float speed);
 
+  rev::CANEncoder GetEncoderLF();
+  rev::CANEncoder GetEncoderRF();
+  rev::CANEncoder GetEncoderLR();
+  rev::CANEncoder GetEncoderRR();
+
+
+
  private:
   //Drivebase motors
   rev::CANSparkMax  rightFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  leftFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  rightBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  leftBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  leftFront{DRIVE_LEFT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  rightBack{DRIVE_RIGHT_REAR, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  leftBack{DRIVE_LEFT_REAR, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
   //Drivebase Object
-  frc::MecanumDrive  MecanumDrive{leftFront, leftBack, rightFront, rightBack};
+
+  
+  frc::MecanumDrive  RobotDrive{leftFront, leftBack, rightFront, rightBack};
+
+  // is the robot using the gyro to turn to a preset location
+  bool bPresetTurning = false;
+  bool bRotatePrevious = false;
+
+  float GetRotate();
 };
