@@ -16,6 +16,10 @@
 #include <atomic>
 #include "Subsystems/Drivebase.h"
 #include "Utilities/Debug.h"
+#include "frc/Ultrasonic.h"
+
+//Ultrasonic distance from ground in inches
+#define ULTRASONICHEIGHT 20
 
 class Odometry {
  public:
@@ -62,13 +66,14 @@ class Odometry {
   
   frc::MecanumDriveOdometry mecOdometry{mecKinematics, frc::Rotation2d{0_deg}, startingPosition};
   
-
+  frc::Ultrasonic trenchUltrasonic{TRENCHULTRASONIC1, TRENCHULTRASONIC2};
   
 
   //Current Position pose is thread-safe for the getters
   std::atomic<frc::Pose2d>  currPose;
 
   void updatePose();
+  bool canReset();
 
   Debug OdometryDebug{"/Subsystems/Odometry"};
 

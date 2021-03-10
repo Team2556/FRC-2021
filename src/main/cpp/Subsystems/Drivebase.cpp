@@ -12,5 +12,16 @@ Drivebase::Drivebase(Robot * pRobot)
 //Drives the robot using a speed, direction, and rotation. 
 void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyro)
 {
-    return;
+    //normalize to [-180, 180]
+    rotate = fmod((rotate + 3600.0), 360);
+    if(rotate > 180)
+    {
+        rotate -= 360;
+    }
+    MecanumDrive.DrivePolar(speed, direction, rotate);
+}
+
+void Drivebase::Drive(float fForward, float fStrafe, float rotate, float gyro)
+{
+    MecanumDrive.DriveCartesian(fStrafe, fForward, rotate, gyro);
 }
