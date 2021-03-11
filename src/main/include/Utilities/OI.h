@@ -18,7 +18,11 @@ class OI {
   bool AutomaticBall(); //Start picking up balls
   bool AutomaticPath(); //Start Trench
   //Driving Controls
-
+  float fMoveForward(); 
+  float fMoveSideways(); // 
+  float fRotate();
+  bool bManualRotate();
+  int POV();
   //Codriver Controls
   bool IntakeExtension(); //Extend the intake system
   float IntakeRun(); //Run intake

@@ -18,7 +18,7 @@ class Drivebase {
   Robot * pRobot;
 
   // reference frame for robot is: +X Right, +Y Forward, +theta
-  void Drive(float xSpeed, float ySpeed, float rotate, float gyro);
+  void Drive(float fForward, float fStrafe, float rotate, float gyro);
   
   void PolarDrive(float speed, float direction, float rotate, float gyro);
   void GyroDrive();
@@ -33,9 +33,9 @@ class Drivebase {
 
   //Drivebase motors
   rev::CANSparkMax  rightFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  leftFront{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  rightBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANSparkMax  leftBack{DRIVE_RIGHT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  leftFront{DRIVE_LEFT_FRONT, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  rightBack{DRIVE_RIGHT_REAR, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax  leftBack{DRIVE_LEFT_REAR, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
 
  private:
   //Drivebase Object

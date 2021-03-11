@@ -42,6 +42,46 @@ bool OI::AutomaticPath()
 // Driver commands
 // ----------------------------------------------------------------------------
 
+// positive is forward
+float OI::fMoveForward()
+{
+    float speed = Xbox1.GetY(frc::XboxController::kLeftHand);
+    OIDebug.PutNumber("Forward", speed);
+    return speed;
+}
+
+// positive is right
+float OI::fMoveSideways()
+{
+    float speed =  Xbox1.GetX(frc::XboxController::kLeftHand);
+    OIDebug.PutNumber("Forward", speed);
+    return speed;
+}
+
+// positive is clockwise
+float OI::fRotate()
+{
+    float speed = Xbox1.GetX(frc::XboxController::kRightHand);
+    OIDebug.PutNumber("Forward", speed);
+    return speed;
+}
+
+bool OI::bManualRotate()
+{
+    bool x;
+    if ((fRotate() > 0.05) || (fRotate() < -0.05))
+    {
+        x = true;
+    }
+    else
+    {
+        x =  false;
+    }
+    OIDebug.PutBoolean("Manual Rotate", x);
+    return x;
+}
+
+
 
 // ----------------------------------------------------------------------------
 // Codriver commands
@@ -118,9 +158,13 @@ float OI::HopperRun()
     return x;
 }
 
+<<<<<<< HEAD
+
+=======
 bool OI::StopShoot(){
     return Xbox2.GetTriggerAxis(frc::GenericHID::JoystickHand::kLeftHand);
 }
+>>>>>>> dd6b8ffd33cd0c8a6dcec09505faf3241d741254
 
 // ----------------------------------------------------------------------------
 // Test commands

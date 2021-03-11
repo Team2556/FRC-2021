@@ -98,6 +98,7 @@ void Robot::TeleopPeriodic()
   TeleopController->ControllerPeriodic();
   frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
   frc::SmartDashboard::PutNumber("EncoderSpeed", OdometryController->testGetEncoder());
+  MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0);
 }
 
 void Robot::DisabledInit() 

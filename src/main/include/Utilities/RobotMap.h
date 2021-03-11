@@ -38,3 +38,7 @@
 
 //Limelight
 #define LIMELIGHT 15
+
+//All DIO Things
+#define TRENCHULTRASONIC1 0
+#define TRENCHULTRASONIC2 1 

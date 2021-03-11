@@ -28,6 +28,26 @@ void Odometry::odometryPeriodic()
     {
         //Periodic stuff goes here
         updatePose();
+        if(canReset())
+        {
+            //Y value is either 40.3181 inches or 55.3181 inches. The X value is approximately 133.049 inches.
+            float yOption1 = 40.3181 * 0.0254;
+            float yOption2 = 55.3181 * 0.0254;
+            float currentY = getY();
+            float realY;
+            /* Whichever side the robot thinks it should be closer to is probably the correct one. If this doesn't work
+            we'll need to store the last y value and figure out which direction we're going */
+            if(abs(currentY - yOption1) < abs(currentY - yOption2))
+            {
+                realY = yOption1;
+            }
+            else
+            {
+                realY = yOption2;
+            }
+            float x = 133.049 * 0.0254;
+            mecOdometry.ResetPosition(frc::Pose2d{(units::meter_t) x, (units::meter_t) realY, 0_deg}, units::degree_t(getYaw())); //Probably shouldn't be 0 degrees
+        }
     }
 }
 
@@ -67,6 +87,8 @@ void Odometry::updatePose()
     };
     frc::Rotation2d gyroAngle{units::degree_t(getYaw())}; //may need to use -yaw instead of positive, needs testing
     currPose.store(mecOdometry.Update(gyroAngle, wheelSpeeds));
+    OdometryDebug.PutNumber("Field X Position", getX());
+    OdometryDebug.PutNumber("Field Y Position", getY());
 }
 
 
@@ -77,6 +99,24 @@ float Odometry::normalize360(float angle)
     newAngle = fmod(newAngle, 360);
     return newAngle;
 }
+
+bool Odometry::canReset()
+{
+    //distance from floor to bottom of trench is 28 inches.
+    float trenchHeight = 28;
+    float ultraToTrench = trenchHeight - ULTRASONICHEIGHT;
+    float ultraSeen = trenchUltrasonic.GetRangeInches();
+    if(ultraSeen < ultraToTrench + 2 && ultraSeen > ultraToTrench - 2)
+    {
+        //We're inside the trench pog
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 
 float Odometry::testGetEncoder()
 {
