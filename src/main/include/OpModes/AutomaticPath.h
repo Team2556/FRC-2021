@@ -37,5 +37,6 @@ class AutomaticPath : public OpMode {
   bool atHeading(frc::Pose2d * waypoint);
   bool moveToNextWaypoint();
 
+
   Debug * PathDebug;
 };

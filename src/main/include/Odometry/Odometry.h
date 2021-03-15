@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "AHRS.h"
-#include "frc/SPI.h"
 #include "frc/kinematics/MecanumDriveOdometry.h"
 #include "frc/kinematics/MecanumDriveKinematics.h"
 #include "thread"
@@ -17,24 +15,28 @@
 #include "Subsystems/Drivebase.h"
 #include "Utilities/Debug.h"
 #include "frc/Ultrasonic.h"
+#include "Robot.h"
 
 //Ultrasonic distance from ground in inches
 #define ULTRASONICHEIGHT 20
 
 class Odometry {
  public:
-  Odometry(Drivebase * pDrivebase);
+  Odometry(Robot * pRobot, Drivebase * pDrivebase);
 
   void odometryPeriodic();
 
   float getX();
   float getY();
-
-  void setCommandYaw();
   float getYaw();
-  float getCommandYaw();
-  float error();
-  float getRotate();
+
+  void SetStartX(float X);
+  void SetStartY(float Y);
+  void SetStartYaw(float Yaw);
+
+  float GetStartX();
+  float GetStartY();
+  float GetStartYaw();
   
   float normalize360(float angle);
 
@@ -43,21 +45,25 @@ class Odometry {
 
   std::thread OdometryPeriodicThread;
 
-  //TESTING
-  float testGetEncoder();
+  void updatePose();
 
+  // testing functions, will be removed
+  void printWheelSpeeds(frc::MecanumDriveWheelSpeeds wheelSpeeds);
  private:
-
   Drivebase * pDrivebase;
-  AHRS * pNavX;
+  Robot * pRobot;
+  
+  bool canReset();
+  
 
   //x and y are distances from robot center to wheel
-  units::length::meter_t x = 0_m;
-  units::length::meter_t y = 0_m;
-  frc::Translation2d frontRight{x, y};
-  frc::Translation2d backRight{x, -y};
-  frc::Translation2d frontLeft{-x, y};
-  frc::Translation2d backLeft{-x, -y};
+  units::length::meter_t x{.256};
+  units::length::meter_t y{.256};
+
+  frc::Translation2d frontRight{x, -y};
+  frc::Translation2d backRight{-x, -y};
+  frc::Translation2d frontLeft{x, y};
+  frc::Translation2d backLeft{-x, y};
   
   frc::MecanumDriveKinematics mecKinematics{frontLeft, frontRight, backLeft, backRight};
   
@@ -72,8 +78,10 @@ class Odometry {
   //Current Position pose is thread-safe for the getters
   std::atomic<frc::Pose2d>  currPose;
 
-  void updatePose();
-  bool canReset();
+  frc::Pose2d  newPose{frc::Translation2d{1_m, 1_m}, frc::Rotation2d{0_deg}};
+
+  void init();
+  
 
   Debug OdometryDebug{"/Subsystems/Odometry"};
 

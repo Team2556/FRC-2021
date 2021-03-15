@@ -42,46 +42,47 @@ bool OI::AutomaticPath()
 // Driver commands
 // ----------------------------------------------------------------------------
 
-// positive is forward
+/*
+Driver input for the forward movement of the robot.
+in field oriented mode positive is away from the driver
+in non-field oriented positive is forward in the robots frame of reference
+*/
 float OI::fMoveForward()
 {
-    float speed = Xbox1.GetY(frc::XboxController::kLeftHand);
-    OIDebug.PutNumber("Forward", speed);
-    return speed;
+    float value = -Xbox1.GetY(frc::XboxController::kLeftHand);
+    OIDebug.PutNumber("Forward", value);
+    return value;
 }
 
-// positive is right
+/*
+Driver input for the strafing movement of the robot.
+in field oriented mode positive is to the right in the drivers frame of reference
+in non-field oriented positive is to the right in the robots frame of reference
+*/
 float OI::fMoveSideways()
 {
-    float speed =  Xbox1.GetX(frc::XboxController::kLeftHand);
-    OIDebug.PutNumber("Forward", speed);
-    return speed;
+    return Xbox1.GetX(frc::XboxController::kLeftHand);
 }
 
-// positive is clockwise
 float OI::fRotate()
 {
-    float speed = Xbox1.GetX(frc::XboxController::kRightHand);
-    OIDebug.PutNumber("Forward", speed);
-    return speed;
+    return Xbox1.GetX(frc::XboxController::kRightHand)*.8;
 }
 
 bool OI::bManualRotate()
 {
-    bool x;
-    if ((fRotate() > 0.05) || (fRotate() < -0.05))
-    {
-        x = true;
-    }
-    else
-    {
-        x =  false;
-    }
-    OIDebug.PutBoolean("Manual Rotate", x);
-    return x;
+    return fabs(this->fRotate()) > .05;
 }
 
+bool OI::bResetGyro()
+{
+    return Xbox1.GetAButtonPressed();
+}
 
+int OI::POV()
+{
+    return Xbox1.GetPOV();
+}
 
 // ----------------------------------------------------------------------------
 // Codriver commands

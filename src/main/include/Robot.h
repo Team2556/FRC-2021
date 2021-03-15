@@ -15,8 +15,8 @@
 #include <ctre/Phoenix.h>
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
-#include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
+#include "Odometry/NavGyro.h"
 
 class Robot : public frc::TimedRobot{
 public:
@@ -34,14 +34,14 @@ public:
   std::vector<OpMode *> AutoModes;
   std::vector<OpMode *> TeleopModes;
   OI * DriverCMD; 
+  // NavX
+  NavGyro Nav;
 
-  
   std::vector<Trigger *> TeleopTriggers;
 
   std::vector<frc::Pose2d *> testWaypoints;
   frc::Pose2d *pWaypoint1;
   frc::Pose2d *pWaypoint2;
-  Jetson *JetsonController;
 
 private:
 };
