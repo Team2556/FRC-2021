@@ -19,6 +19,9 @@
 #include "OpModes/ManualTeleop.h"
 #include "OpModes/AutomaticShoot.h"
 #include "OpModes/AutomaticBall.h"
+#include "Triggers/AutomaticPathTrigger.h"
+#include "Triggers/AutomaticShootTrigger.h"
+#include "Triggers/AutomaticBallTrigger.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
@@ -30,6 +33,10 @@ Feeder * FeederController;
 ManualTeleop * Manual;
 AutomaticBall * AutoBall;
 AutomaticShoot * AutoShoot;
+AutomaticBallTrigger * AutoBallTrigger;
+AutomaticShootTrigger * AutoShootTrigger;
+AutomaticPathTrigger * AutoPathTrigger;
+OPController * TeleopController;
 
 void Robot::RobotInit() 
 {
