@@ -91,15 +91,11 @@ int OI::POV()
 //Extend and retract intake when Xbox2 X button is pressed.
 bool OI::IntakeExtension()
 {
-    bool extended;
-    if (Xbox2.GetYButtonPressed())
+    static bool extended = false;
+    if (Xbox2.GetXButtonPressed())
     {
-        extended = false;
+        extended = !extended;
     }
-    else if (Xbox2.GetXButtonPressed())
-    {
-        extended = true;
-    } 
     return extended;
 }
 

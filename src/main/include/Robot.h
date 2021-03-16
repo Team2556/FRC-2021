@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include "OpModes/OpMode.h"
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "Utilities/OI.h"
@@ -12,19 +13,17 @@
 #include "OpModes/OPController.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
-#include "Triggers/AutomaticPathTrigger.h"
-#include "Triggers/AutomaticShootTrigger.h"
-#include "Triggers/AutomaticBallTrigger.h"
-#include "OpModes/AutomaticShoot.h"
-#include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
-#include "Odometry/Jetson.h"
 #include "Utilities/RobotMap.h"
 #include "Odometry/NavGyro.h"
 
+<<<<<<< Updated upstream
+class Robot : public frc::TimedRobot{
+=======
 class Robot : public frc::TimedRobot
 {
+>>>>>>> Stashed changes
 public:
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -43,21 +42,11 @@ public:
   // NavX
   NavGyro Nav;
 
-
-  //ManualTeleop *Manual;
-  OI *DriverCMD;
-  AutomaticBallTrigger *AutoBallTrigger;
-  AutomaticShootTrigger *AutoShootTrigger;
-  AutomaticBall *AutoBall;
-  AutomaticShoot *AutoShoot;
-  AutomaticPathTrigger *AutoPathTrigger;
-  OPController *TeleopController;
   std::vector<Trigger *> TeleopTriggers;
 
   std::vector<frc::Pose2d *> testWaypoints;
   frc::Pose2d *pWaypoint1;
   frc::Pose2d *pWaypoint2;
-  Jetson *JetsonController;
 
 private:
 };
