@@ -19,6 +19,9 @@
 #include "OpModes/ManualTeleop.h"
 #include "OpModes/AutomaticShoot.h"
 #include "OpModes/AutomaticBall.h"
+#include "Triggers/AutomaticPathTrigger.h"
+#include "Triggers/AutomaticShootTrigger.h"
+#include "Triggers/AutomaticBallTrigger.h"
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
@@ -30,6 +33,10 @@ Feeder * FeederController;
 ManualTeleop * Manual;
 AutomaticBall * AutoBall;
 AutomaticShoot * AutoShoot;
+AutomaticBallTrigger * AutoBallTrigger;
+AutomaticShootTrigger * AutoShootTrigger;
+AutomaticPathTrigger * AutoPathTrigger;
+OPController * TeleopController;
 
 void Robot::RobotInit() 
 {
@@ -38,29 +45,32 @@ void Robot::RobotInit()
   testWaypoints.push_back(pWaypoint1);
   testWaypoints.push_back(pWaypoint2);
 
+  
+  //OdometryTester = new OdometryTest();
+  //JetsonController = new Jetson();
+  //The Drivebase is the issue. #cringe
   MecanumDrive = new Drivebase(this);
-  OdometryController = new Odometry(MecanumDrive);
-  // JetsonController = new Jetson();
-  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
-  AutoBall = new AutomaticBall();
-  AutoShoot = new AutomaticShoot();
-  Manual =  new ManualTeleop(this, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
+  OdometryController = new Odometry(this, MecanumDrive);
+  // AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryTester);
+  // AutoBall = new AutomaticBall();
+  // AutoShoot = new AutomaticShoot();
+  // Manual =  new ManualTeleop(this, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
   DriverCMD = new OI();
-  AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
-  AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
-  AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
+  // AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
+  // AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
+  // AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
   
 
-  TeleopModes.push_back(AutoPath);
-  TeleopModes.push_back(AutoBall);
-  TeleopModes.push_back(AutoShoot);
-  TeleopModes.push_back(Manual);
-  TeleopTriggers.push_back(AutoShootTrigger);
-  TeleopTriggers.push_back(AutoBallTrigger);
-  TeleopTriggers.push_back(AutoPathTrigger);
+  // TeleopModes.push_back(AutoPath);
+  // TeleopModes.push_back(AutoBall);
+  // TeleopModes.push_back(AutoShoot);
+  // TeleopModes.push_back(Manual);
+  // TeleopTriggers.push_back(AutoShootTrigger);
+  // TeleopTriggers.push_back(AutoBallTrigger);
+  // TeleopTriggers.push_back(AutoPathTrigger);
 
 
-  TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
+  // TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
 }
 
 
@@ -77,7 +87,8 @@ void Robot::AutonomousInit()
 
 void Robot::AutonomousPeriodic() 
 {
-  
+  //MecanumDrive->FieldOrientedDrive();
+  //MecanumDrive->leftBack.Set(1);
 }
 
 void Robot::TeleopInit() 
@@ -86,6 +97,7 @@ void Robot::TeleopInit()
   // frc::SmartDashboard::PutString("Next Op", name);
   // frc::SmartDashboard::PutBoolean("manual", Manual->interruptible);
   // frc::SmartDashboard::PutBoolean("test1", Teleop1->interruptible);
+  Nav.setCommandYaw(Nav.getYaw());
 }
 
 void Robot::TeleopPeriodic() 
@@ -95,19 +107,24 @@ void Robot::TeleopPeriodic()
   //TeleopController->test();
   //frc::SmartDashboard::PutBoolean("button", DriverCMD->bTestButton(0));
   //frc::SmartDashboard::PutString("Next Op", TeleopController->nextOp()->name);
-  TeleopController->ControllerPeriodic();
-  frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
-  frc::SmartDashboard::PutNumber("EncoderSpeed", OdometryController->testGetEncoder());
-  MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0);
+  //TeleopController->ControllerPeriodic();
+  //frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
+  // AutoPath->moveToNextWaypoint();
+  // MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0.0);
+  MecanumDrive->FieldOrientedDrive();
+  OdometryController->updatePose();
+  // MecanumDrive->Drive(DriverCMD->fMoveForward(), 0, 0, 0);
+  //MecanumDrive->leftBack.Set(.3);
 }
 
 void Robot::DisabledInit() 
 {
-  //OdometryController->OdometryPeriodicThread.~thread();
-  //JetsonController->JetsonReceiverThread.~thread();
+  // OdometryController->OdometryPeriodicThread.~thread();
 }
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+
+}
 
 void Robot::TestInit() {}
 

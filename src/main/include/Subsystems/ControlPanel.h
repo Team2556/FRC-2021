@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Utilities/Debug.h"
+#include "rev/ColorSensorV3.h"
 
 class ControlPanel {
  public:
@@ -21,5 +22,4 @@ class ControlPanel {
  private:
   
   //Define a color sensor here. Rev Color Sensor V3 I think
-
 };
