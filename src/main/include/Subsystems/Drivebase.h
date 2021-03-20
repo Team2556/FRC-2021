@@ -8,7 +8,6 @@
 #include "frc/drive/MecanumDrive.h"
 #include "frc/Encoder.h"
 
-
 #include "Utilities/Debug.h"
 
 
@@ -16,12 +15,11 @@ class Drivebase {
  public:
   Drivebase(Robot * pRobot);
   Robot * pRobot;
-
-  // reference frame for robot is: +Strafe Right, +Y Forward, +theta is clockwise
+  // reference frame for robot is: +X Right, +Y Forward, +theta
   void Drive(float fForward, float fStrafe, float rotate, float gyro);
   
   void PolarDrive(float speed, float direction, float rotate, float gyro);
-  void GyroDrive(bool fieldOriented = false);
+  void GyroDrive();
   void FieldOrientedDrive();
 
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
@@ -47,13 +45,5 @@ class Drivebase {
 
  private:
   //Drivebase Object
-
-  
-  frc::MecanumDrive  RobotDrive{leftFront, leftBack, rightFront, rightBack};
-
-  // is the robot using the gyro to turn to a preset location
-  bool bPresetTurning = false;
-  bool bRotatePrevious = false;
-
-  float GetRotate();
+  frc::MecanumDrive  MecanumDrive{leftFront, leftBack, rightFront, rightBack};
 };
