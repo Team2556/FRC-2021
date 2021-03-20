@@ -27,10 +27,10 @@ bool Shooter::SpinUp()
 	pShooter->Shooter_Motor_1.Set(TalonFXControlMode::Velocity, setShooterSpeed);
 	pShooter->Shooter_Motor_2.Follow(pShooter->Shooter_Motor_1);
 	bool spinUpReturn;
-	while (float(pShooter->Shooter_Motor_1.GetSelectedSensorVelocity()) != setShooterSpeed){
+	while (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() != setShooterSpeed){
 		spinUpReturn = false;
 	}
-	if (float(pShooter->Shooter_Motor_1.GetSelectedSensorVelocity()) == setShooterSpeed)
+	if (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() == setShooterSpeed)
 	{
 		frc::SmartDashboard::PutNumber("Shoot Speed", pShooter->Shooter_Motor_1.GetSelectedSensorVelocity());
 		frc::SmartDashboard::PutNumber("Shoot Set Percent", pShooter->Shooter_Motor_1.GetMotorOutputPercent());

@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Utilities/OI.h"
-#include "OpMode.h"
+#include "OpModes/OpMode.h"
 #include "Triggers/Trigger.h"
 
 class OPController {

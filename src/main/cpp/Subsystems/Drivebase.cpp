@@ -34,7 +34,7 @@ void Drivebase::Drive(float fForward, float fStrafe, float rotate, float gyro)
 
 void Drivebase::GyroDrive(bool fieldOriented)
 {
-    bool			bAllowRotate = false;
+    bool bAllowRotate = false;
     static int stopHoldCounter = 0;
 
     // Get joystick inputs

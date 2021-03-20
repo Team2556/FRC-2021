@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "Robot.h"
+//#include "Robot.h"
 
 #include <iostream>
 
@@ -10,19 +10,23 @@
 #include "OpModes/AutomaticPath.h"
 #include "Odometry/Odometry.h"
 #include <thread>
-#include "Subsystems/Drivebase.h"
-#include "Subsystems/Shooter.h"
-#include "Subsystems/Feeder.h"
-#include "Subsystems/ControlPanel.h"
-#include "Subsystems/Climber.h"
+//#include "Subsystems/Drivebase.h"
 
-//#include "OpModes/OpMode.h"
+//#include "Subsystems/Shooter.h"
+//#include "Subsystems/Feeder.h"
+//#include "Subsystems/ControlPanel.h"
+//#include "Subsystems/Climber.h"
+
+
+#include "OpModes/OpMode.h"
 #include "OpModes/ManualTeleop.h"
-#include "OpModes/AutomaticShoot.h"
-#include "OpModes/AutomaticBall.h"
-#include "Triggers/AutomaticPathTrigger.h"
-#include "Triggers/AutomaticShootTrigger.h"
-#include "Triggers/AutomaticBallTrigger.h"
+
+//#include "OpModes/AutomaticShoot.h"
+//#include "OpModes/AutomaticBall.h"
+//#include "Triggers/AutomaticPathTrigger.h"
+//#include "Triggers/AutomaticShootTrigger.h"
+//#include "Triggers/AutomaticBallTrigger.h"
+
 
 AutomaticPath * AutoPath;
 Drivebase * MecanumDrive;
