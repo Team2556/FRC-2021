@@ -8,8 +8,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "OpModes/AutomaticPath.h"
-#include "Odometry/Odometry.h"
-#include <thread>
+//#include "Odometry/Odometry.h"
+//#include <thread>
 //#include "Subsystems/Drivebase.h"
 
 //#include "Subsystems/Shooter.h"
@@ -18,7 +18,7 @@
 //#include "Subsystems/Climber.h"
 
 
-#include "OpModes/OpMode.h"
+//#include "OpModes/OpMode.h"
 #include "OpModes/ManualTeleop.h"
 
 //#include "OpModes/AutomaticShoot.h"

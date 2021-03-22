@@ -27,7 +27,13 @@ public:
   Shooter *pShooter;
 
   
-	float setShooterSpeed = pRobot->DriverCMD->shooterSpeedMult * maxEncoderSpeed; //default shoot speed
+	float setShooterSpeedValue = pRobot->DriverCMD->shooterSpeedMult * maxEncoderSpeed; //need a function to set shooter speed; this is a placeholder for that
+  int maxHoodAngle = -1200; //placeholder number for max hood angle
+							              //(need to ask mechanical for real number)
+	float setHoodValue = pRobot->DriverCMD->hoodAngleMult * maxHoodAngle; //setHoodAngle = 75% of max hood angle
+                                                                        //need a function to set hood angle; this is a placeholder for that
+  float setHoodSpeed; //need a function to set hood speed; this is a placeholder for that
+
 
   Debug ShooterDebug{"/Subsystems/Shooter"};
 

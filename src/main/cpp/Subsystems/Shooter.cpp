@@ -23,14 +23,14 @@ float Shooter::SetSpinSpeed(float setSpinSpeed)
 
 bool Shooter::SpinUp()
 {
-	frc::SmartDashboard::PutNumber("Set Shoot Speed", setShooterSpeed);
-	pShooter->Shooter_Motor_1.Set(TalonFXControlMode::Velocity, setShooterSpeed);
+	frc::SmartDashboard::PutNumber("Set Shoot Speed", setShooterSpeedValue);
+	pShooter->Shooter_Motor_1.Set(TalonFXControlMode::Velocity, setShooterSpeedValue);
 	pShooter->Shooter_Motor_2.Follow(pShooter->Shooter_Motor_1);
 	bool spinUpReturn;
-	while (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() != setShooterSpeed){
+	while (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() != setShooterSpeedValue){
 		spinUpReturn = false;
 	}
-	if (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() == setShooterSpeed)
+	if (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() == setShooterSpeedValue)
 	{
 		frc::SmartDashboard::PutNumber("Shoot Speed", pShooter->Shooter_Motor_1.GetSelectedSensorVelocity());
 		frc::SmartDashboard::PutNumber("Shoot Set Percent", pShooter->Shooter_Motor_1.GetMotorOutputPercent());
@@ -44,13 +44,12 @@ bool Shooter::TargetSpeed(){
 	Shooter::SpinUp();
 	bool targetSpeedReturn;
 	if (Shooter::SpinUp()){
-		frc::SmartDashboard::PutBoolean("At Target Speed", true);
 		targetSpeedReturn = true;
 	}
 	else {
-		frc::SmartDashboard::PutBoolean("At Target Speed", false);
 		targetSpeedReturn = false;
 	}
+	frc::SmartDashboard::PutBoolean("At Target Speed", targetSpeedReturn);
 	return targetSpeedReturn;
 }
 
@@ -65,36 +64,44 @@ void Shooter::StopSpin()
 	frc::SmartDashboard::PutNumber("Shoot Set Percent", pShooter->Shooter_Motor_1.GetMotorOutputPercent());
 }
 
-float Shooter::SetHood(float setHoodAngle)
+float Shooter::SetHood(float setHood)
 {
 	//right now this function is a placeholder for the MoveHood fuction until i get some distance and angle values
 	//it opens the hood 75% of max angle it can open
-
-	int maxHoodAngle = -1200; //placeholder number for max hood angle
-							  //(need to ask mechanical for real number)
-	setHoodAngle = pRobot->DriverCMD->hoodAngleMult * maxHoodAngle; //setHoodAngle = 75% of max hood angle
-	frc::SmartDashboard::PutNumber("Set Angle", setHoodAngle);
-	pShooter->Hood_Motor.Set(TalonSRXControlMode::Position, setHoodAngle);
+	frc::SmartDashboard::PutNumber("Set Angle", setHood);
+	pShooter->Hood_Motor.Set(TalonSRXControlMode::Position, setHood);
 	frc::SmartDashboard::PutNumber("Hood Angle", pShooter->Hood_Motor.GetSelectedSensorPosition());
+	float setHoodAngle = setHood;
 	return setHoodAngle;
 }
 
 bool Shooter::MoveHood(float setHoodSpeed){
+	frc::SmartDashboard::PutNumber("Set Hood Speed", setHoodSpeed);
+	frc::SmartDashboard::PutNumber("Set Hood Angle", Shooter::SetHood(setHoodValue));
 
+	pShooter->Hood_Motor.Set(TalonSRXControlMode::Velocity, setHoodSpeed);
+	bool hoodAngleReturn;
+	while (pShooter->Hood_Motor.GetSelectedSensorPosition() != Shooter::SetHood(setHoodValue)){
+		hoodAngleReturn = false;
+	}
+	if (pShooter->Hood_Motor.GetSelectedSensorPosition() == Shooter::SetHood(setHoodValue))
+	{
+		frc::SmartDashboard::PutNumber("Hood Set Angle", pShooter->Hood_Motor.GetSelectedSensorPosition());
+		hoodAngleReturn = true;
+	}
+	return hoodAngleReturn;
 }
 
 bool Shooter::HoodAimed(){
-	float setHoodSpeed; //need a function to set hood speed; this is a placeholder for that
-	Shooter::MoveHood(setHoodSpeed);
+	
 	bool hoodAimedReturn;
 	if (Shooter::MoveHood(setHoodSpeed)){
-	frc::SmartDashboard::PutBoolean("At Target Speed", true);
 		hoodAimedReturn = true;
 	}
 	else {
-		frc::SmartDashboard::PutBoolean("At Target Speed", false);
 		hoodAimedReturn = false;
 	}
+	frc::SmartDashboard::PutBoolean("At Target Angle", hoodAimedReturn);
 	return hoodAimedReturn;
 
 }
