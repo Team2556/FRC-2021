@@ -57,7 +57,7 @@ void Robot::RobotInit()
   MecanumDrive = new Drivebase(this);
   FeederController = new Feeder();
   OdometryController = new Odometry(this, MecanumDrive);
-  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryTester);
+  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
   DriverCMD = new OI();

@@ -23,26 +23,27 @@ void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyr
 
 bool Drivebase::Aim(float error)
 {
-    float error = pRobot->limelight.xOffset();
-    float integral = 0; 
+    // float error = pRobot->limelight.xOffset();
+    // float integral = 0; 
 
-    if ( error != 0){
+    // if ( error != 0){
                 
-        float pGain = 1; 
-        float dGain = 1; 
-        float iGain = 1; 
+    //     float pGain = 1; 
+    //     float dGain = 1; 
+    //     float iGain = 1; 
     
-        float deriv //= error - previousError; //how do I get the previous error?
-        integral = integral + error;
+    //     float deriv //= error - previousError; //how do I get the previous error?
+    //     integral = integral + error;
        
-       this->RotateDrivebase(((error * pGain) + (integral * iGain) - (deriv * dGain))); 
-       return false;
+    //    this->RotateDrivebase(((error * pGain) + (integral * iGain) - (deriv * dGain))); 
+    //    return false;
 
-    }
+    // }
      
-    else {
-        return true; 
-    } 
+    // else {
+    //     return true; 
+    // } 
+    return false;
 }
 
 float limitNumber(float initial, float max)
@@ -209,6 +210,7 @@ float Drivebase::GetRotate()
 void Drivebase::testDrive(bool go, float speed)
 {
     this->Drive(speed, -speed, 0, 0);
+}
 
 /*
  Drive with direction off x axis (degrees), speed (mps), rotate (deg/s), and gyro (deg).
