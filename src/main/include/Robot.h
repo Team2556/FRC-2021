@@ -23,6 +23,9 @@
 #include "Utilities/RobotMap.h"
 #include "Odometry/NavGyro.h"
 //#include "OpModes/OpMode.h"
+
+#include <Odometry/Limelight.h>
+
 class Robot : public frc::TimedRobot
 {
 public:
@@ -41,7 +44,7 @@ public:
   std::vector<OpMode *> TeleopModes;
   // NavX
   NavGyro Nav;
-
+  Limelight limelight;
 
   //ManualTeleop *Manual;
   OI *DriverCMD;

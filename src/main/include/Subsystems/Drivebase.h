@@ -7,6 +7,7 @@
 #include "rev/CANSparkMax.h"
 #include "frc/drive/MecanumDrive.h"
 #include "frc/Encoder.h"
+#include "Odometry/Limelight.h"
 
 #include "Utilities/Debug.h"
 
@@ -27,7 +28,7 @@ class Drivebase {
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
 
   // Aim Functions
-  bool Aim();
+  bool Aim(float error);
   bool IsAimed();
   void RotateDrivebase(float speed);
 

@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 #define MAX_ROTATE .7
 #include "Subsystems/Drivebase.h"
+#include "Odometry/Limelight.h"
 
 Drivebase::Drivebase(Robot * pRobot)
 {
@@ -20,6 +21,30 @@ void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyr
     this->DriveMPS(speedConverted, direction, rotate, gyro);
 }
 
+bool Drivebase::Aim(float error)
+{
+    float error = pRobot->limelight.xOffset();
+    float integral = 0; 
+
+    if ( error != 0){
+                
+        float pGain = 1; 
+        float dGain = 1; 
+        float iGain = 1; 
+    
+        float deriv //= error - previousError; //how do I get the previous error?
+        integral = integral + error;
+       
+       this->RotateDrivebase(((error * pGain) + (integral * iGain) - (deriv * dGain))); 
+       return false;
+
+    }
+     
+    else {
+        return true; 
+    } 
+}
+
 float limitNumber(float initial, float max)
 {
     if(fabs(initial) < max)
@@ -35,6 +60,7 @@ float limitNumber(float initial, float max)
         return -1.0 * max;
     }
 }
+
 void Drivebase::Drive(float fForward, float fStrafe, float rotate, float gyro)
 {
     rotate *= MAX_ROTATE;
@@ -86,6 +112,11 @@ void Drivebase::GyroDrive(bool fieldOriented)
     DrivebaseDebug.PutNumber("Yaw Speed", pRobot->Nav.getYawSpeed());
     if ((bAllowRotate == false) && (bRotatePrevious== true) && (fabs(pRobot->Nav.getYawSpeed()) < 4))
     {
+        stopHoldCounter++;
+    }
+    else if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter >= 15))
+    {
+        stopHoldCounter = 0;
         bRotatePrevious = false;
     }
     // if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter < 15))
