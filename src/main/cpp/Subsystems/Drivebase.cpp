@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+#define MAX_ROTATE .7
 #include "Subsystems/Drivebase.h"
 
 Drivebase::Drivebase(Robot * pRobot)
@@ -22,13 +22,31 @@ void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyr
     this->Drive(ySpeed, xSpeed, rotate, gyro);
 }
 
+float limitNumber(float initial, float max)
+{
+    if(fabs(initial) < max)
+    {
+        return initial;
+    }
+    else if(initial > max)
+    {
+        return max;
+    }
+    else if(initial < -1.0 * max)
+    {
+        return -1.0 * max;
+    }
+}
 void Drivebase::Drive(float fForward, float fStrafe, float rotate, float gyro)
 {
-    rotate *= .7;
+    rotate *= MAX_ROTATE;
+    rotate = limitNumber(rotate, MAX_ROTATE);
+    
     DrivebaseDebug.PutNumber("Forward", fForward);
     DrivebaseDebug.PutNumber("Strafe", fStrafe);
     DrivebaseDebug.PutNumber("Rotate", rotate);
     DrivebaseDebug.PutNumber("Gyro", gyro);
+
     RobotDrive.DriveCartesian(fStrafe, fForward, rotate, gyro);
 }
 
@@ -64,16 +82,20 @@ void Drivebase::GyroDrive(bool fieldOriented)
     {
         bRotatePrevious = true;
     }
-
-    if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter < 15))
+    DrivebaseDebug.PutNumber("Yaw Speed", pRobot->Nav.getYawSpeed());
+    if ((bAllowRotate == false) && (bRotatePrevious== true) && (fabs(pRobot->Nav.getYawSpeed()) < 4))
     {
-        stopHoldCounter++;
-    }
-    else if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter >= 15))
-    {
-        stopHoldCounter = 0;
         bRotatePrevious = false;
     }
+    // if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter < 15))
+    // {
+    //     stopHoldCounter++;
+    // }
+    // else if((bAllowRotate == false) && (bRotatePrevious == true) && (stopHoldCounter >= 15))
+    // {
+    //     stopHoldCounter = 0;
+    //     bRotatePrevious = false;
+    // }
 
 
     if (bRotatePrevious)
@@ -150,4 +172,9 @@ float Drivebase::GetRotate()
 {
     float error = pRobot->Nav.GetYawError();
     return error * .015;
+}
+
+void Drivebase::testDrive(bool go, float speed)
+{
+    this->Drive(speed, -speed, 0, 0);
 }

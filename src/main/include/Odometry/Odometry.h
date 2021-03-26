@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#define _USE_MATH_DEFINES
 #include "frc/kinematics/MecanumDriveOdometry.h"
 #include "frc/kinematics/MecanumDriveKinematics.h"
 #include "thread"
@@ -15,6 +16,7 @@
 //#include "Utilities/Debug.h"
 #include "frc/Ultrasonic.h"
 //#include "Robot.h"
+#include <math.h>
 
 //Ultrasonic distance from ground in inches
 #define ULTRASONICHEIGHT 20

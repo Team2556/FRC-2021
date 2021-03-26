@@ -55,27 +55,28 @@ void Robot::RobotInit()
   //JetsonController = new Jetson();
   //The Drivebase is the issue. #cringe
   MecanumDrive = new Drivebase(this);
+  FeederController = new Feeder();
   OdometryController = new Odometry(this, MecanumDrive);
-  // AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryTester);
-  // AutoBall = new AutomaticBall();
-  // AutoShoot = new AutomaticShoot();
-  // Manual =  new ManualTeleop(this, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
+  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryTester);
+  AutoBall = new AutomaticBall();
+  AutoShoot = new AutomaticShoot();
   DriverCMD = new OI();
-  // AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
-  // AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
-  // AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
+  Manual =  new ManualTeleop(this, DriverCMD, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
+  AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
+  AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
+  AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
   
 
-  // TeleopModes.push_back(AutoPath);
-  // TeleopModes.push_back(AutoBall);
-  // TeleopModes.push_back(AutoShoot);
-  // TeleopModes.push_back(Manual);
-  // TeleopTriggers.push_back(AutoShootTrigger);
-  // TeleopTriggers.push_back(AutoBallTrigger);
-  // TeleopTriggers.push_back(AutoPathTrigger);
+  TeleopModes.push_back(AutoPath);
+  TeleopModes.push_back(AutoBall);
+  TeleopModes.push_back(AutoShoot);
+  TeleopModes.push_back(Manual);
+  TeleopTriggers.push_back(AutoShootTrigger);
+  TeleopTriggers.push_back(AutoBallTrigger);
+  TeleopTriggers.push_back(AutoPathTrigger);
 
 
-  // TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
+  TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);
 }
 
 
@@ -107,6 +108,7 @@ void Robot::TeleopInit()
 
 void Robot::TeleopPeriodic() 
 {
+  Nav.Update();
   //printf("address is %p and address 2 is %p\n", (void *)TeleopModes[0], *((int *)(void * )TeleopController->nextOp()));
   //TeleopController->nextOp();
   //TeleopController->test();
@@ -117,7 +119,12 @@ void Robot::TeleopPeriodic()
   // AutoPath->moveToNextWaypoint();
   // MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0.0);
   MecanumDrive->FieldOrientedDrive();
+  // MecanumDrive->testDrive(true, DriverCMD->fMoveForward());
   OdometryController->updatePose();
+  float speed = (float)(DriverCMD->bTestButton(9)) * .25;
+  frc::SmartDashboard::PutBoolean("button pressed", DriverCMD->bTestButton(9));
+  frc::SmartDashboard::PutNumber("hopper speed", speed);
+  FeederController->SpinHopper(speed);
   // MecanumDrive->Drive(DriverCMD->fMoveForward(), 0, 0, 0);
   //MecanumDrive->leftBack.Set(.3);
 }

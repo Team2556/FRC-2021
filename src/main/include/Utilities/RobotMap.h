@@ -11,8 +11,8 @@
 
 //Feeder/Intake Placeholders.
 #define INTAKE_OUT 56
-#define CAN_INTAKE 5
-#define HOPPER_MOTOR 6 
+#define CAN_INTAKE 6
+#define HOPPER_MOTOR 5 
 #define FEEDER_HIGH 7
 #define FEEDER_LOW 8
 #define HOPPER_KICKUP 101 //Currently not on robot, when added give real value

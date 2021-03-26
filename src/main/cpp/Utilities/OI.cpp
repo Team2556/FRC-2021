@@ -218,6 +218,9 @@ bool OI::bTestButton(int iButton)
         case 8:
             bButtonValue = Xbox3.GetAButtonPressed();
             break;
+        case 9:
+            bButtonValue = Xbox1.GetBumper(frc::XboxController::kRightHand);
+            break;
         default :
             bButtonValue = false;
             break;

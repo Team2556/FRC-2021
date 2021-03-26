@@ -18,7 +18,7 @@ void Feeder::KickUp(float Speed)
 
 void Feeder::SpinHopper(float speed)
 {
-    Hopper_Spinner.Set(speed);
+    Hopper_Spinner.Set(-1 * fabs(speed));
 }
 
 void Feeder::SetIntake(bool Extended)

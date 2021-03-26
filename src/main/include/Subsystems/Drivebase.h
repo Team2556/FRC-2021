@@ -34,7 +34,7 @@ class Drivebase {
   rev::CANEncoder GetEncoderLR();
   rev::CANEncoder GetEncoderRR();
 
-
+  void testDrive(bool go, float speed);
 
  private:
   //Drivebase motors
