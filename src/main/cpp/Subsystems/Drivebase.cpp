@@ -16,10 +16,8 @@ Drivebase::Drivebase(Robot * pRobot)
 //Drives the robot using a speed, direction (rads clockwise from forward), and rotation. 
 void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyro)
 {
-    float xSpeed = sin(direction) * speed;
-    float ySpeed = cos(direction) * speed;
-
-    this->Drive(ySpeed, xSpeed, rotate, gyro);
+    float speedConverted = MAX_SPEED * speed;
+    this->DriveMPS(speedConverted, direction, rotate, gyro);
 }
 
 float limitNumber(float initial, float max)
@@ -47,7 +45,10 @@ void Drivebase::Drive(float fForward, float fStrafe, float rotate, float gyro)
     DrivebaseDebug.PutNumber("Rotate", rotate);
     DrivebaseDebug.PutNumber("Gyro", gyro);
 
-    RobotDrive.DriveCartesian(fStrafe, fForward, rotate, gyro);
+    float totalSpeed = sqrt(fStrafe * fStrafe + fForward * fForward);
+    float direction = atan2(fForward, fStrafe);
+
+    this->DriveMPS(totalSpeed, direction, rotate, gyro);
 }
 
 void Drivebase::GyroDrive(bool fieldOriented)
@@ -177,4 +178,46 @@ float Drivebase::GetRotate()
 void Drivebase::testDrive(bool go, float speed)
 {
     this->Drive(speed, -speed, 0, 0);
+
+/*
+ Drive with direction off x axis (degrees), speed (mps), rotate (deg/s), and gyro (deg).
+ All other drive functions feed into this one.
+ */
+void Drivebase::DriveMPS(float direction, float speed, float rotate, float gyro)
+{
+    direction += gyro;
+    float rotateScaled = rotate * ROBOT_RADIUS * PI/180;
+    //Motor speeds are dependent on direction and speed. These are the functions that return correct values.
+    double rightFrontSpeed = speed * sin((45 - direction) * PI/180) + rotate;
+    double leftFrontSpeed = speed * sin((135 - direction) * PI/180) + rotate;
+    double leftBackSpeed = speed * sin((225 - direction) * PI/180) + rotate;
+    double rightBackSpeed = speed * sin((315 - direction) * PI/180) + rotate;
+
+    //Set motor speeds to calculated values
+    DriveLowLevel(leftFrontSpeed, rightFrontSpeed, leftBackSpeed, rightBackSpeed);
+}
+
+
+//Parameters are pointer to the motor you want to set and the speed in m/s you want it to end up at
+void Drivebase::SetMotorSpeed(rev::CANSparkMax * motor, float speed)
+{
+    float SetPoint = speed; //This is the speed we want to be at.
+    float scale = 0.02;     //This needs to change lol
+    //Error is the difference between the speed we want to be at and our current speed from that motor.
+    float error = SetPoint - motor->GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192).GetVelocity();
+    float motorSpeedNow = motor->Get(); //Find current speed on the motor
+    motor->Set(motorSpeedNow + error * scale); //Adjust current speed by the error
+}
+
+//Sets drive motor speeds (mps). Only function that should interact with drivebase motors.
+void Drivebase::DriveLowLevel(float FrontLeftMPS, float FrontRightMPS, float RearLeftMPS, float RearRightMPS)
+{
+    DrivebaseDebug.PutNumber("RF Encoder Number", GetEncoderRF().GetVelocity());
+    DrivebaseDebug.PutNumber("LF Encoder Number", GetEncoderLF().GetVelocity());
+    DrivebaseDebug.PutNumber("RR Encoder Number", GetEncoderRR().GetVelocity());
+    DrivebaseDebug.PutNumber("LR Encoder Number", GetEncoderLR().GetVelocity());
+    SetMotorSpeed(&rightFront, FrontRightMPS);
+    SetMotorSpeed(&leftFront, FrontLeftMPS);
+    SetMotorSpeed(&rightBack, RearRightMPS);
+    SetMotorSpeed(&leftBack, RearLeftMPS);
 }

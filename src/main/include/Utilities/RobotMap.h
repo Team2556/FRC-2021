@@ -42,3 +42,6 @@
 //All DIO Things
 #define TRENCHULTRASONIC1 0
 #define TRENCHULTRASONIC2 1 
+
+//Robot Details
+#define ROBOT_RADIUS 0.256
