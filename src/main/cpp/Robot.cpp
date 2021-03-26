@@ -111,10 +111,11 @@ void Robot::TeleopPeriodic()
   //frc::SmartDashboard::PutString("Current OpMode", TeleopController->CurrOp->name);
   // AutoPath->moveToNextWaypoint();
   // MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0.0);
-  MecanumDrive->FieldOrientedDrive();
-  OdometryController->updatePose();
+  // MecanumDrive->FieldOrientedDrive();
+  // OdometryController->updatePose();
   // MecanumDrive->Drive(DriverCMD->fMoveForward(), 0, 0, 0);
   //MecanumDrive->leftBack.Set(.3);
+  MecanumDrive->DriveMPS(45, 0.5, 0, 0);
 }
 
 void Robot::DisabledInit() 

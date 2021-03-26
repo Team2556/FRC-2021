@@ -57,8 +57,8 @@ class Odometry {
   
 
   //x and y are distances from robot center to wheel
-  units::length::meter_t x{.256};
-  units::length::meter_t y{.256};
+  units::length::meter_t x{ROBOT_RADIUS};
+  units::length::meter_t y{ROBOT_RADIUS};
 
   frc::Translation2d frontRight{x, -y};
   frc::Translation2d backRight{-x, -y};
