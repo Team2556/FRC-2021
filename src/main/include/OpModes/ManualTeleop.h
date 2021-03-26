@@ -5,6 +5,7 @@
 #pragma once
 #include "OpMode.h"
 #include "Robot.h"
+#include "Utilities/OI.h"
 #include "Subsystems/Climber.h"
 #include "Subsystems/Drivebase.h"
 #include "Subsystems/ControlPanel.h"
@@ -13,9 +14,10 @@
 
 class ManualTeleop : public OpMode {
  public:
-  ManualTeleop(Robot * pRobot, Climber * pClimber, ControlPanel * pCtrlPanel, Drivebase * pDrivebase, Feeder * pFeeder, Shooter * pShooter);
+  ManualTeleop(Robot * pRobot, OI * DriverCMD, Climber * pClimber, ControlPanel * pCtrlPanel, Drivebase * pDrivebase, Feeder * pFeeder, Shooter * pShooter);
 
   Robot * pRobot;
+  OI * DriverCMD;
   Climber * pClimber;
   ControlPanel * pCtrlPanel;
   Drivebase * pDrivebase;
@@ -27,5 +29,4 @@ class ManualTeleop : public OpMode {
   void Run() override;
   bool Complete() override;
 
-  int timesRun;
 };

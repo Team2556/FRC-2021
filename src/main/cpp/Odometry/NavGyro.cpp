@@ -9,15 +9,30 @@ NavGyro::NavGyro()
     pNavX = new AHRS(frc::SPI::Port::kMXP);
     pNavX->Reset();
     this->CommandYaw = pNavX->GetYaw();
+    PrevYaw = pNavX->GetYaw();
 }
 
 float fNormalizeAngle360(float fAngle);
 float fNormalizeAngle180(float fAngle);
 
+void NavGyro::Update()
+{
+    PrevYaw = CurrentYaw;
+    CurrentYaw = pNavX->GetYaw();
+    Speed = PrevYaw - CurrentYaw;;
+}
+
 //Returns the degree value of the robot's counterclockwise angle from vertical heading
 float NavGyro::getYaw()
 {
-    return pNavX->GetYaw();
+    return CurrentYaw;
+    // return pNavX->GetYaw();
+}
+
+float NavGyro::getYawSpeed()
+{
+    return Speed;
+    // return pNavX->GetRate();
 }
 
 // Get the current command yaw
@@ -42,6 +57,7 @@ float NavGyro::GetYawError()
 void NavGyro::ResetYaw()
 {
     pNavX->Reset();
+    Update();
     CommandYaw = getYaw();
 }
 

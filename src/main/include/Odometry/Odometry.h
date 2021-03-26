@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#define _USE_MATH_DEFINES
 #include "frc/kinematics/MecanumDriveOdometry.h"
 #include "frc/kinematics/MecanumDriveKinematics.h"
 #include "thread"
@@ -12,6 +13,7 @@
 #include "Subsystems/Drivebase.h"
 #include <mutex>
 #include <atomic>
+#include <math.h>
 
 #include "Utilities/Debug.h"
 #include "Robot.h"

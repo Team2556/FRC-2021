@@ -11,8 +11,10 @@ class NavGyro {
   public:
     NavGyro();
 
+    void Update();
     void setCommandYaw(float yaw);
     float getYaw();
+    float getYawSpeed();
     float getCommandYaw();
     float GetYawError();
     float GetRotate();
@@ -25,5 +27,9 @@ class NavGyro {
     float CommandYaw;
 
     Debug NavXDebug{"Subsystems/NavX"};
+
+    float CurrentYaw;
+    float PrevYaw;
+    float Speed;
     
 };
