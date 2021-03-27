@@ -14,7 +14,7 @@ class AutomaticBall : public OpMode {
   void Run() override;
   bool Complete() override;
 
-  float angleOffNearestBall(); //Get angle to the nearest ball. This will need to use the pixy cam.
+  double angleOffNearestBall(); //Get angle to the nearest ball. This will need to use the pixy cam.
   void rotateToBall(); //Robot needs to be rotated so intake is in line with ball. 
   void moveToBall(); //Robot needs to move towards ball to pick it up. Also needs to run intake.
   // rotateToBall and moveToBall can be run simultaneously with holonomic drive to optimize efficiency.

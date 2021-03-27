@@ -27,19 +27,19 @@ class Odometry {
 
   void odometryPeriodic();
 
-  float getX();
-  float getY();
-  float getYaw();
+  double getX();
+  double getY();
+  double getYaw();
 
-  void SetStartX(float X);
-  void SetStartY(float Y);
-  void SetStartYaw(float Yaw);
+  void SetStartX(double X);
+  void SetStartY(double Y);
+  void SetStartYaw(double Yaw);
 
-  float GetStartX();
-  float GetStartY();
-  float GetStartYaw();
+  double GetStartX();
+  double GetStartY();
+  double GetStartYaw();
   
-  float normalize360(float angle);
+  double normalize360(double angle);
 
   frc::Pose2d getCurrentPose();
 

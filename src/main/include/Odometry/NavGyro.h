@@ -14,24 +14,24 @@ class NavGyro {
     NavGyro();
 
     void Update();
-    void setCommandYaw(float yaw);
-    float getYaw();
-    float getYawSpeed();
-    float getCommandYaw();
-    float GetYawError();
-    float GetRotate();
+    void setCommandYaw(double yaw);
+    double getYaw();
+    double getYawSpeed();
+    double getCommandYaw();
+    double GetYawError();
+    double GetRotate();
 
     void ResetYaw();
 
   private:
     AHRS * pNavX;
     // Values for the navX
-    float CommandYaw;
+    double CommandYaw;
 
     Debug NavXDebug{"Subsystems/NavX"};
 
-    float CurrentYaw;
-    float PrevYaw;
-    float Speed;
+    double CurrentYaw;
+    double PrevYaw;
+    double Speed;
     
 };

@@ -14,7 +14,7 @@ bool Limelight::HasTarget()
   return table->GetBoolean("tv", false);
 }
 
-float Limelight::xOffset()
+double Limelight::xOffset()
 {
   return table->GetNumber("tx", 0);
 }

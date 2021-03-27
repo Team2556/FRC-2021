@@ -12,10 +12,10 @@ class Debug {
   Debug(std::string name);
 
   void PutString(std::string key, std::string value);
-  void PutNumber(std::string key, float value);
+  void PutNumber(std::string key, double value);
   void PutBoolean(std::string key, bool value);
 
-  float GetNumber(std::string key, float defaultValue);
+  double GetNumber(std::string key, double defaultValue);
 
   std::shared_ptr<NetworkTable> table;
 };

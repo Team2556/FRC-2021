@@ -121,7 +121,7 @@ void Robot::TeleopPeriodic()
   MecanumDrive->FieldOrientedDrive();
   // MecanumDrive->testDrive(true, DriverCMD->fMoveForward());
   OdometryController->updatePose();
-  float speed = (float)(DriverCMD->bTestButton(9)) * .25;
+  double speed = (double)(DriverCMD->bTestButton(9)) * .25;
   frc::SmartDashboard::PutBoolean("button pressed", DriverCMD->bTestButton(9));
   frc::SmartDashboard::PutNumber("hopper speed", speed);
   FeederController->SpinHopper(speed);

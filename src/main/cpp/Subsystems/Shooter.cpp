@@ -10,9 +10,9 @@ Shooter::Shooter(Robot *pRobot)
 }
 
 
-void Shooter::SetSpinSpeed(float setSpinSpeed)
+void Shooter::SetSpinSpeed(double setSpinSpeed)
 {
-	//float setSpinSpeed; //get desired speed from another function
+	//double setSpinSpeed; //get desired speed from another function
 	setShooterSpeedValue = setSpinSpeed;
 	// This function should be just to set the speed for the spinup function so we souldn't call spinup here
 	//SpinUp();
@@ -72,18 +72,18 @@ void Shooter::StopSpin()
 	// frc::SmartDashboard::PutNumber("Shoot Set Percent", Shooter_Motor_1.GetMotorOutputPercent());
 }
 
-float Shooter::SetHood(float setHood)
+double Shooter::SetHood(double setHood)
 {
 	//right now this function is a placeholder for the MoveHood fuction until i get some distance and angle values
 	//it opens the hood 75% of max angle it can open
 	frc::SmartDashboard::PutNumber("Set Angle", setHood);
 	Hood_Motor.Set(TalonSRXControlMode::Position, setHood);
 	frc::SmartDashboard::PutNumber("Hood Angle", Hood_Motor.GetSelectedSensorPosition());
-	float setHoodAngle = setHood;
+	double setHoodAngle = setHood;
 	return setHoodAngle;
 }
 
-bool Shooter::MoveHood(float setHoodSpeed){
+bool Shooter::MoveHood(double setHoodSpeed){
 	frc::SmartDashboard::PutNumber("Set Hood Speed", setHoodSpeed);
 	frc::SmartDashboard::PutNumber("Set Hood Angle", Shooter::SetHood(setHoodValue));
 

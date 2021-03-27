@@ -42,9 +42,9 @@ class Drivebase {
   Drivebase(Robot * pRobot);
   Robot * pRobot;
   // reference frame for robot is: +X Right, +Y Forward, +theta
-  void Drive(float fForward, float fStrafe, float rotate, float gyro);
-  void DriveMPS(float direction, float speed, float rotate, float gyro);
-  void PolarDrive(float speed, float direction, float rotate, float gyro);
+  void Drive(double fForward, double fStrafe, double rotate, double gyro);
+  void DriveMPS(double direction, double speed, double rotate, double gyro);
+  void PolarDrive(double speed, double direction, double rotate, double gyro);
   void GyroDrive(bool fieldOriented);
   void FieldOrientedDrive();
 
@@ -52,7 +52,7 @@ class Drivebase {
 
   // Aim Functions
   bool Aim();
-  float GetAimSpeed();
+  double GetAimSpeed();
   bool IsAimed();
 
   rev::CANEncoder GetEncoderLF();
@@ -60,7 +60,7 @@ class Drivebase {
   rev::CANEncoder GetEncoderLR();
   rev::CANEncoder GetEncoderRR();
 
-  void testDrive(bool go, float speed);
+  void testDrive(bool go, double speed);
 
  private:
   //Drivebase motors
@@ -76,9 +76,9 @@ class Drivebase {
   bool bRotatePrevious = false;
 
 
-  void SetMotorSpeed(rev::CANSparkMax * motor, float speed);
-  float GetRotate();
-  void DriveLowLevel(float FrontLeftMPS, float FrontRightMPS, float RearLeftMPS, float RearRightMPS);
+  void SetMotorSpeed(rev::CANSparkMax * motor, double speed);
+  double GetRotate();
+  void DriveLowLevel(double FrontLeftMPS, double FrontRightMPS, double RearLeftMPS, double RearRightMPS);
 
   AimPIDSource * source;
   PIDWrapper * AimPID;

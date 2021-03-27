@@ -18,24 +18,24 @@ public:
 
   // Wheel Functions
   bool SpinUp(); //uses encoder units per second spins up motor until reaches SetSpinSpeed (Running RPM)
-  void SetSpinSpeed(float setSpinSpeed); //sets the target speed of motor (Desired RPM)
+  void SetSpinSpeed(double setSpinSpeed); //sets the target speed of motor (Desired RPM)
   void StopSpin();
   bool TargetSpeed(); //checks if motor is at target speed
 
   //Hood
-  float SetHood(float setHoodAngle /*units is encoder ticks*/); //sets hood angle
+  double SetHood(double setHoodAngle /*units is encoder ticks*/); //sets hood angle
   bool HoodAimed(); //checks angle of hood
-  bool MoveHood(float setHoodSpeed); //Move hood to the angle SetHood has at given speed
+  bool MoveHood(double setHoodSpeed); //Move hood to the angle SetHood has at given speed
 
   Robot *pRobot;
 
   // All of these values need to be set in the .cpp file
-	float setShooterSpeedValue = pRobot->DriverCMD->shooterSpeedMult * maxEncoderSpeed; //need a function to set shooter speed; this is a placeholder for that
+	double setShooterSpeedValue = pRobot->DriverCMD->shooterSpeedMult * maxEncoderSpeed; //need a function to set shooter speed; this is a placeholder for that
   int maxHoodAngle = -1200; //placeholder number for max hood angle
 							              //(need to ask mechanical for real number)
-	float setHoodValue = pRobot->DriverCMD->hoodAngleMult * maxHoodAngle; //setHoodAngle = 75% of max hood angle
+	double setHoodValue = pRobot->DriverCMD->hoodAngleMult * maxHoodAngle; //setHoodAngle = 75% of max hood angle
                                                                         //need a function to set hood angle; this is a placeholder for that
-  float setHoodSpeed; //need a function to set hood speed; this is a placeholder for that
+  double setHoodSpeed; //need a function to set hood speed; this is a placeholder for that
 
 
   Debug ShooterDebug{"/Subsystems/Shooter"};

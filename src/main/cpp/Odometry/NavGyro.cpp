@@ -12,8 +12,8 @@ NavGyro::NavGyro()
     PrevYaw = pNavX->GetYaw();
 }
 
-float fNormalizeAngle360(float fAngle);
-float fNormalizeAngle180(float fAngle);
+double fNormalizeAngle360(double fAngle);
+double fNormalizeAngle180(double fAngle);
 
 void NavGyro::Update()
 {
@@ -23,33 +23,33 @@ void NavGyro::Update()
 }
 
 //Returns the degree value of the robot's counterclockwise angle from vertical heading
-float NavGyro::getYaw()
+double NavGyro::getYaw()
 {
     return CurrentYaw;
     // return pNavX->GetYaw();
 }
 
-float NavGyro::getYawSpeed()
+double NavGyro::getYawSpeed()
 {
     return Speed;
     // return pNavX->GetRate();
 }
 
 // Get the current command yaw
-float NavGyro::getCommandYaw()
+double NavGyro::getCommandYaw()
 {
     return CommandYaw;
 }
 
 // Set a new command yaw
-void NavGyro::setCommandYaw(float yaw)
+void NavGyro::setCommandYaw(double yaw)
 {
     CommandYaw = yaw;
 }
 
-float NavGyro::GetYawError()
+double NavGyro::GetYawError()
 {
-    float value = fNormalizeAngle180(CommandYaw - getYaw());
+    double value = fNormalizeAngle180(CommandYaw - getYaw());
     NavXDebug.PutNumber("Yaw Error", value);
     return value;
 }
@@ -67,7 +67,7 @@ void NavGyro::ResetYaw()
 
 // Normalize fAngle range from 0.0 to 360.0
 
-float fNormalizeAngle360(float fAngle)
+double fNormalizeAngle360(double fAngle)
 {
     while (fAngle <    0.0) fAngle += 360.0;
     while (fAngle >= 360.0) fAngle -= 360.0;
@@ -79,7 +79,7 @@ float fNormalizeAngle360(float fAngle)
 
 // Normalize fAngle range from +180.0 to -180.0
 
-float fNormalizeAngle180(float fAngle)
+double fNormalizeAngle180(double fAngle)
 {
     while (fAngle <  -180.0) fAngle += 360.0;
     while (fAngle >=  180.0) fAngle -= 360.0;

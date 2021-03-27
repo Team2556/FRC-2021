@@ -47,9 +47,9 @@ Driver input for the forward movement of the robot.
 in field oriented mode positive is away from the driver
 in non-field oriented positive is forward in the robots frame of reference
 */
-float OI::fMoveForward()
+double OI::fMoveForward()
 {
-    float value = -Xbox1.GetY(frc::XboxController::kLeftHand);
+    double value = -Xbox1.GetY(frc::XboxController::kLeftHand);
     OIDebug.PutNumber("Forward", value);
     return value;
 }
@@ -59,12 +59,12 @@ Driver input for the strafing movement of the robot.
 in field oriented mode positive is to the right in the drivers frame of reference
 in non-field oriented positive is to the right in the robots frame of reference
 */
-float OI::fMoveSideways()
+double OI::fMoveSideways()
 {
     return Xbox1.GetX(frc::XboxController::kLeftHand);
 }
 
-float OI::fRotate()
+double OI::fRotate()
 {
     return Xbox1.GetX(frc::XboxController::kRightHand)*.8;
 }
@@ -104,9 +104,9 @@ bool OI::IntakeExtension()
 }
 
 //Run intake in when Xbox2 A button is pressed, run intake out when Xbox2 B button is pressed.
-float OI::IntakeRun()
+double OI::IntakeRun()
 { 
-    float x; 
+    double x; 
     if (Xbox2.GetAButton())
     {
         x = -0.5;
@@ -124,9 +124,9 @@ float OI::IntakeRun()
 }
 
 //Returns speed of hopper kickup motor using Xbox2 Dpad.
-float OI::HopperKickup()
+double OI::HopperKickup()
 {
-    float x; 
+    double x; 
     if (Xbox2.GetPOV() == 90)
     {
         x = 0.5;
@@ -144,9 +144,9 @@ float OI::HopperKickup()
 }
 
 //Returns hopper speed using Xbox2 Dpad
-float OI::HopperRun()
+double OI::HopperRun()
 {
-    float x; 
+    double x; 
     if (Xbox2.GetPOV() == 0)
     {
         x = 0.5;
@@ -235,9 +235,9 @@ bool OI::bTestButton(int iButton)
 
 // Return a control test value
 // From -1.0 to +1.0
-float OI::fTestValue(int iControl)
+double OI::fTestValue(int iControl)
 {
-    float   fControlValue;
+    double   fControlValue;
     switch (iControl)
     {
         case 0 :

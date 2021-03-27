@@ -17,7 +17,7 @@
 
 class AutomaticPath : public OpMode {
  public:
-  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController, float speedMultiplier = 0.5, float rotationMultiplier = 0.5);
+  AutomaticPath(Robot * pRobot, std::vector<frc::Pose2d*> waypoints, Drivebase * MecanumDrive, Odometry * OdometryController, double speedMultiplier = 0.5, double rotationMultiplier = 0.5);
 
   std::vector<frc::Pose2d*> waypoints;
   Robot * pRobot;
@@ -31,14 +31,14 @@ class AutomaticPath : public OpMode {
 
  private:
 
-  float speedMultiplier;
-  float rotationMultiplier;
+  double speedMultiplier;
+  double rotationMultiplier;
   bool complete;
   int timesRun;
   int waypointIndex;
 
-  float distanceToNextWaypoint(frc::Pose2d * waypoint);
-  float angleToNextWaypoint(frc::Pose2d * waypoint);
+  double distanceToNextWaypoint(frc::Pose2d * waypoint);
+  double angleToNextWaypoint(frc::Pose2d * waypoint);
   bool atHeading(frc::Pose2d * waypoint);
   bool moveToNextWaypoint();
 

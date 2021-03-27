@@ -23,28 +23,28 @@ class OI {
 
   //Driving Controls
   
-  float     fMoveForward();
-  float     fMoveSideways();
-  float     fRotate();
+  double     fMoveForward();
+  double     fMoveSideways();
+  double     fRotate();
   bool      bManualRotate();
   bool      bResetGyro();
   int       POV();
 
   //Codriver Controls
   bool IntakeExtension(); //Extend the intake system
-  float IntakeRun(); //Run intake
-  float HopperRun(); //Spin hopper
-  float HopperKickup(); //Kickup balls in hopper
+  double IntakeRun(); //Run intake
+  double HopperRun(); //Spin hopper
+  double HopperKickup(); //Kickup balls in hopper
   bool StopShoot();
   //Feeder
 
   // Test Functions
   bool bTestButton(int iButton);
-  float fTestValue(int iControl);
+  double fTestValue(int iControl);
 
 
-  float shooterSpeedMult = .9;
-  float hoodAngleMult = .75; 
+  double shooterSpeedMult = .9;
+  double hoodAngleMult = .75; 
 
   protected:
     frc::XboxController   Xbox1{XBOX_ONE};

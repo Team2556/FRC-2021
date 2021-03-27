@@ -13,7 +13,7 @@ class Limelight{
     
     bool HasTarget();
 
-    float xOffset();
+    double xOffset();
 
   private:
     std::shared_ptr<NetworkTable> table;

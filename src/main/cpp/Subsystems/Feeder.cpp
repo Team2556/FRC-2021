@@ -11,12 +11,12 @@ Feeder::Feeder()
 }
 
 
-void Feeder::KickUp(float Speed)
+void Feeder::KickUp(double Speed)
 {
     Hopper_Kickup.Set(Speed);
 }
 
-void Feeder::SpinHopper(float speed)
+void Feeder::SpinHopper(double speed)
 {
     Hopper_Spinner.Set(-1 * fabs(speed));
 }
@@ -33,7 +33,7 @@ void Feeder::SetIntake(bool Extended)
     }
 }
 
-void Feeder::RunIntake(float speed)
+void Feeder::RunIntake(double speed)
 {
     Intake_Motor.Set(speed);
 }

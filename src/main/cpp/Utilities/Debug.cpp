@@ -14,7 +14,7 @@ void Debug::PutString(std::string key, std::string value)
     table->PutString(key, value);
 }
 
-void Debug::PutNumber(std::string key, float value)
+void Debug::PutNumber(std::string key, double value)
 {
     table->PutNumber(key, value);
 }
@@ -24,7 +24,7 @@ void Debug::PutBoolean(std::string key, bool value)
     table->PutBoolean(key, value);
 }
 
-float Debug::GetNumber(std::string key, float defaultValue)
+double Debug::GetNumber(std::string key, double defaultValue)
 {
     return table->GetNumber(key, defaultValue);
 }
