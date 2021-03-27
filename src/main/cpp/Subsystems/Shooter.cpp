@@ -4,63 +4,72 @@
 
 #include "Subsystems/Shooter.h"
 
-Shooter::Shooter(Robot *pRobot, Shooter *pShooter)
+Shooter::Shooter(Robot *pRobot)
 {
 	this->pRobot = pRobot;
-	this->pShooter = pShooter;
 }
 
 
-float Shooter::SetSpinSpeed(float setSpinSpeed)
+void Shooter::SetSpinSpeed(float setSpinSpeed)
 {
 	//float setSpinSpeed; //get desired speed from another function
-	float setShooterSpeed = setSpinSpeed;
-	Shooter::SpinUp();
-	return setShooterSpeed;
+	setShooterSpeedValue = setSpinSpeed;
+	// This function should be just to set the speed for the spinup function so we souldn't call spinup here
+	//SpinUp();
 }
 
 
 bool Shooter::SpinUp()
 {
-	frc::SmartDashboard::PutNumber("Set Shoot Speed", setShooterSpeedValue);
-	pShooter->Shooter_Motor_1.Set(TalonFXControlMode::Velocity, setShooterSpeedValue);
-	pShooter->Shooter_Motor_2.Follow(pShooter->Shooter_Motor_1);
-	bool spinUpReturn;
-	while (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() != setShooterSpeedValue){
-		spinUpReturn = false;
-	}
-	if (pShooter->Shooter_Motor_1.GetSelectedSensorVelocity() == setShooterSpeedValue)
-	{
-		frc::SmartDashboard::PutNumber("Shoot Speed", pShooter->Shooter_Motor_1.GetSelectedSensorVelocity());
-		frc::SmartDashboard::PutNumber("Shoot Set Percent", pShooter->Shooter_Motor_1.GetMotorOutputPercent());
-		spinUpReturn = true;
-	}
-	return spinUpReturn;
+	ShooterDebug.PutNumber("Set Shoot Speed", setShooterSpeedValue);
+	Shooter_Motor_1.Set(TalonFXControlMode::Velocity, setShooterSpeedValue);
+	Shooter_Motor_2.Follow(Shooter_Motor_1);
+	
+	// the way you did this doesn't work because the the value from the encoder will never reach exactly the target value
+	// bool spinUpReturn;
+	// while (Shooter_Motor_1.GetSelectedSensorVelocity() != setShooterSpeedValue){
+	// 	spinUpReturn = false;
+	// }
+	// if (Shooter_Motor_1.GetSelectedSensorVelocity() == setShooterSpeedValue)
+	// {
+	// 	frc::SmartDashboard::PutNumber("Shoot Speed", Shooter_Motor_1.GetSelectedSensorVelocity());
+	// 	frc::SmartDashboard::PutNumber("Shoot Set Percent", Shooter_Motor_1.GetMotorOutputPercent());
+	// 	spinUpReturn = true;
+	// }
+	ShooterDebug.PutNumber("Shooter Speed 1", Shooter_Motor_1.GetSelectedSensorVelocity());
+	ShooterDebug.PutNumber("Shooter Speed 2", Shooter_Motor_2.GetSelectedSensorVelocity());
+	ShooterDebug.PutNumber("Shooter Set Percent", Shooter_Motor_1.GetMotorOutputPercent());
+	ShooterDebug.PutNumber("Motor 1 Current", pRobot->PDP.GetCurrent(SHOOTER_MOTOR_1_PDP));
+	ShooterDebug.PutNumber("Motor 2 Current", pRobot->PDP.GetCurrent(SHOOTER_MOTOR_2_PDP));
+
+	return TargetSpeed();
 }
 
-
+// Returns whether the shooter is within the error range of speed
 bool Shooter::TargetSpeed(){
-	Shooter::SpinUp();
-	bool targetSpeedReturn;
-	if (Shooter::SpinUp()){
-		targetSpeedReturn = true;
-	}
-	else {
-		targetSpeedReturn = false;
-	}
-	frc::SmartDashboard::PutBoolean("At Target Speed", targetSpeedReturn);
-	return targetSpeedReturn;
+	// Shooter::SpinUp();
+	// bool targetSpeedReturn;
+	// if (Shooter::SpinUp()){
+	// 	targetSpeedReturn = true;
+	// }
+	// else {
+	// 	targetSpeedReturn = false;
+	// }
+	// frc::SmartDashboard::PutBoolean("At Target Speed", targetSpeedReturn);
+	// return targetSpeedReturn;
+	return fabs(setShooterSpeedValue - Shooter_Motor_1.GetSelectedSensorVelocity()) < MAX_SHOOT_SPEED_ERROR;
 }
 
 
 void Shooter::StopSpin()
 {
-
-	frc::SmartDashboard::PutNumber("Set Output", 0);
-	pShooter->Shooter_Motor_1.Set(TalonFXControlMode::PercentOutput, 0);
-	pShooter->Shooter_Motor_2.Follow(pShooter->Shooter_Motor_1);
-	frc::SmartDashboard::PutNumber("Shoot Speed", pShooter->Shooter_Motor_1.GetSelectedSensorVelocity());
-	frc::SmartDashboard::PutNumber("Shoot Set Percent", pShooter->Shooter_Motor_1.GetMotorOutputPercent());
+	// This function is meant to just be a wrapper for SetSpeed(0)
+	SetSpinSpeed(0);
+	// frc::SmartDashboard::PutNumber("Set Output", 0);
+	// Shooter_Motor_1.Set(TalonFXControlMode::PercentOutput, 0);
+	// Shooter_Motor_2.Follow(Shooter_Motor_1);
+	// frc::SmartDashboard::PutNumber("Shoot Speed", Shooter_Motor_1.GetSelectedSensorVelocity());
+	// frc::SmartDashboard::PutNumber("Shoot Set Percent", Shooter_Motor_1.GetMotorOutputPercent());
 }
 
 float Shooter::SetHood(float setHood)
@@ -68,8 +77,8 @@ float Shooter::SetHood(float setHood)
 	//right now this function is a placeholder for the MoveHood fuction until i get some distance and angle values
 	//it opens the hood 75% of max angle it can open
 	frc::SmartDashboard::PutNumber("Set Angle", setHood);
-	pShooter->Hood_Motor.Set(TalonSRXControlMode::Position, setHood);
-	frc::SmartDashboard::PutNumber("Hood Angle", pShooter->Hood_Motor.GetSelectedSensorPosition());
+	Hood_Motor.Set(TalonSRXControlMode::Position, setHood);
+	frc::SmartDashboard::PutNumber("Hood Angle", Hood_Motor.GetSelectedSensorPosition());
 	float setHoodAngle = setHood;
 	return setHoodAngle;
 }
@@ -78,14 +87,14 @@ bool Shooter::MoveHood(float setHoodSpeed){
 	frc::SmartDashboard::PutNumber("Set Hood Speed", setHoodSpeed);
 	frc::SmartDashboard::PutNumber("Set Hood Angle", Shooter::SetHood(setHoodValue));
 
-	pShooter->Hood_Motor.Set(TalonSRXControlMode::Velocity, setHoodSpeed);
+	Hood_Motor.Set(TalonSRXControlMode::Velocity, setHoodSpeed);
 	bool hoodAngleReturn;
-	while (pShooter->Hood_Motor.GetSelectedSensorPosition() != Shooter::SetHood(setHoodValue)){
+	while (Hood_Motor.GetSelectedSensorPosition() != Shooter::SetHood(setHoodValue)){
 		hoodAngleReturn = false;
 	}
-	if (pShooter->Hood_Motor.GetSelectedSensorPosition() == Shooter::SetHood(setHoodValue))
+	if (Hood_Motor.GetSelectedSensorPosition() == Shooter::SetHood(setHoodValue))
 	{
-		frc::SmartDashboard::PutNumber("Hood Set Angle", pShooter->Hood_Motor.GetSelectedSensorPosition());
+		frc::SmartDashboard::PutNumber("Hood Set Angle", Hood_Motor.GetSelectedSensorPosition());
 		hoodAngleReturn = true;
 	}
 	return hoodAngleReturn;

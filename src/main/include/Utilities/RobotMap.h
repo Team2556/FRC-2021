@@ -45,3 +45,7 @@
 
 //Robot Details
 #define ROBOT_RADIUS 0.256
+
+// PDP Channels
+#define SHOOTER_MOTOR_1_PDP 0
+#define SHOOTER_MOTOR_2_PDP 1

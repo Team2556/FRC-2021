@@ -13,6 +13,7 @@
 #include <ctre/Phoenix.h>
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
+#include "frc/PowerDistributionPanel.h"
 
 #include "Triggers/Trigger.h"
 #include "OpModes/OpMode.h"
@@ -50,6 +51,7 @@ public:
   //ManualTeleop *Manual;
   OI * DriverCMD;
 
+  frc::PowerDistributionPanel PDP{0};
 
   std::vector<frc::Pose2d *> testWaypoints;
   frc::Pose2d *pWaypoint1;

@@ -9,14 +9,16 @@
 
 #include "Utilities/Debug.h"
 
+#define MAX_SHOOT_SPEED_ERROR 100 // since the shooter is spinning at about 11,000rpm, the error can be this high while still being close enough
+
 class Shooter
 {
 public:
-  Shooter(Robot *pRobot, Shooter *pShooter);
+  Shooter(Robot *pRobot);
 
   // Wheel Functions
   bool SpinUp(); //uses encoder units per second spins up motor until reaches SetSpinSpeed (Running RPM)
-  float SetSpinSpeed(float setSpinSpeed); //sets the target speed of motor (Desired RPM)
+  void SetSpinSpeed(float setSpinSpeed); //sets the target speed of motor (Desired RPM)
   void StopSpin();
   bool TargetSpeed(); //checks if motor is at target speed
 
@@ -26,9 +28,8 @@ public:
   bool MoveHood(float setHoodSpeed); //Move hood to the angle SetHood has at given speed
 
   Robot *pRobot;
-  Shooter *pShooter;
 
-  
+  // All of these values need to be set in the .cpp file
 	float setShooterSpeedValue = pRobot->DriverCMD->shooterSpeedMult * maxEncoderSpeed; //need a function to set shooter speed; this is a placeholder for that
   int maxHoodAngle = -1200; //placeholder number for max hood angle
 							              //(need to ask mechanical for real number)
