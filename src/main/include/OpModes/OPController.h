@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+
 #include "Utilities/OI.h"
 #include "OpModes/OpMode.h"
 #include "Triggers/Trigger.h"

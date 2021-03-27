@@ -1,9 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-#define MAX_ROTATE .7
 #include "Subsystems/Drivebase.h"
-#include "Odometry/Limelight.h"
 
 Drivebase::Drivebase(Robot * pRobot)
 {
@@ -12,6 +10,9 @@ Drivebase::Drivebase(Robot * pRobot)
     leftFront.SetInverted(true);
     rightBack.SetInverted(true);
     leftBack.SetInverted(true);
+
+    source = new AimPIDSource(&pRobot->limelight);
+    AimPID = new PIDWrapper(0, 0, 0, 0, PIDOutput, source);
 }
 
 //Drives the robot using a speed, direction (rads clockwise from forward), and rotation. 
@@ -21,29 +22,43 @@ void Drivebase::PolarDrive(float speed, float direction, float rotate, float gyr
     this->DriveMPS(speedConverted, direction, rotate, gyro);
 }
 
-bool Drivebase::Aim(float error)
+/*
+Aim the drivebase at the target using the limelight.
+This function will interfere with any other attempts to drive, if you want to get the speed from the PID loop that would be used here, use GetAimSpeed() instead.
+*/
+bool Drivebase::Aim()
 {
-    // float error = pRobot->limelight.xOffset();
-    // float integral = 0; 
-
-    // if ( error != 0){
-                
-    //     float pGain = 1; 
-    //     float dGain = 1; 
-    //     float iGain = 1; 
+    float speed;
+    if (pRobot->limelight.HasTarget())
+    {
+        speed = *PIDOutput;
+    }
+    else
+    {
+        speed = 0;
+    }
     
-    //     float deriv //= error - previousError; //how do I get the previous error?
-    //     integral = integral + error;
-       
-    //    this->RotateDrivebase(((error * pGain) + (integral * iGain) - (deriv * dGain))); 
-    //    return false;
+    Drive(0, 0, speed, 0);
+    DrivebaseDebug.PutNumber("Aim Speed", speed);
+    return pRobot->limelight.xOffset() < MAX_AIM_ERROR;
+}
 
-    // }
-     
-    // else {
-    //     return true; 
-    // } 
-    return false;
+/*
+Use this function to get the aim speed if you want to aim and call drive yourself 
+*/
+float Drivebase::GetAimSpeed()
+{
+    float speed;
+    if (pRobot->limelight.HasTarget())
+    {
+        speed = *PIDOutput;
+    }
+    else
+    {
+        speed = 0;
+    }
+    DrivebaseDebug.PutNumber("Aim Speed", speed);
+    return speed;
 }
 
 float limitNumber(float initial, float max)

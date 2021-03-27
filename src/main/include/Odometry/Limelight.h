@@ -6,6 +6,7 @@
 
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
+
 class Limelight{
   public:
     Limelight();

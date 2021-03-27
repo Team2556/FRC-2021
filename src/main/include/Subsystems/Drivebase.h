@@ -3,16 +3,39 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "Robot.h"
+
 #include "rev/CANSparkMax.h"
 #include "frc/drive/MecanumDrive.h"
 #include "frc/Encoder.h"
+
+#include "Robot.h"
+
 #include "Odometry/Limelight.h"
 
 #include "Utilities/Debug.h"
+#include "Utilities/PIDWrapper.h"
 
+#define MAX_ROTATE .7
+#define MAX_AIM_ERROR 5
 #define MAX_SPEED 4
 #define PI 3.14159265358979323
+
+
+class AimPIDSource : public frc::PIDSource
+{
+  public:
+    AimPIDSource(Limelight * limelightParam)
+    {
+      limelight = limelightParam;
+    }
+
+    double PIDGet()
+    {
+      return (*limelight).xOffset();
+    }
+  private:
+    Limelight * limelight;
+};
 
 class Drivebase {
  public:
@@ -28,9 +51,9 @@ class Drivebase {
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
 
   // Aim Functions
-  bool Aim(float error);
+  bool Aim();
+  float GetAimSpeed();
   bool IsAimed();
-  void RotateDrivebase(float speed);
 
   rev::CANEncoder GetEncoderLF();
   rev::CANEncoder GetEncoderRF();
@@ -56,4 +79,8 @@ class Drivebase {
   void SetMotorSpeed(rev::CANSparkMax * motor, float speed);
   float GetRotate();
   void DriveLowLevel(float FrontLeftMPS, float FrontRightMPS, float RearLeftMPS, float RearRightMPS);
+
+  AimPIDSource * source;
+  PIDWrapper * AimPID;
+  double * PIDOutput;
 };

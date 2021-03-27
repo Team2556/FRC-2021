@@ -3,14 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "OpMode.h"
+
 #include "Robot.h"
-#include "Utilities/OI.h"
+#include "OpMode.h"
+
 #include "Subsystems/Climber.h"
 #include "Subsystems/Drivebase.h"
 #include "Subsystems/ControlPanel.h"
 #include "Subsystems/Feeder.h"
 #include "Subsystems/Shooter.h"
+
+#include "Utilities/OI.h"
 
 class ManualTeleop : public OpMode {
  public:

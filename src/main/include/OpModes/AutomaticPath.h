@@ -3,12 +3,17 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-//#include "OpMode.h"
-//#include "frc/geometry/Pose2d.h"
+
+#include "frc/geometry/Pose2d.h"
+
+#include "Robot.h"
+#include "OpMode.h"
+
+#include "Subsystems/Drivebase.h"
+
 #include "Odometry/Odometry.h"
-//#include "Robot.h"
-//#include "Subsystems/Drivebase.h"
-//#include "Utilities/Debug.h"
+
+#include "Utilities/Debug.h"
 
 class AutomaticPath : public OpMode {
  public:

@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Subsystems/Shooter.h"
-#include "math.h"
 
 Shooter::Shooter(Robot *pRobot, Shooter *pShooter)
 {

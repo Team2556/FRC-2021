@@ -3,9 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include "math.h"
+
+#include "Robot.h"
 
 #include "Utilities/Debug.h"
-#include "Robot.h"
 
 class Shooter
 {

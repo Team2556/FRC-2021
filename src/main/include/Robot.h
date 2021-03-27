@@ -5,26 +5,24 @@
 #pragma once
 
 #include <string>
+#include <iostream>
+
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-//#include "Utilities/OI.h"
-//#include "Triggers/Trigger.h"
-#include "OpModes/OPController.h"
-//#include "frc/smartdashboard/SmartDashboard.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 #include <ctre/Phoenix.h>
-//#include "OpModes/AutomaticPath.h"
-#include "Triggers/AutomaticPathTrigger.h"
-#include "Triggers/AutomaticShootTrigger.h"
-#include "Triggers/AutomaticBallTrigger.h"
-#include "OpModes/AutomaticShoot.h"
-#include "OpModes/AutomaticBall.h"
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
-#include "Utilities/RobotMap.h"
-#include "Odometry/NavGyro.h"
-//#include "OpModes/OpMode.h"
 
+#include "Triggers/Trigger.h"
+#include "OpModes/OpMode.h"
+#include "OpModes/OPController.h"
+
+#include "Odometry/NavGyro.h"
 #include <Odometry/Limelight.h>
+
+#include "Utilities/RobotMap.h"
+#include "Utilities/OI.h"
 
 class Robot : public frc::TimedRobot
 {
@@ -42,19 +40,16 @@ public:
 
   std::vector<OpMode *> AutoModes;
   std::vector<OpMode *> TeleopModes;
+  OPController *TeleopController;
+  std::vector<Trigger *> TeleopTriggers;
+
   // NavX
   NavGyro Nav;
   Limelight limelight;
 
   //ManualTeleop *Manual;
-  OI *DriverCMD;
-  AutomaticBallTrigger *AutoBallTrigger;
-  AutomaticShootTrigger *AutoShootTrigger;
-  AutomaticBall *AutoBall;
-  AutomaticShoot *AutoShoot;
-  AutomaticPathTrigger *AutoPathTrigger;
-  OPController *TeleopController;
-  std::vector<Trigger *> TeleopTriggers;
+  OI * DriverCMD;
+
 
   std::vector<frc::Pose2d *> testWaypoints;
   frc::Pose2d *pWaypoint1;

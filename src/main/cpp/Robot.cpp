@@ -2,46 +2,46 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-//#include "Robot.h"
-
-#include <iostream>
-
-#include <frc/smartdashboard/SmartDashboard.h>
-#include "OpModes/AutomaticPath.h"
-//#include "Odometry/Odometry.h"
-//#include <thread>
-//#include "Subsystems/Drivebase.h"
-
-//#include "Subsystems/Shooter.h"
-//#include "Subsystems/Feeder.h"
-//#include "Subsystems/ControlPanel.h"
-//#include "Subsystems/Climber.h"
 
 
-//#include "OpModes/OpMode.h"
+#include "Robot.h"
+
+//Subsystem includes
+#include "Subsystems/Drivebase.h"
+#include "Subsystems/Shooter.h"
+#include "Subsystems/Feeder.h"
+#include "Subsystems/ControlPanel.h"
+#include "Subsystems/Climber.h"
+
+
 #include "OpModes/ManualTeleop.h"
+#include "OpModes/AutomaticPath.h"
+#include "OpModes/AutomaticShoot.h"
+#include "OpModes/AutomaticBall.h"
 
-//#include "OpModes/AutomaticShoot.h"
-//#include "OpModes/AutomaticBall.h"
-//#include "Triggers/AutomaticPathTrigger.h"
-//#include "Triggers/AutomaticShootTrigger.h"
-//#include "Triggers/AutomaticBallTrigger.h"
+#include "Triggers/AutomaticPathTrigger.h"
+#include "Triggers/AutomaticShootTrigger.h"
+#include "Triggers/AutomaticBallTrigger.h"
 
-
-AutomaticPath * AutoPath;
+//Subsystems
 Drivebase * MecanumDrive;
-Odometry * OdometryController;
 Shooter * ShooterController;
 Climber * ClimberController;
 ControlPanel * CtrlPanel;
 Feeder * FeederController;
+
+Odometry * OdometryController;
+
+// OpModes
+AutomaticPath * AutoPathTest;
 ManualTeleop * Manual;
 AutomaticBall * AutoBall;
 AutomaticShoot * AutoShoot;
+
+// Triggers
 AutomaticBallTrigger * AutoBallTrigger;
 AutomaticShootTrigger * AutoShootTrigger;
-AutomaticPathTrigger * AutoPathTrigger;
-OPController * TeleopController;
+AutomaticPathTrigger * AutoPathTestTrigger;
 
 void Robot::RobotInit() 
 {
@@ -57,23 +57,23 @@ void Robot::RobotInit()
   MecanumDrive = new Drivebase(this);
   FeederController = new Feeder();
   OdometryController = new Odometry(this, MecanumDrive);
-  AutoPath = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
+  AutoPathTest = new AutomaticPath(this, testWaypoints, MecanumDrive, OdometryController);
   AutoBall = new AutomaticBall();
   AutoShoot = new AutomaticShoot();
   DriverCMD = new OI();
   Manual =  new ManualTeleop(this, DriverCMD, ClimberController, CtrlPanel, MecanumDrive, FeederController, ShooterController);
   AutoShootTrigger = new AutomaticShootTrigger(DriverCMD);
-  AutoPathTrigger = new AutomaticPathTrigger(DriverCMD);
+  AutoPathTestTrigger = new AutomaticPathTrigger(DriverCMD);
   AutoBallTrigger = new AutomaticBallTrigger(DriverCMD);
   
 
-  TeleopModes.push_back(AutoPath);
+  TeleopModes.push_back(AutoPathTest);
   TeleopModes.push_back(AutoBall);
   TeleopModes.push_back(AutoShoot);
   TeleopModes.push_back(Manual);
   TeleopTriggers.push_back(AutoShootTrigger);
   TeleopTriggers.push_back(AutoBallTrigger);
-  TeleopTriggers.push_back(AutoPathTrigger);
+  TeleopTriggers.push_back(AutoPathTestTrigger);
 
 
   TeleopController = new OPController(DriverCMD, TeleopModes, TeleopTriggers);

@@ -4,19 +4,19 @@
 
 #pragma once
 #define _USE_MATH_DEFINES
-#include "frc/kinematics/MecanumDriveOdometry.h"
-#include "frc/kinematics/MecanumDriveKinematics.h"
+
+#include <math.h>
 #include "thread"
-//#include "Utilities/RobotMap.h"
-#include "rev/CANEncoder.h"
-//#include "frc/Encoder.h"
 #include <mutex>
 #include <atomic>
-#include "Subsystems/Drivebase.h"
-//#include "Utilities/Debug.h"
+
+#include "frc/kinematics/MecanumDriveOdometry.h"
+#include "frc/kinematics/MecanumDriveKinematics.h"
+#include "rev/CANEncoder.h"
 #include "frc/Ultrasonic.h"
-//#include "Robot.h"
-#include <math.h>
+
+#include "Subsystems/Drivebase.h"
+#include "Utilities/Debug.h"
 
 //Ultrasonic distance from ground in inches
 #define ULTRASONICHEIGHT 20

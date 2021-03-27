@@ -3,8 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+
 #include "AHRS.h"
 #include "frc/SPI.h"
+
 #include "Utilities/Debug.h"
 
 class NavGyro {

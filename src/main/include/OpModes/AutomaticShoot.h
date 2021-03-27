@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+
 #include "OpModes/OpMode.h"
 
 class AutomaticShoot : public OpMode {

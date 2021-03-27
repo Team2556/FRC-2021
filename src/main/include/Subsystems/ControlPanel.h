@@ -3,8 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
-#include "Utilities/Debug.h"
+
 #include "rev/ColorSensorV3.h"
+
+#include "Utilities/Debug.h"
 
 class ControlPanel {
  public:
