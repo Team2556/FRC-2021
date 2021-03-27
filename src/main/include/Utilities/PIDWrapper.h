@@ -29,7 +29,28 @@ class PIDWrapper
   public:
     PIDWrapper(double p, double i, double d, double f, double * outputLocation, frc::PIDSource * source);
   
+    void SetP(double p);
+    void SetI(double i);
+    void SetD(double d);
+    void SetF(double f);
+    void SetOutput(double * outputLocation);
+    void SetSource(frc::PIDSource * source);
+
+    double GetP();
+    double GetI();
+    double GetD();
+    double GetF();
+    double * GetOutput();
+    frc::PIDSource * GetSource();
+
   private:
     PIDOutputWrapper * output;
     frc::PIDController * controller;
+
+    double p;
+    double i;
+    double d;
+    double f;
+    double * outputLocation;
+    frc::PIDSource * source;
 };

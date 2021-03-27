@@ -43,6 +43,11 @@ bool Drivebase::Aim()
     return pRobot->limelight.xOffset() < MAX_AIM_ERROR;
 }
 
+bool Drivebase::IsAimed()
+{
+    return pRobot->limelight.xOffset() < MAX_AIM_ERROR;
+}
+
 /*
 Use this function to get the aim speed if you want to aim and call drive yourself 
 */
@@ -71,10 +76,11 @@ double limitNumber(double initial, double max)
     {
         return max;
     }
-    else if(initial < -1.0 * max)
+    else //if(initial < -1.0 * max)
     {
         return -1.0 * max;
     }
+    
 }
 
 void Drivebase::Drive(double fForward, double fStrafe, double rotate, double gyro)
