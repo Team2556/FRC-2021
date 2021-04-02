@@ -6,7 +6,7 @@
 #include "math.h"
 
 #include "Robot.h"
-
+#include <ctre/Phoenix.h> //I think this is whats causing builds to take forever
 #include "Utilities/Debug.h"
 
 #define MAX_SHOOT_SPEED_ERROR 100 // since the shooter is spinning at about 11,000rpm, the error can be this high while still being close enough

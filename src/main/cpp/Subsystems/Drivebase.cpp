@@ -6,20 +6,21 @@
 Drivebase::Drivebase(Robot * pRobot)
 {
     this->pRobot = pRobot;
-    rightFront.SetInverted(true);
-    leftFront.SetInverted(true);
-    rightBack.SetInverted(true);
-    leftBack.SetInverted(true);
+    rightFront.SetInverted(false);
+    leftFront.SetInverted(false);
+    rightBack.SetInverted(false);
+    leftBack.SetInverted(false);
 
     source = new AimPIDSource(&pRobot->limelight);
     AimPID = new PIDWrapper(0, 0, 0, 0, PIDOutput, source);
 }
 
-//Drives the robot using a speed, direction (rads clockwise from forward), and rotation. 
+//Drives the robot using a speed, direction (degrees clockwise from forward), and rotation. 
 void Drivebase::PolarDrive(double speed, double direction, double rotate, double gyro)
 {
-    double speedConverted = MAX_SPEED * speed;
-    this->DriveMPS(speedConverted, direction, rotate, gyro);
+    direction += 90;
+    double speedConverted = MAX_SPEED * speed; //Scale speed
+    this->DriveMPS(direction, speedConverted, rotate, gyro);
 }
 
 /*
@@ -76,7 +77,7 @@ double limitNumber(double initial, double max)
     {
         return max;
     }
-    else //if(initial < -1.0 * max)
+    else
     {
         return -1.0 * max;
     }
@@ -85,18 +86,19 @@ double limitNumber(double initial, double max)
 
 void Drivebase::Drive(double fForward, double fStrafe, double rotate, double gyro)
 {
-    rotate *= MAX_ROTATE;
-    rotate = limitNumber(rotate, MAX_ROTATE);
-    
+    rotate *= MAX_ROTATE_PERCENTAGE; //Scale rotate
+    rotate = limitNumber(rotate, MAX_ROTATE_PERCENTAGE); //Limit rotate to max rotate
     DrivebaseDebug.PutNumber("Forward", fForward);
     DrivebaseDebug.PutNumber("Strafe", fStrafe);
     DrivebaseDebug.PutNumber("Rotate", rotate);
     DrivebaseDebug.PutNumber("Gyro", gyro);
 
-    double totalSpeed = sqrt(fStrafe * fStrafe + fForward * fForward);
-    double direction = atan2(fForward, fStrafe);
+    double totalSpeed = sqrt(fStrafe * fStrafe + fForward * fForward) * MAX_SPEED;
+    double direction = -atan2(fForward, fStrafe) * 180/PI;
 
-    this->DriveMPS(totalSpeed, direction, rotate, gyro);
+    double rotateDPS = rotate * MAX_ROTATE; //Convert rotate from [-1, 1] to [-MAX_ROTATE, MAX_ROTATE]
+    DrivebaseDebug.PutNumber("RotateDPS", rotateDPS);
+    this->DriveMPS(direction, totalSpeed, rotateDPS, gyro);
 }
 
 void Drivebase::GyroDrive(bool fieldOriented)
@@ -193,7 +195,7 @@ void Drivebase::GyroDrive(bool fieldOriented)
 
 void Drivebase::FieldOrientedDrive()
 {
-    this->GyroDrive(true);
+    this->GyroDrive(true); //Why dont we just call GyroDrive(true)??
 }
 
 // Encoder Functions
@@ -230,7 +232,7 @@ double Drivebase::GetRotate()
 
 void Drivebase::testDrive(bool go, double speed)
 {
-    this->Drive(speed, -speed, 0, 0);
+    this->Drive(speed, -speed, 0, 0); //Wtf is this? Why does this exist
 }
 
 /*
@@ -239,13 +241,16 @@ void Drivebase::testDrive(bool go, double speed)
  */
 void Drivebase::DriveMPS(double direction, double speed, double rotate, double gyro)
 {
-    direction += gyro;
-    double rotateScaled = rotate * ROBOT_RADIUS * PI/180;
+    DrivebaseDebug.PutNumber("Set Robot Speed", speed);
+    direction += gyro; //Tack on gyro value to direction.
+    DrivebaseDebug.PutNumber("Set Direction", direction);
+    double rotateScaled = (rotate * ROBOT_RADIUS * PI)/180; //Convert degrees per second to mps
+    DrivebaseDebug.PutNumber("Scaled Rotate", rotateScaled);
     //Motor speeds are dependent on direction and speed. These are the functions that return correct values.
-    double rightFrontSpeed = speed * sin((45 - direction) * PI/180) + rotateScaled;
-    double leftFrontSpeed = speed * sin((135 - direction) * PI/180) + rotateScaled;
-    double leftBackSpeed = speed * sin((225 - direction) * PI/180) + rotateScaled;
-    double rightBackSpeed = speed * sin((315 - direction) * PI/180) + rotateScaled;
+    double rightFrontSpeed = -speed * sin((direction - 45) * PI/180) + rotateScaled;
+    double leftFrontSpeed = speed * cos((direction - 45) * PI/180) + rotateScaled;
+    double leftBackSpeed = speed * sin((direction - 45) * PI/180) + rotateScaled;
+    double rightBackSpeed = -speed * cos((direction - 45) * PI/180) + rotateScaled;
 
     //Set motor speeds to calculated values
     DriveLowLevel(leftFrontSpeed, rightFrontSpeed, leftBackSpeed, rightBackSpeed);
@@ -256,22 +261,48 @@ void Drivebase::DriveMPS(double direction, double speed, double rotate, double g
 void Drivebase::SetMotorSpeed(rev::CANSparkMax * motor, double speed)
 {
     double SetPoint = speed; //This is the speed we want to be at.
-    double scale = 0.02;     //This needs to change lol
+    double scale = 0.02;
     //Error is the difference between the speed we want to be at and our current speed from that motor.
     double error = SetPoint - motor->GetAlternateEncoder(rev::CANEncoder::AlternateEncoderType::kQuadrature, 8192).GetVelocity();
     double motorSpeedNow = motor->Get(); //Find current speed on the motor
-    motor->Set(motorSpeedNow + error * scale); //Adjust current speed by the error
+    motor->Set(motorSpeedNow + error * scale); //Adjust current speed by the error. Can be scaled in the future if deemed necessary.
 }
 
 //Sets drive motor speeds (mps). Only function that should interact with drivebase motors.
 void Drivebase::DriveLowLevel(double FrontLeftMPS, double FrontRightMPS, double RearLeftMPS, double RearRightMPS)
 {
-    DrivebaseDebug.PutNumber("RF Encoder Number", GetEncoderRF().GetVelocity());
-    DrivebaseDebug.PutNumber("LF Encoder Number", GetEncoderLF().GetVelocity());
-    DrivebaseDebug.PutNumber("RR Encoder Number", GetEncoderRR().GetVelocity());
-    DrivebaseDebug.PutNumber("LR Encoder Number", GetEncoderLR().GetVelocity());
+    DrivebaseDebug.PutNumber("RF Encoder mps", GetEncoderRF().GetVelocity());
+    DrivebaseDebug.PutNumber("LF Encoder mps", GetEncoderLF().GetVelocity());
+    DrivebaseDebug.PutNumber("RR Encoder mps", GetEncoderRR().GetVelocity());
+    DrivebaseDebug.PutNumber("LR Encoder mps", GetEncoderLR().GetVelocity());
+    DrivebaseDebug.PutNumber("RF Target mps", FrontRightMPS);
+    DrivebaseDebug.PutNumber("LF Target mps", FrontLeftMPS);
+    DrivebaseDebug.PutNumber("RR Target mps", RearRightMPS);
+    DrivebaseDebug.PutNumber("LR Target mps", RearLeftMPS);
+    DrivebaseDebug.PutNumber("Robot Speed mps", GetRobotSpeedMPS());
     SetMotorSpeed(&rightFront, FrontRightMPS);
     SetMotorSpeed(&leftFront, FrontLeftMPS);
     SetMotorSpeed(&rightBack, RearRightMPS);
     SetMotorSpeed(&leftBack, RearLeftMPS);
+}
+
+double Drivebase::GetRobotSpeedMPS()
+{
+    //Get speeds from encoder
+    double wheel1 = GetEncoderRF().GetVelocity();
+    double wheel2 = GetEncoderLF().GetVelocity();
+    double wheel3 = GetEncoderLR().GetVelocity();
+    double wheel4 = GetEncoderRR().GetVelocity();
+
+    //Average corresponding wheel speeds to find their rotation value
+    double yRotation = (wheel1 + wheel3)/2;
+    double xRotation = (wheel2 + wheel4)/2;
+
+    //Subtract off rotations
+    wheel2 -= xRotation;
+    wheel3 -= yRotation;
+
+    double speed = sqrt(wheel2 * wheel2 + wheel3 * wheel3);
+
+    return speed;
 }

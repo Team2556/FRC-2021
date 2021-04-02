@@ -16,7 +16,7 @@
 #define FEEDER_HIGH 7
 #define FEEDER_LOW 8
 #define HOPPER_KICKUP 101 //Currently not on robot, when added give real value
-#define CAN_PCM 102 //Is this pneumatics? Why is this on our robot??
+#define CAN_PCM 20
 #define INTAKE_IN 103 //Why are there 2 motors to move the intake in and out????
 
 //Xbox Controllers
@@ -46,6 +46,6 @@
 //Robot Details
 #define ROBOT_RADIUS 0.256
 
-// PDP Channels
+//PDP Channels
 #define SHOOTER_MOTOR_1_PDP 0
 #define SHOOTER_MOTOR_2_PDP 1

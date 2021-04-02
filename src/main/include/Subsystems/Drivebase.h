@@ -15,7 +15,8 @@
 #include "Utilities/Debug.h"
 #include "Utilities/PIDWrapper.h"
 
-#define MAX_ROTATE .7
+#define MAX_ROTATE 360
+#define MAX_ROTATE_PERCENTAGE 0.7
 #define MAX_AIM_ERROR 5
 #define MAX_SPEED 4
 #define PI 3.14159265358979323
@@ -47,6 +48,7 @@ class Drivebase {
   void PolarDrive(double speed, double direction, double rotate, double gyro);
   void GyroDrive(bool fieldOriented);
   void FieldOrientedDrive();
+  double GetRobotSpeedMPS();
 
   Debug DrivebaseDebug{"/Subsystems/Drivebase"};
 

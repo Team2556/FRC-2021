@@ -8,8 +8,8 @@
 
 //Subsystem includes
 #include "Subsystems/Drivebase.h"
-#include "Subsystems/Shooter.h"
-#include "Subsystems/Feeder.h"
+//#include "Subsystems/Shooter.h"
+//#include "Subsystems/Feeder.h"
 #include "Subsystems/ControlPanel.h"
 #include "Subsystems/Climber.h"
 
@@ -103,6 +103,7 @@ void Robot::TeleopInit()
   // frc::SmartDashboard::PutString("Next Op", name);
   // frc::SmartDashboard::PutBoolean("manual", Manual->interruptible);
   // frc::SmartDashboard::PutBoolean("test1", Teleop1->interruptible);
+  Nav.ResetYaw();
   Nav.setCommandYaw(Nav.getYaw());
 }
 
@@ -110,21 +111,18 @@ void Robot::TeleopPeriodic()
 {
   Nav.Update(); // do not remove this, it must be called
 
-  MecanumDrive->FieldOrientedDrive();
-  // MecanumDrive->testDrive(true, DriverCMD->fMoveForward());
+  //MecanumDrive->FieldOrientedDrive(); //Field oriented drive code in drivebase is trash, needs to be refactored
   OdometryController->updatePose();
-  double speed = (double)(DriverCMD->bTestButton(9)) * .25;
-  frc::SmartDashboard::PutBoolean("button pressed", DriverCMD->bTestButton(9));
-  frc::SmartDashboard::PutNumber("hopper speed", speed);
-  FeederController->SpinHopper(speed);
-  // MecanumDrive->FieldOrientedDrive();
-  // OdometryController->updatePose();
-  // MecanumDrive->Drive(DriverCMD->fMoveForward(), 0, 0, 0);
-  //MecanumDrive->leftBack.Set(.3);
-  MecanumDrive->DriveMPS(45, 0.5, 0, 0);
+  //double speed = (double)(DriverCMD->bTestButton(9)) * .25;
+  //frc::SmartDashboard::PutBoolean("button pressed", DriverCMD->bTestButton(9));
+  //frc::SmartDashboard::PutNumber("hopper speed", speed);
+  //FeederController->SpinHopper(speed);
+  //MecanumDrive->DriveMPS(14, 1.5, 30, 0); //STRICTLY TESTING, REMOVE THIS
+  //MecanumDrive->Drive(DriverCMD->fMoveForward(), DriverCMD->fMoveSideways(), DriverCMD->fRotate(), 0);
 }
 
 void Robot::DisabledInit() 
+
 {
   // OdometryController->OdometryPeriodicThread.~thread();
 }

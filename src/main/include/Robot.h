@@ -10,7 +10,6 @@
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include "frc/smartdashboard/SmartDashboard.h"
-#include <ctre/Phoenix.h>
 #include "frc/geometry/Pose2d.h"
 #include "frc/DoubleSolenoid.h"
 #include "frc/PowerDistributionPanel.h"
